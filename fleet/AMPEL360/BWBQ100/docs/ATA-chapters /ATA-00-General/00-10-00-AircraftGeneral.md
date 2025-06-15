@@ -382,6 +382,277 @@ Reference: ATA XX-80 Series Documentation
 
 ---
 
+# Appendix A: General Arrangement Drawing
+## AMPEL360 BWB-Q100 Blended Wing Body Aircraft
+
+**Drawing Number:** AMPEL-360BWBH200-00-0000-GA-001  
+**Scale:** As Noted  
+**Sheet:** 1 of 1  
+**Date:** 2025-06-15  
+**Revision:** A  
+**Units:** Meters unless noted
+
+---
+
+## TOP VIEW (PLAN)
+**Scale: 1:500**
+
+```
+                                    ← 85.0m →
+                                       
+    BL-25     BL-20    BL-10      BL 0      BL+10    BL+20     BL+25
+     │         │        │          │          │        │         │
+     │                          STA 0                            │
+     │                        ┌────┴────┐                        │
+     │                        │ RADOME  │                        │
+     │                      ┌─┴────────┴─┐                      │
+     │                      │  COCKPIT   │ STA 5                │
+     │                    ┌─┴───────────┴─┐                    │
+     │                    │   FWD CARGO   │ STA 15             │
+     │                  ┌─┴──────────────┴─┐                  │
+     │                  │  QUANTUM SYSTEMS  │ STA 25           │
+     │                ╱─┴─────────────────┴─╲                │
+     │              ╱                         ╲              │
+     │            ╱   ┌─────────────────┐     ╲            │
+     │          ╱     │ PASSENGER CABIN │       ╲          │
+     ├────────┤       │    250 SEATS    │        ├────────┤
+     │  FOT   │       │  STA 25 - 65    │        │  FOT   │ STA 40
+     │ 3000kg │       └─────────────────┘        │ 3000kg │
+     │        │  ┌─┐                       ┌─┐    │        │
+     │  FIT   │  │L│    ┌──────────┐     │R│    │  FIT   │
+     │ 5000kg │  │ │    │   FCT     │     │ │    │ 5000kg │ STA 50
+     │        │  │G│    │  9000kg   │     │G│    │        │
+     │        │  │ │    └──────────┘     │ │    │        │
+     ├────────┤  └─┘                       └─┘    ├────────┤
+     │        │       ┌───────────────┐          │        │
+     │        │       │  AFT CARGO    │          │        │ STA 65
+     │        │       │   4000kg      │          │        │
+     │        ╲       └───────────────┘         ╱        │
+     │         ╲    ┌───┐         ┌───┐       ╱         │
+     │          ╲   │ L │   APU   │ R │      ╱          │ STA 75
+     │           ╲  │ENG│         │ENG│     ╱           │
+     │            ╲ └───┘         └───┘    ╱            │
+     │             ╲  △             △     ╱             │ STA 85
+     │              ╲ VS            VS   ╱              │
+     │               ╲_________________╱               │
+     │                                                   │
+     └───────────────────────────────────────────────────┘
+                          ← 50.0m →
+                         (Wingspan)
+
+Legend:
+FOT/FIT = Fuel Outer/Inner Tank    VS = Vertical Stabilizer
+FCT = Fuel Center Tank              LG = Landing Gear
+L/R ENG = Left/Right Engine         APU = Auxiliary Power Unit
+```
+
+---
+
+## SIDE VIEW (PROFILE)
+**Scale: 1:500**
+
+```
+                                    ← 85.0m →
+    
+    WL 450 ┌─────────────────────────────────────────────────┐
+           │                                                 │ 
+    WL 400 │              ┌─────────────────┐               │
+           │              │  VERTICAL STAB   │               │
+    WL 350 │              │     (×2)         │               │
+           │              └────────┬─────────┘               │
+    WL 300 │                       │                         │ ← 14.5m
+           │    ┌──────────────────┴──────────────────┐     │   (Height)
+    WL 250 │    │                                     │     │
+           │    │         PASSENGER CABIN             │     │
+    WL 200 │    │            (WL 200)                │     │
+           │    └─────────────────────────────────────┘     │
+    WL 150 │  ┌───┐                               ┌────┐    │
+           │  │QPU│  ┌────────────────────┐      │ ENG│    │
+    WL 100 │  │BAY│  │   CARGO HOLDS      │      │    │    │
+           │  └───┘  └────────────────────┘      └────┘    │
+    WL 50  │ ┌─┐                                      ┌─┐   │
+           │ │ │  ┌─────────────────────────────┐    │ │   │
+    WL 0   └─┴─┴──┴─────────────────────────────┴────┴─┴───┘
+           NGear          Main Gear              Main Gear
+          (STA 8)      (STA 45, BL±8)          (Engines)
+    
+    Station: 0   10   20   30   40   50   60   70   80  85
+             │   │    │    │    │    │    │    │    │   │
+```
+
+---
+
+## FRONT VIEW
+**Scale: 1:500**
+
+```
+                          ← 50.0m (Wingspan) →
+                                    
+    WL 450                    ┌───┐ ┌───┐
+                              │VS │ │VS │
+    WL 400                    └─┬─┘ └─┬─┘
+                                │     │
+    WL 350                 ╱────┴─────┴────╲
+                         ╱                   ╲
+    WL 300             ╱                       ╲
+                     ╱     ┌─────────────┐       ╲
+    WL 250         ╱       │  PASSENGER  │         ╲
+                 ╱         │    CABIN    │           ╲
+    WL 200     ╱           └─────────────┘             ╲
+             ╱                                           ╲
+    WL 150 ╱               ┌─────────────┐                 ╲
+         ╱                 │ CARGO AREA  │                   ╲
+    WL 100                 └─────────────┘                     
+       │                                                         │
+    WL 50├─────────────────────────────────────────────────────┤
+       │ │                                                     │ │
+    WL 0 └┴───────────────────────────────────────────────────┴┘
+         │                       │                             │
+      BL-25                     BL 0                         BL+25
+    
+    Landing Gear:         ┌─┐           ┌─┐ ┌─┐
+                          │ │           │ │ │ │
+                          └─┘           └─┘ └─┘
+                         Nose          Main Gear
+                                      (Tandem)
+```
+
+---
+
+## GENERAL DIMENSIONS
+
+### Primary Dimensions
+| Parameter | Value | Notes |
+|-----------|-------|-------|
+| Overall Length | 85.0 m | Nose to engine exhaust |
+| Wingspan | 50.0 m | Tip to tip |
+| Height (overall) | 14.5 m | Ground to VS tip |
+| Wing Area | 850 m² | Reference area |
+| Aspect Ratio | 2.94 | Low for BWB |
+| MAC | 20.0 m | Mean Aerodynamic Chord |
+| Wheelbase | 37.0 m | Nose to main gear |
+| Track | 16.0 m | Main gear spacing |
+
+### Ground Clearances (Static)
+| Location | Clearance | Condition |
+|----------|-----------|-----------|
+| Fuselage minimum | 2.5 m | Centerline |
+| Engine nacelle | 3.0 m | Static |
+| Wing tip | 4.5 m | Level ground |
+| Cargo door sill | 3.2 m | All doors |
+| Service panels | 1.8-4.0 m | Various |
+
+---
+
+## DOOR AND ACCESS LOCATIONS
+
+### Passenger Doors (Emergency Exits)
+```
+    LEFT SIDE                          RIGHT SIDE
+    L1 - STA 20 (Type A)              R1 - STA 20 (Type A)
+    L2 - STA 35 (Type A)              R2 - STA 35 (Type A)
+    L3 - STA 50 (Type A)              R3 - STA 50 (Type A)
+    L4 - STA 65 (Type III)            R4 - STA 65 (Type III)
+```
+
+### Cargo Doors
+```
+    FWD CARGO  - STA 18, RH SIDE (2.0m × 2.0m)
+    CTR CARGO  - STA 48, RH SIDE (2.5m × 2.5m)
+    AFT CARGO  - STA 70, RH SIDE (2.0m × 2.0m)
+    BULK DOOR  - STA 75, LH SIDE (1.5m × 1.5m)
+```
+
+### Service Panels
+```
+    REFUEL PANEL      - STA 40, LH SIDE, WL 150
+    WASTE PANEL       - STA 55, RH SIDE, WL 100
+    POTABLE WATER     - STA 25, RH SIDE, WL 100
+    GPU RECEPTACLE    - STA 30, RH SIDE, WL 150
+    QUANTUM SERVICE   - STA 25, VENTRAL, WL 50
+```
+
+---
+
+## QUANTUM SYSTEMS LAYOUT
+
+### QPU Bay (STA 20-30)
+```
+    ┌─────────────────────────────────┐
+    │  QPU CORE        CRYO PLANT     │
+    │  ┌─────┐        ┌─────────┐    │
+    │  │ QPU │        │ COOLING │    │
+    │  │1024Q│        │ SYSTEM  │    │
+    │  └─────┘        └─────────┘    │
+    │                                 │
+    │  CONTROL         SHIELDING      │
+    │  ┌─────┐        ┌─────────┐    │
+    │  │RACKS│        │ΜU-METAL │    │
+    │  └─────┘        └─────────┘    │
+    └─────────────────────────────────┘
+    
+    Access: Ventral panels + internal from cabin
+    Environment: EMI shielded, vibration isolated
+```
+
+### QNS Locations
+- Forward Unit: STA 5 (radome area)
+- Center Unit: STA 40 (CG area)  
+- Aft Unit: STA 70 (reference)
+
+### QSM Network
+- 48 distributed sensors throughout structure
+- Concentrated at high-stress areas
+- Wing root: 12 sensors
+- Pressure vessel: 24 sensors
+- Landing gear: 12 sensors
+
+---
+
+## NOTES
+
+1. **Drawing Conventions**
+   - STA = Station (longitudinal position from nose)
+   - BL = Butt Line (lateral position from centerline)
+   - WL = Water Line (vertical position from ground)
+
+2. **BWB Specific Features**
+   - Non-circular pressure vessel cross-section
+   - Integrated wing-body junction
+   - Distributed passenger cabin
+   - Central cargo tunnel
+
+3. **Ground Operations**
+   - All dimensions at OEW on ground
+   - Standard tire pressure (nose: 180 PSI, main: 205 PSI)
+   - Level attitude reference
+
+4. **Coordinate System**
+   - X-axis: Positive aft (STA)
+   - Y-axis: Positive right (BL)
+   - Z-axis: Positive up (WL)
+
+---
+
+**Drawing Approval:**
+
+| Role | Name | Signature | Date |
+|------|------|-----------|------|
+| Drawn By | A. Designer | [Signed] | 2025-06-01 |
+| Checked By | B. Checker | [Signed] | 2025-06-10 |
+| Approved By | C. Chief Engineer | [Signed] | 2025-06-15 |
+
+**Revision History:**
+- Rev A: Initial Release (2025-06-15)
+
+**Related Drawings:**
+- Interior Arrangement: AMPEL-360BWBH200-25-5000-LAY-001
+- Systems Installation: AMPEL-360BWBH200-00-7000-INS-001
+- Ground Support: AMPEL-360BWBH200-00-3000-GSE-001
+
+**END OF DRAWING**
+
+
 **END OF DOCUMENT**
 
 *© 2025 GAIA-QAO Aerospace. All rights reserved.*  
