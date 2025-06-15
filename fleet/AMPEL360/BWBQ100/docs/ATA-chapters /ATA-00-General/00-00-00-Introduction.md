@@ -1,3 +1,9 @@
+> **ATA 00 - General**  
+> **00-00-00 Introduction**  
+> _[Source on GitHub](https://github.com/Robbbo-T/GAIA-QAO-ADVENT/blob/main/fleet/AMPEL360/BWBQ100/docs/ATA-chapters%20/ATA-00-General/00-00-00-Introduction.md)_
+
+---
+
 # ATA 00 - General
 ## 00-00-00 Introduction
 
@@ -18,6 +24,7 @@
 5. [Quantum Systems Integration](#5-quantum-systems-integration)
 6. [Safety Philosophy](#6-safety-philosophy)
 7. [Revision History](#7-revision-history)
+8. [Appendices](#appendices)
 
 ---
 
@@ -88,22 +95,23 @@ The AMPEL360 BWB-Q100 represents a paradigm shift in aircraft design, integratin
 
 ### 3.2 Key Specifications
 
-| Parameter | Value |
-|-----------|-------|
-| **Configuration** | Blended Wing Body |
-| **Capacity** | 200 passengers (typical) |
-| **Range** | 8,000 nm |
-| **Cruise Speed** | Mach 0.85 |
-| **Propulsion** | 2 × H2 Turbofan (60,000 lbf each) |
-| **Quantum Systems** | QPU (1000 qubits), QNS, QSM, QKD |
-| **Certification** | EASA/FAA with quantum special conditions |
+| Parameter          | Value                        |
+|--------------------|-----------------------------|
+| **Configuration**  | Blended Wing Body           |
+| **Capacity**       | 200 passengers (typical)    |
+| **Range**          | 8,000 nm                    |
+| **Cruise Speed**   | Mach 0.85                   |
+| **Propulsion**     | 2 × H₂ Turbofan (60,000 lbf each) |
+| **Quantum Systems**| QPU (1000 qubits), QNS, QSM, QKD |
+| **Certification**  | EASA/FAA with quantum special conditions |
 
 ### 3.3 System Architecture
+
 ```
 ┌─────────────────────────────────────────────────────┐
-│                  Digital Twin Cloud                  │
+│                  Digital Twin Cloud                 │
 ├─────────────────────────────────────────────────────┤
-│                 Mission Control                      │
+│                 Mission Control                     │
 ├──────────────┬────────────────┬────────────────────┤
 │   Classical  │    Quantum     │    Hybrid          │
 │   Systems    │    Systems     │    Systems         │
@@ -120,6 +128,7 @@ The AMPEL360 BWB-Q100 represents a paradigm shift in aircraft design, integratin
 ## 4. Documentation System
 
 ### 4.1 Organization Principle
+
 Documentation follows the ATA 100 specification with extensions:
 
 **Standard ATA Chapters (00-79)**
@@ -128,23 +137,24 @@ Documentation follows the ATA 100 specification with extensions:
 - Digital twin data references
 
 **Extended Chapters (XX-80 Series)**
-- 80: Quantum Navigation System (QNS)
-- 81: Quantum Processing Unit (QPU)
-- 82: Quantum Structural Monitoring (QSM)
-- 83: Quantum Diagnostic System (QDS)
-- 84: Quantum Key Distribution (QKD)
+- [80: Quantum Navigation System (QNS)](../quantum/80-QNS.md)
+- [81: Quantum Processing Unit (QPU)](../quantum/81-QPU.md)
+- [82: Quantum Structural Monitoring (QSM)](../quantum/82-QSM.md)
+- [83: Quantum Diagnostic System (QDS)](../quantum/83-QDS.md)
+- [84: Quantum Key Distribution (QKD)](../quantum/84-QKD.md)
 
 ### 4.2 Document Types
 
-| Type | Purpose | Example |
-|------|---------|---------|
-| **System Description** | Theory of operation | 21-00-00-SystemDescription.md |
-| **Maintenance Procedure** | Step-by-step instructions | AMM 21-10-00 |
-| **Schematic Diagram** | System interconnections | WDM 21-00-SCH-001 |
-| **Interface Control** | System boundaries | ICD-QPU-IMA-V1R0 |
-| **Safety Analysis** | Risk assessment | SSA-21-001 |
+| Type                  | Purpose                    | Example                                                           |
+|-----------------------|----------------------------|-------------------------------------------------------------------|
+| **System Description**| Theory of operation        | [21-00-00-SystemDescription.md](../21-00-Air-Conditioning/21-00-00-SystemDescription.md) |
+| **Maintenance Procedure** | Step-by-step instructions | [AMM 21-10-00](../21-10-Air-Conditioning/AMM-21-10-00.md)        |
+| **Schematic Diagram** | System interconnections    | [WDM 21-00-SCH-001](../21-00-Air-Conditioning/WDM-21-00-SCH-001.md) |
+| **Interface Control** | System boundaries          | [ICD-QPU-IMA-V1R0](../quantum/ICD-QPU-IMA-V1R0.md)                |
+| **Safety Analysis**   | Risk assessment            | [SSA-21-001](../21-00-Air-Conditioning/SSA-21-001.md)             |
 
 ### 4.3 Numbering Convention
+
 ```
 XX-YY-ZZ-Description
 │  │  │
@@ -154,6 +164,7 @@ XX-YY-ZZ-Description
 ```
 
 ### 4.4 Revision Control
+
 - **Major Revisions**: X.0.0 (Significant design changes)
 - **Minor Revisions**: 0.X.0 (Procedural updates)
 - **Corrections**: 0.0.X (Typographical/formatting)
@@ -163,6 +174,7 @@ XX-YY-ZZ-Description
 ## 5. Quantum Systems Integration
 
 ### 5.1 Quantum-Classical Interface
+
 The BWB-Q100 pioneering integration requires special consideration:
 
 **Design Principles**
@@ -178,6 +190,7 @@ The BWB-Q100 pioneering integration requires special consideration:
 - Novel maintenance and calibration procedures
 
 ### 5.2 Quantum Safety Framework
+
 ```
 Level 1: Hardware Isolation
 - Physical separation of quantum/classical
@@ -200,6 +213,7 @@ Level 3: Operational Procedures
 ## 6. Safety Philosophy
 
 ### 6.1 Core Principles
+
 The AMPEL360 BWB-Q100 embodies GAIA-QAO's safety philosophy:
 
 **"No Flight Without Assurance"**
@@ -209,13 +223,15 @@ The AMPEL360 BWB-Q100 embodies GAIA-QAO's safety philosophy:
 - Predictive maintenance preventing failures
 
 ### 6.2 Safety Hierarchy
-1. **Prevent**: Design out failure modes
-2. **Detect**: Real-time monitoring (classical + quantum)
-3. **Isolate**: Contain failures from propagating
-4. **Recover**: Graceful degradation and recovery
+
+1. **Prevent**: Design out failure modes  
+2. **Detect**: Real-time monitoring (classical + quantum)  
+3. **Isolate**: Contain failures from propagating  
+4. **Recover**: Graceful degradation and recovery  
 5. **Learn**: Digital twin feeds back improvements
 
 ### 6.3 Novel Technology Approach
+
 - Conservative application of new technologies
 - Extensive simulation before implementation
 - Incremental capability activation
@@ -225,12 +241,12 @@ The AMPEL360 BWB-Q100 embodies GAIA-QAO's safety philosophy:
 
 ## 7. Revision History
 
-| Version | Date | Description | Author |
-|---------|------|-------------|---------|
-| 1.0.0 | 2024-01-15 | Initial release | GAIA-QAO Team |
-| 1.1.0 | 2024-06-20 | Added quantum systems overview | Quantum Division |
-| 1.2.0 | 2024-09-10 | Updated for H200 variant | Engineering |
-| 2.0.0 | 2025-06-15 | Major update for certification | Certification Team |
+| Version | Date        | Description                      | Author             |
+|---------|-------------|----------------------------------|--------------------|
+| 1.0.0   | 2024-01-15  | Initial release                  | GAIA-QAO Team      |
+| 1.1.0   | 2024-06-20  | Added quantum systems overview   | Quantum Division   |
+| 1.2.0   | 2024-09-10  | Updated for H200 variant         | Engineering        |
+| 2.0.0   | 2025-06-15  | Major update for certification   | Certification Team |
 
 ---
 
@@ -240,14 +256,16 @@ The AMPEL360 BWB-Q100 embodies GAIA-QAO's safety philosophy:
 See [Appendix H: Centralized Glossary](../../../appendices/appendix-h-glossary.md)
 
 ### B. Reference Documents
-- GAIA-QAO-001: System Design Philosophy
-- GAIA-QAO-002: Quantum Integration Guidelines
-- CS-25 / Part 25: Certification Basis
-- DO-178C/DO-254: Software/Hardware Assurance
+
+- [GAIA-QAO-001: System Design Philosophy](../../../reference/GAIA-QAO-001-SystemDesignPhilosophy.md)
+- [GAIA-QAO-002: Quantum Integration Guidelines](../../../reference/GAIA-QAO-002-QuantumIntegrationGuidelines.md)
+- [CS-25 / Part 25: Certification Basis (EASA)](https://www.easa.europa.eu/en/document-library/certification-specifications/cs-25-large-aeroplanes)
+- [DO-178C / DO-254: Software/Hardware Assurance (RTCA)](https://www.rtca.org/content/DO-178C)
 
 ### C. Contact Information
-- **Technical Support**: support@gaia-qao.org
-- **Documentation Feedback**: docs@gaia-qao.org
+
+- **Technical Support**: [support@gaia-qao.org](mailto:support@gaia-qao.org)
+- **Documentation Feedback**: [docs@gaia-qao.org](mailto:docs@gaia-qao.org)
 - **24/7 AOG Support**: +1-800-GAIA-AOG
 
 ---
@@ -255,3 +273,26 @@ See [Appendix H: Centralized Glossary](../../../appendices/appendix-h-glossary.m
 **END OF DOCUMENT**
 
 *The information contained in this document is proprietary to GAIA-QAO and subject to the restrictions on the title page.*
+
+---
+
+**Referenced Documents (with Links):**
+- [Appendix H: Centralized Glossary](../../../appendices/appendix-h-glossary.md)
+- [GAIA-QAO-001: System Design Philosophy](../../../reference/GAIA-QAO-001-SystemDesignPhilosophy.md)
+- [GAIA-QAO-002: Quantum Integration Guidelines](../../../reference/GAIA-QAO-002-QuantumIntegrationGuidelines.md)
+- [CS-25 / Part 25: Certification Basis (EASA)](https://www.easa.europa.eu/en/document-library/certification-specifications/cs-25-large-aeroplanes)
+- [DO-178C / DO-254: Software/Hardware Assurance (RTCA)](https://www.rtca.org/content/DO-178C)
+- [Quantum Navigation System (QNS)](../quantum/80-QNS.md)
+- [Quantum Processing Unit (QPU)](../quantum/81-QPU.md)
+- [Quantum Structural Monitoring (QSM)](../quantum/82-QSM.md)
+- [Quantum Diagnostic System (QDS)](../quantum/83-QDS.md)
+- [Quantum Key Distribution (QKD)](../quantum/84-QKD.md)
+- [21-00-00-SystemDescription.md](../21-00-Air-Conditioning/21-00-00-SystemDescription.md)
+- [AMM 21-10-00](../21-10-Air-Conditioning/AMM-21-10-00.md)
+- [WDM 21-00-SCH-001](../21-00-Air-Conditioning/WDM-21-00-SCH-001.md)
+- [ICD-QPU-IMA-V1R0](../quantum/ICD-QPU-IMA-V1R0.md)
+- [SSA-21-001](../21-00-Air-Conditioning/SSA-21-001.md)
+
+---
+
+
