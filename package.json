@@ -1,0 +1,25 @@
+{
+  "name": "gaia-qao-advent",
+  "version": "2.0.0",
+  "private": true,
+  "description": "GAIA-QAO Aerospace Digital Venture - AMPEL360 BWB-Q100",
+  "workspaces": [
+    "fleet/ampel360/BWBQ100/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=dashboard",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "start": "bash start.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gaia-qao/GAIA-QAO-AdVent.git"
+  },
+  "author": "GAIA-QAO Team",
+  "license": "SEE LICENSE IN LICENSE",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
