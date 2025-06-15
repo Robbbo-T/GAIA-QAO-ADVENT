@@ -117,7 +117,7 @@ Consulte el archivo **[LICENSE](LICENSE)** para ver los términos completos.
 
 ### GAIA-QAO-AdVent: Estructura Definitiva, Completa y Unificada
 
-```
+
 GAIA-QAO-AdVent/
 │
 ├── 📄 README.md
