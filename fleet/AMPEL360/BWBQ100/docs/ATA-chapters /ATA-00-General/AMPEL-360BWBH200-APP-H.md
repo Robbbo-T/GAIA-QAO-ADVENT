@@ -1,4 +1,4 @@
-> **ATA 00 - General**  
++> **ATA 00 - General**  
 > **00-00-00 Introduction**  
 > _[Source on GitHub](https://github.com/Robbbo-T/GAIA-QAO-ADVENT/blob/main/fleet/AMPEL360/BWBQ100/docs/ATA-chapters/ATA-00-General/00-00-00-Introduction.md)_
 
@@ -253,7 +253,8 @@ The AMPEL360 BWB-Q100 embodies GAIA-QAO's safety philosophy:
 ## Appendices
 
 ### A. Abbreviations and Acronyms
-See [Appendix H: Centralized Glossary](./AMPEL-360BWBH200-APP-H.md)
+See [Appendix H: Centralized Glossary](./AMPEL-360BWBH200-APP-H.md)  
+_[Source on GitHub](https://github.com/Robbbo-T/GAIA-QAO-ADVENT/blob/main/fleet/AMPEL360/BWBQ100/docs/ATA-chapters%20/ATA-00-General/AMPEL-360BWBH200-APP-H.md)_
 
 ### B. Reference Documents
 
@@ -277,7 +278,8 @@ See [Appendix H: Centralized Glossary](./AMPEL-360BWBH200-APP-H.md)
 ---
 
 **Referenced Documents (with Links):**
-- [Appendix H: Centralized Glossary](./AMPEL-360BWBH200-APP-H.md)
+- [Appendix H: Centralized Glossary](./AMPEL-360BWBH200-APP-H.md)  
+  _[Source on GitHub](https://github.com/Robbbo-T/GAIA-QAO-ADVENT/blob/main/fleet/AMPEL360/BWBQ100/docs/ATA-chapters%20/ATA-00-General/AMPEL-360BWBH200-APP-H.md)_
 - [GAIA-QAO-001: System Design Philosophy](./GAIA-QAO-001-SystemDesignPhilosophy.md)
 - [GAIA-QAO-002: Quantum Integration Guidelines](./GAIA-QAO-002-QuantumIntegrationGuidelines.md)
 - [CS-25 / Part 25: Certification Basis (EASA)](https://www.easa.europa.eu/en/document-library/certification-specifications/cs-25-large-aeroplanes)
@@ -294,5 +296,6 @@ See [Appendix H: Centralized Glossary](./AMPEL-360BWBH200-APP-H.md)
 - [SSA-21-001.md](./SSA-21-001.md)
 
 ---
+
 
 
