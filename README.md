@@ -1,116 +1,228 @@
 # ✈️ GAIA-QAO-AdVent 🚀
 
-**GAIA-QAO Aerospace Digital Venture**
+**GAIA-QAO Aerospace Digital Venture**  
 _Unifying Aerospace Engineering with Quantum and AI Technologies_
 
 ---
 
-![GAIA-QAO Banner](https://example.com/gaia-qao-banner.png) 
-*(Nota: Reemplazar con una imagen de banner real del proyecto)*
+## Project Metadata
 
-**GAIA-QAO-AdVent** es una plataforma de ingeniería y operaciones de última generación para el diseño, simulación y gestión del ciclo de vida de sistemas aeroespaciales avanzados. Este proyecto representa la convergencia de la ingeniería aeronáutica y astronáutica con los avances en **computación cuántica**, **inteligencia artificial** y **gemelos digitales**.
-
-Este repositorio contiene el código fuente completo, la documentación técnica, los modelos de simulación y la infraestructura de despliegue para toda la flota de vehículos y los módulos de soporte del consorcio GAIA-QAO.
-
----
-
-## 🎯 Visión del Proyecto
-
-Nuestra visión es revolucionar el diseño, la operación y la sostenibilidad de los viajes aéreos y espaciales mediante la creación de una "fuente única de verdad" digital (`Single Source of Truth`) para cada vehículo. Al integrar gemelos digitales con optimización cuántica y análisis predictivo de IA, buscamos alcanzar niveles sin precedentes de seguridad, eficiencia y rendimiento.
-
-## ✨ Módulos Principales del Ecosistema
-
-El proyecto está organizado en un monorepo que contiene varios módulos altamente especializados:
-
-| Módulo                               | Icono | Descripción                                                                                               |
-| ------------------------------------ | :---: | --------------------------------------------------------------------------------------------------------- |
-| [**Q-AIR**](#q-air-aviation-systems) |  ✈️   | Diseño, simulación y mantenimiento de la familia de aeronaves **AMPEL360**.                                 |
-| [**Q-SPACE**](#q-space-space-systems) |  🚀   | Diseño, perfiles de misión y operaciones de la familia de naves espaciales **AMPEL360plus**.                  |
-| [**Q-SCIRES**](#q-scires-scientific-research) |  🔬   | Investigación fundamental en física cuántica y ciencias aeroespaciales que impulsa nuestra tecnología.      |
-| [**Q-HPC**](#q-hpc-high-performance-computing) |  💻   | Infraestructura y cargas de trabajo para simulaciones a gran escala (CFD, FEA, Quantum Sim).          |
-| [**Q-GREENTECH**](#q-greentech-green-technology) |  🌱   | Iniciativas para la propulsión sostenible, electrificación y economía circular en la industria. |
-| [**Q-DATAGOV**](#q-datagov-data-governance) |  📊   | Políticas, cumplimiento y herramientas para la gestión de datos críticos y sensibles.                     |
+- **Repository ID:** GAIA-QAO-AdVent  
+- **Version:** 1.0.0  
+- **Author:** Amedeo Pelliccia  
+- **Base Directory:** `/`  
 
 ---
 
-## 🚀 Getting Started: Entorno de Desarrollo Local
+## Domains
 
-Para configurar su entorno de desarrollo local, siga estos pasos. Se requiere tener instalados `git`, `docker`, `docker-compose`, `node`, `npm` y `python3`.
-
-1.  **Clonar el repositorio:**
-    ```bash
-    git clone https://github.com/gaia-qao/gaia-qao-advent.git
-    cd gaia-qao-advent
-    ```
-
-2.  **Ejecutar el script de configuración:**
-    Este script instalará todas las dependencias, configurará los archivos de entorno y levantará los servicios locales.
-    ```bash
-    ./scripts/setup.sh
-    ```
-
-3.  **¡Listo!** El entorno está en funcionamiento. Los servicios principales estarán disponibles en:
-    -   **FlightOps Dashboard:** `http://localhost:3000`
-    -   **API Gateway:** `http://localhost:8080`
-    -   **RabbitMQ Management:** `http://localhost:15672`
-
-4.  **Ver comandos disponibles:**
-    Use `make help` para ver una lista completa de comandos de desarrollo útiles (iniciar, detener, probar, etc.).
-    ```bash
-    make help
-    ```
+- Q-AIR
+- Q-SPACE
+- Q-DATAGOV
+- Q-GREENTECH
+- Q-HPC
+- Q-SCIRES
 
 ---
 
-## 🏛️ Estructura del Repositorio
+## Documentation
 
-Este repositorio sigue una estructura de monorepo políglota, donde cada módulo principal reside en su propio directorio de alto nivel.
+- **Format:** `markdown_extended`
+- **Certification Traceability:** `true`
+- **Structure Standard:** `ATA-SSA`
+- **Generators:**
+  - `tools/generators/build_manuals.py`
+  - `tools/generators/generate_ata_readme.sh`
+- **Compliance Scripts:**
+  - `tools/check_do178_compliance.py`
+  - `tools/k8s_validate_ci.py`
+
+---
+
+## CI/CD
+
+- **Pipeline Framework:** GitHub Actions / Kubernetes / ArgoCD
+- **Versioning:**
+  - **Strategy:** `semver`
+  - **Baseline Tag:** `v1.0.0`
+  - **Auto Changelog:** `true`
+- **Validation:**
+  - DO-178C level DAL-B
+  - Quantum trace: QAO-QIL-B
+  - Git history auditability: true
+- **Deployment Profiles:**
+  - `onboard_wasm`
+  - `cloud_certification_node`
+  - `quantum_validation_node`
+
+---
+
+## Documentation Scope
+
+**By Chapter:**
+- **ATA 00–20:** Design, General, Maintenance
+- **ATA 21–49:** Systems (ECS, Electricity, Communications)
+- **ATA 50–89:** Operation and Cockpit
+- **ATA 90–95:** Integration, Connectivity
+- **ATA 96–99:** Quantum, Metamodels, Ontologies
+
+**File Templates:**
+- `README.md`
+- `[ATA-CODE]-[TITLE].md`
+- `certification/compliance_[ATA].yaml`
+- `qao_object_id.yml`
+
+---
+
+## Traceability Framework
+
+- **Enabled:** true
+- **Dike Integration:** true
+- **Quachain Enabled:** true
+- **Object ID System:**
+  - **Format:** `GQOIS-[DOMAIN]-[ATA]-[INFOCODE]`
+  - **Generator:** `tools/object_id_gen.py`
+
+---
+
+## Interface Integration
+
+- **Edge Modules:**
+  - `wasm_mod_telemetry`
+  - `wasm_mod_advisory`
+  - `wasm_mod_entropy_control`
+- **Quantum Links:**
+  - `QIL-B: qpu_interface_dwave.py`
+- **Web Components:**
+  - `mission_dashboard_react/`
+  - `telemetry_timeline/`
+
+---
+
+## Sustainability Tags
+
+- `lifecycle_traced`
+- `zero_emissions_ready`
+- `quantum_ai_assisted_design`
+
+---
+
+## Metadata
+
+- **License:** CC-BY-SA 4.0
+- **Language:** EN/ES dual
+- **Registered By:** Amedeo Pelliccia (NIE Y0940932Q)
+
+---
+
+## GAIA-QAO-AdVent
+
+GAIA-QAO-AdVent is a next-generation engineering and operations platform for the design, simulation, and lifecycle management of advanced aerospace systems. This project represents the convergence of aeronautical and astronautical engineering with advances in quantum computing, artificial intelligence, and digital twins.
+
+This repository contains the complete source code, technical documentation, simulation models, and deployment infrastructure for the entire fleet of vehicles and support modules for the GAIA-QAO consortium.
+
+---
+
+### 🎯 Project Vision
+
+Our vision is to revolutionize the design, operation, and sustainability of air and space travel by creating a "Single Source of Truth" digital platform for each vehicle. By integrating digital twins with quantum optimization and AI-driven predictive analysis, we aim to achieve unprecedented levels of safety, efficiency, and performance.
+
+---
+
+## ✨ Core Ecosystem Modules
+
+| Module      | Icon | Description                                                                 |
+|-------------|------|-----------------------------------------------------------------------------|
+| Q-AIR       | ✈️   | Design, simulation, and maintenance of the AMPEL360 aircraft family.         |
+| Q-SPACE     | 🚀   | Design, mission profiles, and operations for the AMPEL360plus spacecraft.    |
+| Q-SCIRES    | 🔬   | Fundamental research in quantum physics and aerospace science.               |
+| Q-HPC       | 💻   | Infrastructure and workloads for large-scale simulations (CFD, FEA, Quantum).|
+| Q-GREENTECH | 🌱   | Sustainable propulsion, electrification, and circular economy initiatives.   |
+| Q-DATAGOV   | 📊   | Policies, compliance, and tools for managing critical and sensitive data.    |
+
+---
+
+## 🚀 Getting Started: Local Development Environment
+
+To set up your local development environment, follow these steps. You need to have `git`, `docker`, `docker-compose`, `node`, `npm`, and `python3` installed.
+
+**Clone the repository:**
+```sh
+git clone https://github.com/gaia-qao/gaia-qao-advent.git
+cd gaia-qao-advent
+```
+**Run the setup script:**  
+This script will install all dependencies, set up environment files, and launch local services.
+
+```sh
+./scripts/setup.sh
+```
+Your environment is now running! Main services will be available at:
+
+- FlightOps Dashboard: http://localhost:3000
+- API Gateway: http://localhost:8080
+- RabbitMQ Management: http://localhost:15672
+
+**View available commands:**  
+Use `make help` to see a full list of useful development commands (start, stop, test, etc.).
+
+```sh
+make help
+```
+
+---
+
+## 🏛️ Repository Structure
+
+This repository follows a polyglot monorepo structure, with each main module in its own top-level directory.
 
 ```
 GAIA-QAO-AdVent/
 │
-├── Q-AIR/              # Módulo de Sistemas de Aviación (Aeronaves)
-├── Q-SPACE/            # Módulo de Sistemas Espaciales (Naves)
-├── Q-DATAGOV/          # Módulo de Gobernanza de Datos
-├── Q-GREENTECH/        # Módulo de Tecnologías Verdes y Sostenibilidad
-├── Q-HPC/              # Módulo de Computación de Alto Rendimiento
-├── Q-SCIRES/           # Módulo de Investigación Científica
+├── Q-AIR/              # Aviation Systems Module (Aircraft)
+├── Q-SPACE/            # Space Systems Module (Spacecraft)
+├── Q-DATAGOV/          # Data Governance Module
+├── Q-GREENTECH/        # Green Technology & Sustainability Module
+├── Q-HPC/              # High Performance Computing Module
+├── Q-SCIRES/           # Scientific Research Module
 │
-├── kubernetes/         # Manifiestos de despliegue (Kustomize, Helm)
-├── scripts/            # Scripts de automatización (setup, start, test, deploy)
-├── tools/              # Herramientas de desarrollo (simuladores, generadores)
+├── kubernetes/         # Deployment manifests (Kustomize, Helm)
+├── scripts/            # Automation scripts (setup, start, test, deploy)
+├── tools/              # Development tools (simulators, generators)
 │
-├── .github/            # Plantillas para Issues, PRs y flujos de GitHub Actions
-├── docker-compose.yml  # Orquestación de servicios para desarrollo local
-├── Makefile            # Interfaz de comandos simplificada para desarrolladores
-└── package.json        # Manifiesto del ecosistema Node.js (monorepo root)
+├── .github/            # Issue, PR templates, and GitHub Actions workflows
+├── docker-compose.yml  # Service orchestration for local development
+├── Makefile            # Simplified command interface for developers
+└── package.json        # Node.js ecosystem manifest (monorepo root)
 ```
+Each module contains its own detailed `README.md` for deeper exploration.
 
-Para una exploración más profunda, cada módulo contiene su propio `README.md` detallado.
+---
+
+## 🤝 How to Contribute
+
+Contributions are welcome! Due to the nature of the project, we follow a strict process. Please read our Contribution Guide before you start.
+
+**Key points:**
+- You must sign our Contributor License Agreement (CLA) before your PR can be accepted.
+- Follow our branch strategy and commit conventions.
+- All code contributions must be accompanied by tests and updated documentation.
 
 ---
 
-## 🤝 Cómo Contribuir
+## 🛡️ Security Policy
 
-¡Las contribuciones son bienvenidas! Sin embargo, debido a la naturaleza del proyecto, seguimos un proceso estricto. Por favor, lea nuestra **[Guía de Contribución](CONTRIBUTING.md)** antes de empezar.
-
-Los puntos clave son:
--   Debe firmar nuestro **Acuerdo de Licencia de Contribuidor (CLA)** antes de que su PR pueda ser aceptado.
--   Siga nuestra **estrategia de ramas** y las **convenciones de commits**.
--   Toda contribución de código debe ir acompañada de **pruebas** y **documentación** actualizada.
-
-## 🛡️ Política de Seguridad
-
-La seguridad es nuestra máxima prioridad. Si descubre una vulnerabilidad de seguridad, por favor, siga las directrices de nuestra **[Política de Seguridad](SECURITY.md)** para reportarla de forma responsable. **No divulgue vulnerabilidades en issues públicos de GitHub.**
-
-## 📄 Licencia
-
-El código fuente y los activos de este repositorio están bajo una licencia propietaria del Consorcio GAIA-QAO. El uso está restringido a la evaluación interna y la investigación académica no comercial. Para cualquier otro uso, se requiere un acuerdo de licencia por escrito.
-
-Consulte el archivo **[LICENSE](LICENSE)** para ver los términos completos.
+Security is our highest priority. If you discover a security vulnerability, please follow our Security Policy guidelines to report it responsibly. Do not disclose vulnerabilities in public GitHub issues.
 
 ---
-**GAIA-QAO Consortium** | [Página Web](https://gaia-qao.org) | [Contacto Legal](mailto:legal@gaia-qao.org)
+
+## 📄 License
+
+The source code and assets in this repository are under a proprietary license of the GAIA-QAO Consortium. Usage is restricted to internal evaluation and non-commercial academic research. For any other use, a written license agreement is required.
+
+See the LICENSE file for full terms.
+
+---
 ```
 
 ***
