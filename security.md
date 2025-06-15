@@ -1,87 +1,94 @@
-# Security Policy
+# GAIA-QAO-AdVent Security Policy
 
-## GAIA-QAO-AdVent Aerospace Platform
+The GAIA-QAO Consortium takes the security of our systems very seriously. We appreciate the efforts of security researchers and the community to help us maintain a high standard of security and safety for our aerospace and quantum computing platform.
 
-Security is paramount for the GAIA-QAO-AdVent platform, especially given its application in mission-critical aerospace and quantum-compute environments. This policy outlines how we handle vulnerabilities, security assessments, and responsible disclosure.
+This document outlines our security policy and the procedure for responsibly reporting vulnerabilities.
 
----
+## Table of Contents
+
+1.  [Supported Versions](#supported-versions)
+2.  [Reporting a Vulnerability](#reporting-a-vulnerability)
+3.  [Our Commitment (The Process)](#our-commitment-the-process)
+4.  [Scope](#scope)
+5.  [Out of Scope](#out-of-scope)
+6.  [Safe Harbor](#safe-harbor)
 
 ## Supported Versions
 
-Only the latest major and minor versions of GAIA-QAO-AdVent are actively supported with security updates.
+Due to the rapid development and mission-critical nature of our software, only the latest major release and the current `develop` branch receive security support.
 
 | Version | Supported          |
-| ------- | ----------------- |
-| 2.x     | ✅ Yes            |
-| 1.x     | ❌ No             |
+| ------- | ------------------ |
+| 2.x.x   | :white_check_mark: |
+| 1.x.x   | :x:                |
+| < 1.0   | :x:                |
 
----
+Please ensure you are testing against the latest version before submitting a report.
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability, **do not create a public GitHub issue**. Instead, follow these steps:
+**DO NOT report security vulnerabilities through public GitHub issues.**
 
-1. **Email the Security Team:**  
-   Send a detailed description to [security@gaia-qao.org](mailto:security@gaia-qao.org).  
-   Please include:
-   - Affected component or module (e.g., `/quantum/`, `/wasm/`, `/telemetry/`)
-   - Version(s) affected
-   - Steps to reproduce
-   - Impact assessment (e.g., remote code execution, data leakage, denial of service)
-   - Any relevant logs, PoC, or crash dumps
+To ensure the confidentiality of your finding, please report any suspected security vulnerabilities directly to our dedicated security team via email:
 
-2. **PGP Encryption (Recommended):**  
-   Our public PGP key is available at [https://gaia-qao.org/pgp-key.asc](https://gaia-qao.org/pgp-key.asc) for secure communication.
+**security@gaia-qao.org**
 
-3. **Response Time:**  
-   We will acknowledge your report within 3 business days and provide a timeline for remediation if confirmed.
+You can encrypt your message using our PGP key:
 
----
+```
+-----BEGIN PGP PUBLIC KEY BLOCK-----
 
-## Security Best Practices
+(Aquí iría el bloque de clave pública PGP completo del equipo de seguridad de GAIA-QAO)
+Comment: GAIA-QAO Security Team <security@gaia-qao.org>
+Version: GnuPG v2
 
-- **Keep dependencies up-to-date.**  
-  Use the latest supported versions of all dependencies across Node.js, Python, and native modules.
+mQINBF...
+...
+...
+=W4pE
+-----END PGP PUBLIC KEY BLOCK-----
+```
 
-- **Enforce Principle of Least Privilege.**  
-  Run all services with the minimum required permissions (see `/docker-compose.yml` and `/kubernetes/`).
+Please include the following information in your report:
 
-- **Code Signing & Verification.**  
-  All production builds and WASM binaries must be signed. Validate signatures before deployment.
+-   **A clear and concise description** of the vulnerability.
+-   The **component or module** affected (e.g., `api-gateway`, `Q-AIR/BWBQ100`, `Q-SPACE/STS-100`).
+-   **Step-by-step instructions** to reproduce the issue, including any scripts, code, or configurations.
+-   The **potential impact** of the vulnerability (e.g., data exfiltration, denial of service, unauthorized system control).
+-   Any **suggested mitigations** or fixes, if you have them.
 
-- **Quantum-Safe Cryptography.**  
-  Prefer quantum-resistant algorithms (e.g., CRYSTALS-Kyber, Falcon) for all communications and at-rest encryption.
+## Our Commitment (The Process)
 
-- **Air-Gapped and Hardened QPUs.**  
-  Quantum backends and hardware bridges should be isolated and monitored for side-channel risks.
+When you report a vulnerability to us, we commit to the following process:
 
-- **Continuous Monitoring.**  
-  Integrate with SIEM tools (Splunk, ELK, etc.) for anomaly and intrusion detection.
+1.  **Acknowledgement:** We will acknowledge receipt of your report within **48 business hours**.
+2.  **Initial Triage:** Our security team will triage the vulnerability to determine its validity and severity within **5 business days**.
+3.  **Communication:** We will maintain an open channel of communication with you, providing updates on our progress as we work on a fix.
+4.  **Resolution:** We will notify you once the vulnerability has been patched. We aim to resolve critical vulnerabilities as quickly as possible.
+5.  **Public Disclosure & Recognition:** With your permission, we will publicly credit you for your discovery in the security advisory and release notes once the vulnerability is fixed and disclosed. We typically follow a 90-day disclosure deadline.
 
-- **Comply with DO-326A and DO-356A.**  
-  All airborne components must follow industry security standards for safety and cyber-resilience.
+## Scope
 
----
+The following systems and assets are considered **in scope** for our security policy:
 
-## Vulnerability Management
+-   All source code within this repository (`gaia-qao/gaia-qao-advent`).
+-   Publicly exposed API endpoints associated with our official deployments.
+-   The infrastructure configuration defined in the `/kubernetes` directory.
 
-- Vulnerabilities are tracked privately until a fix is released.
-- Public advisories are issued via the project’s GitHub [Security Advisories](https://github.com/gaia-qao/GAIA-QAO-AdVent/security/advisories) and [gaia-qao.org/security-advisories](https://gaia-qao.org/security-advisories).
-- All security patches are documented and traceable for certification.
+## Out of Scope
 
----
+The following are considered **out of scope**:
 
-## Responsible Disclosure
+-   Denial of Service (DoS/DDoS) attacks against our infrastructure. Please do not perform any testing that could disrupt our services.
+-   Social engineering or phishing attacks against GAIA-QAO Consortium members.
+-   Physical security of our facilities.
+-   Vulnerabilities in third-party dependencies (please report them to the respective project maintainers).
 
-We value and recognize the contributions of security researchers. If you responsibly disclose a vulnerability, you may be eligible for acknowledgment in release notes and the project website.
+## Safe Harbor
 
----
-
-## Contact
-
-- Security Team: [security@gaia-qao.org](mailto:security@gaia-qao.org)
-- Emergency Hotline (Critical Incidents): +1-555-GAIA-SOC
+We consider security research and responsible disclosure conducted under this policy to be authorized and beneficial. We will not pursue or support any legal action against you for a vulnerability report that complies with this policy. We will work with you to understand and resolve the issue quickly, and we will not engage in legal action for accidental, good-faith violations of this policy.
 
 ---
 
-**Thank you for helping keep GAIA-QAO-AdVent safe and secure.**
+**GAIA-QAO Consortium Security Team**
+
