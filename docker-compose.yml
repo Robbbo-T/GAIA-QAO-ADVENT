@@ -1,0 +1,66 @@
+version: '3.9'
+services:
+  dashboard:
+    build: ./fleet/ampel360/BWBQ100/dashboard
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - telemetry
+      - quantum
+
+  telemetry:
+    build: ./fleet/ampel360/BWBQ100/telemetry
+    command: npm start
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=development
+      - KAFKA_BROKERS=kafka:9092
+      - INFLUXDB_URL=http://influxdb:8086
+    depends_on:
+      - kafka
+      - influxdb
+
+  quantum:
+    build: ./fleet/ampel360/BWBQ100/quantum
+    command: python -m algorithms.qubo.route
+    environment:
+      - QUANTUM_BACKEND=simulator
+      - IBMQ_TOKEN=${IBMQ_TOKEN}
+      - DWAVE_TOKEN=${DWAVE_TOKEN}
+      - RIGETTI_TOKEN=${RIGETTI_TOKEN}
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://0.0.0.0:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+    depends_on:
+      - zookeeper
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  influxdb:
+    image: influxdb:2.7
+    ports:
+      - "8086:8086"
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=gaia
+      - DOCKER_INFLUXDB_INIT_PASSWORD=gaia_pass
+      - DOCKER_INFLUXDB_INIT_ORG=gaia-qao
+      - DOCKER_INFLUXDB_INIT_BUCKET=telemetry
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=gaia-token
+
+volumes:
+  influxdb-data:
