@@ -1,5 +1,10 @@
 # GAIA-QAO-AdVent
+
 **GAIA-QAO Aerospace Digital Venture — AMPEL360 BWB-Q100**
+
+![image](https://github.com/user-attachments/assets/6412c9d6-f29c-4ef2-a76d-2a2539908624)
+
+![image](https://github.com/user-attachments/assets/248db12a-52f2-4227-9864-2ae0cd29675b)
 
 A fully integrated, quantum-ready digital platform for next-generation aerospace systems. GAIA-QAO-AdVent (Quantum Aerospace Operations — Advanced Digital Venture) delivers a modular digital twin, quantum-classical computing pipeline, and real-time mission control for the AMPEL360 BWB-Q100 aircraft and beyond.
 
