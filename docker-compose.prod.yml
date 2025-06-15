@@ -1,88 +1,139 @@
-version: '3.9'
+# GAIA-QAO-AdVent Production Docker Compose Configuration
+# Version: 2.0.0
+#
+# DESCRIPTION:
+# This file defines the service stack for a PRODUCTION environment. It is optimized
+# for performance, security, and stability. It assumes that container images
+# have already been built and are available in a remote container registry.
+#
+# USAGE:
+# This file is typically used by an orchestrator like Docker Swarm or as a reference
+# for creating Kubernetes manifests. It is NOT intended for local development.
+#
+# To run with Docker Compose (e.g., on a single node production server):
+#   docker-compose -f docker-compose.prod.yml up -d
+
+version: '3.8'
+
 services:
-  dashboard:
-    image: ghcr.io/gaia-qao/advent-dashboard:latest
+  # --- API Gateway ---
+  # The single entry point for all client requests. Handles routing, auth, and rate limiting.
+  api-gateway:
+    image: ${REGISTRY_URL}/gaia-qao/api-gateway:${IMAGE_TAG:-latest}
     restart: always
+    ports:
+      - "80:8080" # Expose standard HTTP port 80, mapped to the container's port 8080.
     environment:
       - NODE_ENV=production
-    ports:
-      - "3000:3000"
+      - LOG_LEVEL=warn # Reduce log verbosity in production.
+      - SECRET_KEY=${SECRET_KEY} # Passed from the host environment or a secrets manager.
+      - TELEMETRY_SERVICE_URL=http://telemetry-processor:5000
+      - QNS_SOLVER_SERVICE_URL=http://qns-solver:5002
     depends_on:
-      - telemetry
-      - quantum
+      - telemetry-processor
+      - qns-solver
     networks:
-      - gaia-net
+      - gaia-qao-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
-  telemetry:
-    image: ghcr.io/gaia-qao/advent-telemetry:latest
+  # --- Telemetry Processing Service ---
+  # Ingests, processes, and stores raw telemetry data.
+  telemetry-processor:
+    image: ${REGISTRY_URL}/gaia-qao/telemetry-processor:${IMAGE_TAG:-latest}
     restart: always
     environment:
-      - NODE_ENV=production
-      - KAFKA_BROKERS=kafka:9092
-      - INFLUXDB_URL=http://influxdb:8086
-    ports:
-      - "8080:8080"
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+      - POSTGRES_DB=${POSTGRES_DB}
+      - RABBITMQ_HOST=rabbitmq
     depends_on:
-      - kafka
-      - influxdb
+      - db
+      - rabbitmq
     networks:
-      - gaia-net
+      - gaia-qao-net
+    secrets:
+      - postgres_password
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
-  quantum:
-    image: ghcr.io/gaia-qao/advent-quantum:latest
+  # --- Quantum Navigation Solver (Simulated) ---
+  # Provides high-precision navigation solutions.
+  qns-solver:
+    image: ${REGISTRY_URL}/gaia-qao/qns-solver:${IMAGE_TAG:-latest}
+    restart: always
+    networks:
+      - gaia-qao-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+
+  # --- Flight Operations Dashboard ---
+  # Serves the static build of the React frontend.
+  flightops-dashboard:
+    image: ${REGISTRY_URL}/gaia-qao/flightops-dashboard:${IMAGE_TAG:-latest}
+    restart: always
+    # This service is served through the API Gateway (or a dedicated web server like Nginx),
+    # so it does not need to expose a port directly to the host.
+    networks:
+      - gaia-qao-net
+
+  # --- PostgreSQL Database ---
+  # The primary data store for the platform.
+  db:
+    image: postgres:14-alpine
     restart: always
     environment:
-      - QUANTUM_BACKEND=${QUANTUM_BACKEND}
-      - IBMQ_TOKEN=${IBMQ_TOKEN}
-      - DWAVE_TOKEN=${DWAVE_TOKEN}
-      - RIGETTI_TOKEN=${RIGETTI_TOKEN}
-    networks:
-      - gaia-net
-
-  kafka:
-    image: confluentinc/cp-kafka:7.5.0
-    restart: unless-stopped
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9092
-      KAFKA_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://0.0.0.0:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-    depends_on:
-      - zookeeper
-    networks:
-      - gaia-net
-
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.5.0
-    restart: unless-stopped
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-    networks:
-      - gaia-net
-
-  influxdb:
-    image: influxdb:2.7
-    restart: always
-    ports:
-      - "8086:8086"
-    environment:
-      - DOCKER_INFLUXDB_INIT_MODE=setup
-      - DOCKER_INFLUXDB_INIT_USERNAME=gaia
-      - DOCKER_INFLUXDB_INIT_PASSWORD=gaia_prod_pass
-      - DOCKER_INFLUXDB_INIT_ORG=gaia-qao
-      - DOCKER_INFLUXDB_INIT_BUCKET=telemetry
-      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=gaia-prod-token
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
     volumes:
-      - influxdb-data:/var/lib/influxdb2
+      - postgres_data:/var/lib/postgresql/data # Persist data across container restarts.
     networks:
-      - gaia-net
+      - gaia-qao-net
+    secrets:
+      - postgres_password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- RabbitMQ Message Broker ---
+  # Used for asynchronous communication and task queuing between services.
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest # In a real prod, use secrets!
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "15672:15672" # Expose management UI only to trusted networks.
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/
+    networks:
+      - gaia-qao-net
+
+# --- Global Definitions ---
+volumes:
+  postgres_data:
+    driver: local # Or a cloud-specific driver like 'rexray/ebs' for AWS
+  rabbitmq_data:
+    driver: local
 
 networks:
-  gaia-net:
+  gaia-qao-net:
     driver: bridge
 
-volumes:
-  influxdb-data:
+secrets:
+  postgres_password:
+    file: ./secrets/postgres_password.txt # Path to the secret file on the host machine.
