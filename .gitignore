@@ -1,0 +1,90 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# VSCode & JetBrains IDEs
+.vscode/
+.idea/
+*.iml
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pytest_cache/
+*.env
+.venv/
+env/
+venv/
+pip-log.txt
+
+# OS generated
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Build output
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Coverage
+coverage/
+*.lcov
+
+# Logs
+logs/
+*.log
+
+# WebAssembly
+*.wasm
+
+# Docker
+*.pid
+docker-compose.override.yml
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# InfluxDB data
+influxdb-data/
+# Local DB or cache
+*.sqlite
+*.db
+*.sdb
+*.sqlite3
+
+# Misc
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# CI/CD
+.nyc_output/
+.cache/
+.tox/
+.mypy_cache/
+.pytest_cache/
+.coverage
+.coverage.*
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# React/Vite
+fleet/ampel360/BWBQ100/dashboard/.next/
+fleet/ampel360/BWBQ100/dashboard/.cache/
+fleet/ampel360/BWBQ100/dashboard/build/
+fleet/ampel360/BWBQ100/dashboard/dist/
