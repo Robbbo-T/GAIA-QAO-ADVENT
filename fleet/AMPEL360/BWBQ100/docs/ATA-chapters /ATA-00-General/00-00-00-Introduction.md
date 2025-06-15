@@ -1,6 +1,6 @@
 > **ATA 00 - General**  
 > **00-00-00 Introduction**  
-> _[Source on GitHub](https://github.com/Robbbo-T/GAIA-QAO-ADVENT/blob/main/fleet/AMPEL360/BWBQ100/docs/ATA-chapters%20/ATA-00-General/00-00-00-Introduction.md)_
+> _[Source on GitHub](https://github.com/Robbbo-T/GAIA-QAO-ADVENT/blob/main/fleet/AMPEL360/BWBQ100/docs/ATA-chapters/ATA-00-General/00-00-00-Introduction.md)_
 
 ---
 
@@ -137,21 +137,19 @@ Documentation follows the ATA 100 specification with extensions:
 - Digital twin data references
 
 **Extended Chapters (XX-80 Series)**
-- [80: Quantum Navigation System (QNS)](../quantum/80-QNS.md)
-- [81: Quantum Processing Unit (QPU)](../quantum/81-QPU.md)
-- [82: Quantum Structural Monitoring (QSM)](../quantum/82-QSM.md)
-- [83: Quantum Diagnostic System (QDS)](../quantum/83-QDS.md)
-- [84: Quantum Key Distribution (QKD)](../quantum/84-QKD.md)
+- See each quantum system in its dedicated chapter within the documentation set.
 
 ### 4.2 Document Types
 
-| Type                  | Purpose                    | Example                                                           |
-|-----------------------|----------------------------|-------------------------------------------------------------------|
-| **System Description**| Theory of operation        | [21-00-00-SystemDescription.md](../21-00-Air-Conditioning/21-00-00-SystemDescription.md) |
-| **Maintenance Procedure** | Step-by-step instructions | [AMM 21-10-00](../21-10-Air-Conditioning/AMM-21-10-00.md)        |
-| **Schematic Diagram** | System interconnections    | [WDM 21-00-SCH-001](../21-00-Air-Conditioning/WDM-21-00-SCH-001.md) |
-| **Interface Control** | System boundaries          | [ICD-QPU-IMA-V1R0](../quantum/ICD-QPU-IMA-V1R0.md)                |
-| **Safety Analysis**   | Risk assessment            | [SSA-21-001](../21-00-Air-Conditioning/SSA-21-001.md)             |
+| Type                   | Purpose                      | Example Reference           |
+|------------------------|------------------------------|----------------------------|
+| **System Description** | Theory of operation          | See relevant ATA chapter   |
+| **Maintenance Procedure** | Step-by-step instructions | See relevant ATA chapter   |
+| **Schematic Diagram**  | System interconnections      | See relevant ATA chapter   |
+| **Interface Control**  | System boundaries            | See relevant ATA chapter   |
+| **Safety Analysis**    | Risk assessment              | See relevant ATA chapter   |
+
+*For details, refer to the corresponding ATA chapter's documentation directory.*
 
 ### 4.3 Numbering Convention
 
@@ -253,12 +251,12 @@ The AMPEL360 BWB-Q100 embodies GAIA-QAO's safety philosophy:
 ## Appendices
 
 ### A. Abbreviations and Acronyms
-See [Appendix H: Centralized Glossary](../../../appendices/appendix-h-glossary.md)
+See [Appendix H: Centralized Glossary](./AMPEL-360BWBH200-APP-H.md)
 
 ### B. Reference Documents
 
-- [GAIA-QAO-001: System Design Philosophy](../../../reference/GAIA-QAO-001-SystemDesignPhilosophy.md)
-- [GAIA-QAO-002: Quantum Integration Guidelines](../../../reference/GAIA-QAO-002-QuantumIntegrationGuidelines.md)
+- [GAIA-QAO-001: System Design Philosophy](./GAIA-QAO-001-SystemDesignPhilosophy.md)
+- [GAIA-QAO-002: Quantum Integration Guidelines](./GAIA-QAO-002-QuantumIntegrationGuidelines.md)
 - [CS-25 / Part 25: Certification Basis (EASA)](https://www.easa.europa.eu/en/document-library/certification-specifications/cs-25-large-aeroplanes)
 - [DO-178C / DO-254: Software/Hardware Assurance (RTCA)](https://www.rtca.org/content/DO-178C)
 
@@ -277,22 +275,11 @@ See [Appendix H: Centralized Glossary](../../../appendices/appendix-h-glossary.m
 ---
 
 **Referenced Documents (with Links):**
-- [Appendix H: Centralized Glossary](../../../appendices/appendix-h-glossary.md)
-- [GAIA-QAO-001: System Design Philosophy](../../../reference/GAIA-QAO-001-SystemDesignPhilosophy.md)
-- [GAIA-QAO-002: Quantum Integration Guidelines](../../../reference/GAIA-QAO-002-QuantumIntegrationGuidelines.md)
+- [Appendix H: Centralized Glossary](./AMPEL-360BWBH200-APP-H.md)
+- [GAIA-QAO-001: System Design Philosophy](./GAIA-QAO-001-SystemDesignPhilosophy.md)
+- [GAIA-QAO-002: Quantum Integration Guidelines](./GAIA-QAO-002-QuantumIntegrationGuidelines.md)
 - [CS-25 / Part 25: Certification Basis (EASA)](https://www.easa.europa.eu/en/document-library/certification-specifications/cs-25-large-aeroplanes)
 - [DO-178C / DO-254: Software/Hardware Assurance (RTCA)](https://www.rtca.org/content/DO-178C)
-- [Quantum Navigation System (QNS)](../quantum/80-QNS.md)
-- [Quantum Processing Unit (QPU)](../quantum/81-QPU.md)
-- [Quantum Structural Monitoring (QSM)](../quantum/82-QSM.md)
-- [Quantum Diagnostic System (QDS)](../quantum/83-QDS.md)
-- [Quantum Key Distribution (QKD)](../quantum/84-QKD.md)
-- [21-00-00-SystemDescription.md](../21-00-Air-Conditioning/21-00-00-SystemDescription.md)
-- [AMM 21-10-00](../21-10-Air-Conditioning/AMM-21-10-00.md)
-- [WDM 21-00-SCH-001](../21-00-Air-Conditioning/WDM-21-00-SCH-001.md)
-- [ICD-QPU-IMA-V1R0](../quantum/ICD-QPU-IMA-V1R0.md)
-- [SSA-21-001](../21-00-Air-Conditioning/SSA-21-001.md)
 
 ---
-
 
