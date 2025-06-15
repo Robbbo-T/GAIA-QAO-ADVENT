@@ -255,7 +255,7 @@ See [Appendix H: Centralized Glossary](./AMPEL-360BWBH200-APP-H.md)
 
 ### B. Reference Documents
 
-- [GAIA-QAO-001: System Design Philosophy](./GAIA-QAO-001)
+- [GAIA-QAO-001: System Design Philosophy](./GAIA-QAO-001.md)
 - [GAIA-QAO-002: Quantum Integration Guidelines](./GAIA-QAO-002-QuantumIntegrationGuidelines.md)
 - [CS-25 / Part 25: Certification Basis (EASA)](https://www.easa.europa.eu/en/document-library/certification-specifications/cs-25-large-aeroplanes)
 - [DO-178C / DO-254: Software/Hardware Assurance (RTCA)](https://www.rtca.org/content/DO-178C)
