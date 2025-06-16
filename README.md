@@ -4,12 +4,6 @@
 _Unifying Aerospace Engineering with Quantum and AI Technologies_
 
 
-### ✅ **Mejorarlo y extenderlo** en 3 niveles:
-
----
-
-### 🧩 1. **README Pro extendido (estilo GAIA-QAO)**
-
 # 🌐 GAIA-QAO-MDO
 
 **Modular Framework for Quantum-Enhanced Multidisciplinary Design Optimization**  
