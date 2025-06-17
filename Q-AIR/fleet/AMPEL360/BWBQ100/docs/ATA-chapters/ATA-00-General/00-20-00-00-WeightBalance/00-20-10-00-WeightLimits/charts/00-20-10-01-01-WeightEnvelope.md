@@ -18,8 +18,6 @@ output_format: "PDF_OPTIMIZED"
 ![mermaid-ai-diagram-2025-06-17-204543](https://github.com/user-attachments/assets/9fd3c93f-493f-4a58-aafc-54d626160246)
 
 
-```
-
 **Document ID:** GAIA-QAO-ADVENT/Q-AIR/fleet/AMPEL360/BWBQ100/docs/ATA-chapters/ATA-00-General/00-20-00-00-WeightBalance/00-20-10-00-WeightLimits/charts/00-20-10-01-01-WeightEnvelope.pdf  
 **ATA Chapter:** 00-20-10-01-01  
 **GQOIS ID:** GQOIS-Q-AIR-00-20-10-01-01-CHARTS  
