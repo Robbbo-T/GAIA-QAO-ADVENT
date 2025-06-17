@@ -15,6 +15,42 @@ output_format: "PDF_OPTIMIZED"
 
 # ATA 00-20-10-01-01 Weight Envelope Charts
 
+```mermaid
+flowchart TD
+  Collection["Weight Envelope Chart Collection<br>AMPEL360 BWBQ100"]
+
+  %% Primary Charts Group
+  subgraph PrimaryCharts["Primary Charts"]
+    Chart1["1. Master Weight Envelope"]
+    Chart2["2. CG Envelope"]
+    Chart3["3. Loading Zone Diagram"]
+    Chart4["4. Payload-Range Performance"]
+    Chart5["5. Environmental Corrections"]
+  end
+
+  %% Secondary Charts Group
+  subgraph SecondaryCharts["Secondary Charts"]
+    Chart6["6. Fuel System Dist."]
+    Chart7["7. Emerg. Weight Procedures"]
+    Chart8["8. Quick-Change Envelope"]
+    Chart9["9. Cargo Configurations"]
+    Chart10["10. Quantum Sensor Layout"]
+  end
+
+  Collection --> PrimaryCharts
+  Collection --> SecondaryCharts
+  PrimaryCharts --> Chart1
+  PrimaryCharts --> Chart2
+  PrimaryCharts --> Chart3
+  PrimaryCharts --> Chart4
+  PrimaryCharts --> Chart5
+  SecondaryCharts --> Chart6
+  SecondaryCharts --> Chart7
+  SecondaryCharts --> Chart8
+  SecondaryCharts --> Chart9
+  SecondaryCharts --> Chart10
+```
+
 **Document ID:** GAIA-QAO-ADVENT/Q-AIR/fleet/AMPEL360/BWBQ100/docs/ATA-chapters/ATA-00-General/00-20-00-00-WeightBalance/00-20-10-00-WeightLimits/charts/00-20-10-01-01-WeightEnvelope.pdf  
 **ATA Chapter:** 00-20-10-01-01  
 **GQOIS ID:** GQOIS-Q-AIR-00-20-10-01-01-CHARTS  
