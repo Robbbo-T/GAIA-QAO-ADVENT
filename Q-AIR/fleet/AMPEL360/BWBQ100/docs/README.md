@@ -67,21 +67,6 @@ BWB-Q100/
 
 ```
 
----
-
-## 🧪 Estado Actual del Programa
-
-| Fase                  | Estado       | Fecha       |
-|-----------------------|--------------|-------------|
-| Concepto              | ✅ Completado | 2024-11     |
-| Diseño estructural    | ✅ Validado   | 2025-01     |
-| Simulación digital    | 🟢 En curso   | 2025-06     |
-| Prototipo virtual     | 🟢 En curso   | 2025-07     |
-| Validación operativa  | 🔜 Previsto   | 2026-01     |
-| Certificación         | 🔜 En trámite | 2026-06     |
-
----
-
 ## 🔗 Documentos Relacionados
 
 - [📘 ATA Overview](../ATA_STRUCTURE.md)
