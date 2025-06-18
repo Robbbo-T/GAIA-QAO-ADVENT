@@ -3,6 +3,116 @@
 **Quantum Aerospace Digital Venture**  
 _Designing tomorrow's aerospace ecosystems — sustainable, intelligent, certifiable._
 
+# 🌐 GAIA‑QAO‑AdVent – Fleet Programs Overview
+
+> *Designing regenerative aerospace ecosystems with quantum intelligence.*
+
+---
+
+## 🧭 Introduction
+
+**GAIA‑QAO‑AdVent** lidera el despliegue coordinado de ocho programas avanzados —cuatro aeronáuticos y cuatro espaciales— integrando sistemas híbridos-cuánticos, materiales sostenibles, y digital twins activos desde el diseño.  
+Esta flota constituye la primera generación de plataformas **multidominio, trazables y autoadaptativas** bajo gobernanza GAIA‑QAO.
+
+> “No diseñamos máquinas. Diseñamos futuros interdependientes.”
+
+---
+
+## ✈️ Aerial Programs – Q‑AIR
+
+| Program ID     | Nombre          | Propósito                                       | Líderes Técnicos                             |
+|----------------|------------------|------------------------------------------------|----------------------------------------------|
+| `BWB-Q100`     | AMPEL360 Q100    | Transporte regional híbrido-eléctrico          | Q-AIR, Q-GREENTECH, Q-HPC, Q-STRUCTURES      |
+| `BWB-Q250`     | AMPEL360 Q250    | Largo alcance con hidrógeno criogénico         | Q-AIR, Q-STRUCTURES, Q-MATERIALS, Q-HPC      |
+| `BWB-Q250-ER`  | AMPEL360 ER      | Ultra-long range con mezcla SAF/H₂             | Q-AIR, Q-GREENTECH, Q-DATAGOV                |
+| `BWB-Q100-FC`  | AMPEL360 Cargo   | Logística inteligente, carga limpia            | Q-AIR, Q-MECHANICS, Q-ROBOTICS               |
+
+---
+
+## 🚀 Orbital Programs – Q‑SPACE
+
+| Program ID     | Nombre        | Propósito                                           | Líderes Técnicos                             |
+|----------------|---------------|----------------------------------------------------|----------------------------------------------|
+| `STS-100`      | AMPEL360plus  | Suborbital para turismo cuántico                   | Q-SPACE, Q-STRUCTURES, Q-MECHANICS           |
+| `STS-110`      | COMMNET       | Constelación QKD para comunicaciones seguras       | Q-SPACE, Q-HPC, Q-DATAGOV                    |
+| `STS-120`      | ORBIT         | Plataforma modular para ciencia y bioespacio       | Q-SPACE, Q-SCIRES, Q-STRUCTURES              |
+| `STS-130`      | TUG           | Vehículo de servicio orbital, captura y remolque   | Q-SPACE, Q-ROBOTICS, Q-MECHANICS, Q-HPC      |
+
+---
+
+## 🧩 Q‑Teams Involucrados
+
+Cada programa de flota está diseñado por múltiples agentes expertos (Q‑Teams), cada uno responsable de un dominio técnico especializado:
+
+| Q-Team        | Rol en la Flota                                                                 |
+|---------------|----------------------------------------------------------------------------------|
+| **Q-AIR**     | Arquitectura de misión aérea, integración ATA, diseño operacional               |
+| **Q-DATAGOV** | Trazabilidad GQOIS, compliance DO‑178C/DO‑254, documentación certificable        |
+| **Q-GREENTECH** | Propulsión sostenible, gestión energética, biocomponentes, reciclaje avanzado  |
+| **Q-HPC**     | Simulación, digital twin, computación cuántica, optimización de ruta/energía     |
+| **Q-MECHANICS** | Sistemas mecánicos, actuadores, tren de aterrizaje, reparaciones estructurales |
+| **Q-ROBOTICS** | Robótica de exploración, FAL, mantenimiento, SLAM y visión                       |
+| **Q-SCIRES**  | I+D avanzada, sensores cuánticos, biofísica orbital, ignición y nuevos materiales|
+| **Q-SPACE**   | Sistemas orbitales, plataformas STS, GN&C espacial, comunicaciones QKD           |
+| **Q-STRUCTURES** | CAD estructural, materiales compuestos, análisis FEM y aeroelasticidad         |
+
+---
+
+## 🗂️ Estructura de Flota
+
+```
+
+GAIA-QAO-AdVent/
+└── fleet/
+├── Q-AIR/
+│   ├── BWB-Q100/
+│   ├── BWB-Q250/
+│   ├── BWB-Q250-ER/
+│   └── BWB-Q100-FC/
+└── Q-SPACE/
+├── STS-100/
+├── STS-110/
+├── STS-120/
+└── STS-130/
+
+```
+
+---
+
+## 🧬 Trazabilidad & Tecnologías Clave
+
+- **GQOIS**: Identificación global de objetos, trazabilidad por archivo y versión
+- **CI/CD**: Automatización completa vía GitHub Actions + ArgoCD
+- **WASM**: Módulos embarcables seguros (Aviónica, Control)
+- **ONNX + QAOA**: Inferencia cuántica en tiempo real
+- **STEP AP242**: Intercambio CAD estructurado y validado
+- **QUAChain**: Cadena de confianza para telemetría y certificación
+
+---
+
+## 📅 Cronograma Inicial
+
+- 🟢 `Q-AIR`: Iniciado en **mayo 2025**
+- 🟢 `Q-SPACE`: Iniciado en **junio 2025**
+- 📁 600+ archivos programados hasta **diciembre 2027**
+- 📌 Cobertura completa de capítulos **ATA 00–89** y **SSA 01–20**
+
+---
+
+## 🔗 Siguientes Pasos
+
+1. [ ] Generar `README.md` individuales por programa (x8)
+2. [ ] Agregar `*.meta.yaml` para cronogramas y versiones
+3. [ ] Activar generación vía `/kernel` para cada carpeta
+4. [ ] Publicar flota como sistema de conocimiento trazable (GQOIS → Graph)
+
+---
+
+**Chief Designer**: Amedeo Pelliccia  
+**Licencia**: CC BY‑NC‑SA 4.0 / Quantum Commons Spec  
+**Versión**: 1.0.0 (GAIA-QAO‑FLEET)  
+
+
 ---
 
 ```mermaid
