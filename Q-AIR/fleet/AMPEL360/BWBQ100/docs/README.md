@@ -1,3 +1,115 @@
+# ✈️ AMPEL360 BWB-Q100 — Hybrid Quantum Aircraft
+
+**Program ID:** BWB-Q100  
+**GQOIS ID Root:** GQOIS-Q-AIR-BWBQ100-*  
+**Estado:** MVP 2025 — Fase de Validación Operacional  
+**Dominio:** Q‑AIR / Q‑GREENTECH / Q‑STRUCTURES / Q‑HPC  
+**Lead:** Amedeo Pelliccia (Chief Designer)
+
+---
+
+## 🧭 Visión
+
+El **AMPEL360 BWB-Q100** es el primer avión regional del mundo basado en una arquitectura de ala integrada tipo **Blended Wing Body (BWB)** con **propulsión híbrida‑eléctrica cuánticamente optimizada**, diseñado para vuelos de corto a medio alcance (<2500 km), cero emisiones netas, y trazabilidad completa por gemelo digital.
+
+---
+
+## 🚀 Características Principales
+
+| Característica                     | Valor                        |
+|-----------------------------------|------------------------------|
+| Tipo de Plataforma                | Blended Wing Body (BWB)      |
+| Capacidad                         | 90–110 pasajeros             |
+| Autonomía                         | Hasta 2500 km                |
+| Propulsión                        | Híbrida eléctrica distribuida (4 × Fans) |
+| Energía                           | Baterías + hidrógeno gaseoso |
+| Velocidad Crucero                 | ~750 km/h                    |
+| Altitud Crucero                   | 12,500 m                     |
+| Certificación esperada            | EASA CS-25 / DO-178C DAL-B   |
+
+---
+
+## 🧬 Integración Multidominio
+
+- 🔧 **Q‑STRUCTURES**: Ala integrada, núcleos compuestos, controladores embebidos.
+- ♻️ **Q‑GREENTECH**: Sistema de propulsión híbrido, stack de baterías, fuel cell.
+- 🧠 **Q‑HPC**: Arquitectura de gemelo digital, inferencia ONNX + QAOA a bordo.
+- 📋 **Q‑DATAGOV**: DO-178C DAL-B compliance + GQOIS traceabilidad.
+- ⚙️ **Q‑MECHANICS**: Actuadores primarios, tren de aterrizaje, servocontrols.
+- 🤖 **Q‑ROBOTICS**: Soporte para mantenimiento robótico (uGV + visual).
+- 🔬 **Q‑SCIRES**: Quantum sensors embebidos para navegación y health monitoring.
+
+---
+
+## 🗂️ Estructura de Documentación
+
+```
+
+BWB-Q100/
+├── README.md
+├── roadmap.yaml
+├── ata/
+│   ├── 00-09-General/
+│   ├── 20-29-Systems/
+│   └── 50-57-Structures/
+├── integration/
+│   ├── digital\_twin/
+│   └── telemetry/
+├── models/
+│   ├── step/
+│   └── onnx/
+├── tests/
+│   ├── certification/
+│   └── simulation/
+├── docs/
+│   └── manuals/
+└── assets/
+
+```
+
+---
+
+## 🧪 Estado Actual del Programa
+
+| Fase                  | Estado       | Fecha       |
+|-----------------------|--------------|-------------|
+| Concepto              | ✅ Completado | 2024-11     |
+| Diseño estructural    | ✅ Validado   | 2025-01     |
+| Simulación digital    | 🟢 En curso   | 2025-06     |
+| Prototipo virtual     | 🟢 En curso   | 2025-07     |
+| Validación operativa  | 🔜 Previsto   | 2026-01     |
+| Certificación         | 🔜 En trámite | 2026-06     |
+
+---
+
+## 🔗 Documentos Relacionados
+
+- [📘 ATA Overview](../ATA_STRUCTURE.md)
+- [📄 Roadmap General](./roadmap.yaml)
+- [🧬 GQOIS Traceability Manifest](../docs/gqois_map_bwbq100.yaml)
+- [📈 Digital Twin Dashboard](../integration/digital_twin/status.md)
+
+---
+
+## 📍 Trazabilidad
+
+- Todos los archivos siguen el esquema `GQOIS-Q-AIR-BWBQ100-[ATA]-[TYPE]-[ID]`.
+- Cumplimiento total con la arquitectura CI/CD de GAIA-QAO‑AdVent.
+
+---
+
+## 📅 Milestone Siguiente
+
+> Iniciar generación automática de documentos técnicos ATA 00–29 usando `/kernel`  
+> `Prompt:` `/kernel generate ATA 21-50 pack system YAML + markdown`
+
+---
+
+© GAIA‑QAO • All rights reserved. Licencia: CC BY-NC-SA 4.0
+
+
+---
+
 # BWBQ100 Documentation
 
 This directory contains all technical documentation, manuals, specifications, and compliance artifacts for the **AMPEL360 BWB-Q100** program within the GAIA-QAO-AdVent platform.
