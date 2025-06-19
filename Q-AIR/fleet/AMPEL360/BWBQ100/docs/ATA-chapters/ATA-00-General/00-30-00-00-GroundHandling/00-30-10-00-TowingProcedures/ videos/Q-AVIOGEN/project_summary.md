@@ -1,4 +1,4 @@
-# 🎉 ¡Q-AVIOGEN Creado Exitosamente!
+#  ¡Q-AVIOGEN Creado Exitosamente!
 
 ## 📋 Resumen del Proyecto
 
