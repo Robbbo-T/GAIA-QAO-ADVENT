@@ -893,7 +893,7 @@ gantt
 ***
 ```
 **complete list of files**
-```
+
 GAIA-QAO-AdVent/
 ├── 📄 README.md                              # Root repository documentation
 ├── 📄 LICENSE                                # CC-BY-SA 4.0 with GQCL extensions
