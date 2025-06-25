@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- S1000D Data Module for AMPEL360 BWB-Q100 Service Points Layout -->
+<!DOCTYPE dmodule [
+  <!ENTITY % ISOEntities PUBLIC "ISO 8879-1986//ENTITIES ISO Character Entities 20030531//EN//XML" "http://www.s1000d.org/S1000D_5-0/ent/xml/ISOEntities">
+  %ISOEntities;
+]>
+<dmodule xmlns:dc="http://www.purl.org/dc/elements/1.1/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.s1000d.org/S1000D_5-0/xml_schema_flat/descript.xsd"
+         xsi:noNamespaceSchemaLocation="http://www.s1000d.org/S1000D_5-0/xml_schema_flat/descript.xsd">
+  
+  <!-- Identification and Status Section -->
+  <identAndStatusSection>
+    <dmAddress>
+      <dmIdent>
+        <dmCode modelIdentCode="AMPEL360" systemDiffCode="A" systemCode="00" subSystemCode="4" subSubSystemCode="0" assyCode="10" disassyCode="00" disassyCodeVariant="A" infoCode="040" infoCodeVariant="A" itemLocationCode="A"/>
+        <language languageIsoCode="en" countryIsoCode="US"/>
+        <issueInfo issueNumber="001" inWork="00"/>
+      </dmIdent>
+      <dmAddressItems>
+        <issueDate year="2025" month="01" day="20"/>
+        <dmTitle>
+          <techName>Service Points Layout</techName>
+          <infoName>Service connection points and access panels arrangement</infoName>
+        </dmTitle>
+      </dmAddressItems>
+    </dmAddress>
+    
+    <dmStatus issueType="new">
+      <security securityClassification="01" commercialClassification="CC0" caveat="None">
+        <derivativeClassification>
+          <derivativeClassificationRefId>GAIA-QAO-SEC-001</derivativeClassificationRefId>
+        </derivativeClassification>
+      </security>
+      
+      <responsiblePartnerCompany enterpriseCode="GAIA">
+        <enterpriseName>GAIA Quantum Aerospace Organization</enterpriseName>
+      </responsiblePartnerCompany>
+      
+      <originator enterpriseCode="GAIA">
+        <enterpriseName>GAIA-QAO Technical Publications</enterpriseName>
+      </originator>
+      
+      <applicCrossRefTableRef>
+        <dmRef>
+          <dmRefIdent>
+            <dmCode modelIdentCode="AMPEL360" systemDiffCode="A" systemCode="00" subSystemCode="0" subSubSystemCode="0" assyCode="00" disassyCode="00" disassyCodeVariant="A" infoCode="00W" infoCodeVariant="A" itemLocationCode="A"/>
+          </dmRefIdent>
+        </dmRef>
+      </applicCrossRefTableRef>
+      
+      <brexDmRef>
+        <dmRef>
+          <dmRefIdent>
+            <dmCode modelIdentCode="S1000D" systemDiffCode="G" systemCode="04" subSystemCode="1" subSubSystemCode="0" assyCode="0301" disassyCode="00" disassyCodeVariant="A" infoCode="022" infoCodeVariant="A" itemLocationCode="D"/>
+          </dmRefIdent>
+        </dmRef>
+      </brexDmRef>
+      
+      <qualityAssurance>
+        <firstVerification verificationType="tabtop"/>
+        <secondVerification verificationType="onobject"/>
+      </qualityAssurance>
+      
+      <systemBreakdownCode>AMPEL360-BWB-Q100</systemBreakdownCode>
+      
+      <skillLevel skillLevelCode="sk02"/>
+      
+      <reasonForUpdate>
+        <simplePara>Initial release of service points layout for AMPEL360 BWB-Q100 quantum-enhanced aircraft.</simplePara>
+      </reasonForUpdate>
+    </dmStatus>
+  </identAndStatusSection>
+  
+  <!-- Content Section -->
+  <content>
+    <description>
+      <levelledPara>
+        <title>General Description</title>
+        <para>This data module provides the comprehensive service points layout for the AMPEL360 BWB-Q100 aircraft. The layout diagram shows all ground service connection points, access panels, and service zones required for transit and turnaround operations.</para>
+        
+        <levelledPara>
+          <title>Service Points Overview</title>
+          <para>The AMPEL360 BWB-Q100 incorporates advanced service point design with the following key features:</para>
+          <para>
+            <randomList>
+              <listItem>
+                <para>Distributed service architecture optimized for BWB configuration</para>
+              </listItem>
+              <listItem>
+                <para>Smart service panels with RFID identification and biometric access</para>
+              </listItem>
+              <listItem>
+                <para>Quantum system service points with specialized access requirements</para>
+              </listItem>
+              <listItem>
+                <para>Zero-emission ground support equipment compatibility</para>
+              </listItem>
+              <listItem>
+                <para>Integrated safety zones for high-voltage and quantum systems</para>
+              </listItem>
+            </randomList>
+          </para>
+        </levelledPara>
+        
+        <levelledPara>
+          <title>Service Zones</title>
+          <para>The aircraft is divided into three primary service zones:</para>
+          
+          <levelledPara>
+            <title>Forward Service Zone</title>
+            <para>Location: Station 100 to Station 350</para>
+            <para>Primary Services:</para>
+            <para>
+              <sequentialList>
+                <listItem>
+                  <para>Ground power connection (GPU)</para>
+                </listItem>
+                <listItem>
+                  <para>Quantum Navigation System (QNS) calibration port</para>
+                </listItem>
+                <listItem>
+                  <para>Quantum Structural Monitoring (QSM) access panel</para>
+                </listItem>
+                <listItem>
+                  <para>Pneumatic air start connection</para>
+                </listItem>
+                <listItem>
+                  <para>Environmental Control System (ECS) pre-conditioning port</para>
+                </listItem>
+              </sequentialList>
+            </para>
+          </levelledPara>
+          
+          <levelledPara>
+            <title>Center Service Zone</title>
+            <para>Location: Station 350 to Station 600</para>
+            <para>Primary Services:</para>
+            <para>
+              <sequentialList>
+                <listItem>
+                  <para>Fuel service ports (left and right, SAF-compatible)</para>
+                </listItem>
+                <listItem>
+                  <para>Passenger doors (1L, 1R, 2L, 2R)</para>
+                </listItem>
+                <listItem>
+                  <para>Smart multi-service panels (Panel 1 and Panel 2)</para>
+                </listItem>
+              </sequentialList>
+            </para>
+          </levelledPara>
+          
+          <levelledPara>
+            <title>Aft Service Zone</title>
+            <para>Location: Station 600 to Station 800</para>
+            <para>Primary Services:</para>
+            <para>
+              <sequentialList>
+                <listItem>
+                  <para>Water service connection (potable water system)</para>
+                </listItem>
+                <listItem>
+                  <para>Waste service connection (vacuum system)</para>
+                </listItem>
+                <listItem>
+                  <para>Quantum Processing Unit (QPU) cryogenic service port</para>
+                </listItem>
+                <listItem>
+                  <para>High-voltage battery service point (800VDC)</para>
+                </listItem>
+                <listItem>
+                  <para>APU exhaust location</para>
+                </listItem>
+                <listItem>
+                  <para>Cargo doors (forward and aft)</para>
+                </listItem>
+              </sequentialList>
+            </para>
+          </levelledPara>
+        </levelledPara>
+        
+        <levelledPara>
+          <title>Service Points Specifications</title>
+          
+          <levelledPara>
+            <title>Fuel Service Points</title>
+            <para>
+              <definitionList>
+                <definitionListItem>
+                  <listItemTerm>Type</listItemTerm>
+                  <listItemDefinition>
+                    <para>Single-point pressure refueling</para>
+                  </listItemDefinition>
+                </definitionListItem>
+                <definitionListItem>
+                  <listItemTerm>Location</listItemTerm>
+                  <listItemDefinition>
+                    <para>F1: Left wing root station 400</para>
+                    <para>F2: Right wing root station 400</para>
+                  </listItemDefinition>
+                </definitionListItem>
+                <definitionListItem>
+                  <listItemTerm>Compatibility</listItemTerm>
+                  <listItemDefinition>
+                    <para>SAF blends up to 100%, Jet A-1, Jet A</para>
+                  </listItemDefinition>
+                </definitionListItem>
+                <definitionListItem>
+                  <listItemTerm>Flow Rate</listItemTerm>
+                  <listItemDefinition>
+                    <para>Maximum: 2,500 liters per minute</para>
+                  </listItemDefinition>
+                </definitionListItem>
+              </definitionList>
+            </para>
+          </levelledPara>
+          
+          <levelledPara>
+            <title>Electrical Power Points</title>
+            <para>
+              <definitionList>
+                <definitionListItem>
+                  <listItemTerm>GPU Connection</listItemTerm>
+                  <listItemDefinition>
+                    <para>Voltage: 115/200V 400Hz 3-phase</para>
+                    <para>Power: 90kVA</para>
+                    <para>Connector: ISO 461 Type 2</para>
+                  </listItemDefinition>
+                </definitionListItem>
+                <definitionListItem>
+                  <listItemTerm>28VDC Connection</listItemTerm>
+                  <listItemDefinition>
+                    <para>Current: 800A maximum</para>
+                    <para>Connector: AN2551</para>
+                  </listItemDefinition>
+                </definitionListItem>
+              </definitionList>
+            </para>
+          </levelledPara>
+          
+          <levelledPara>
+            <title>Quantum System Service Points</title>
+            <para>
+              <definitionList>
+                <definitionListItem>
+                  <listItemTerm>QPU Cryogenic Service</listItemTerm>
+                  <listItemDefinition>
+                    <para>Coolant: Liquid helium</para>
+                    <para>Temperature: 4.2K (-268.95°C)</para>
+                    <para>Access: Biometric Level 4 required</para>
+                  </listItemDefinition>
+                </definitionListItem>
+                <definitionListItem>
+                  <listItemTerm>QNS Calibration Port</listItemTerm>
+                  <listItemDefinition>
+                    <para>Interface: Quantum-secured optical link</para>
+                    <para>Data rate: 10 Gbps</para>
+                  </listItemDefinition>
+                </definitionListItem>
+              </definitionList>
+            </para>
+          </levelledPara>
+        </levelledPara>
+        
+        <levelledPara>
+          <title>Safety Considerations</title>
+          <para>
+            <warningRef warningIdentNumber="W-00-40-10-001" warningRepository="GAIA-QAO-WARNINGS"/>
+            <cautionRef cautionIdentNumber="C-00-40-10-001" cautionRepository="GAIA-QAO-CAUTIONS"/>
+          </para>
+          
+          <levelledPara>
+            <title>High-Voltage Zone</title>
+            <para>The battery service area operates at 800VDC. This zone requires:</para>
+            <para>
+              <randomList>
+                <listItem>
+                  <para>Lockout/tagout procedures before access</para>
+                </listItem>
+                <listItem>
+                  <para>Class 2 electrical safety PPE (minimum)</para>
+                </listItem>
+                <listItem>
+                  <para>Insulated tools rated for 1000V</para>
+                </listItem>
+                <listItem>
+                  <para>Two-person safety protocol</para>
+                </listItem>
+              </randomList>
+            </para>
+          </levelledPara>
+          
+          <levelledPara>
+            <title>Quantum Exclusion Zone</title>
+            <para>The QPU service area requires special precautions:</para>
+            <para>
+              <randomList>
+                <listItem>
+                  <para>No ferromagnetic materials within 2 meters</para>
+                </listItem>
+                <listItem>
+                  <para>EMI shielding mandatory</para>
+                </listItem>
+                <listItem>
+                  <para>Temperature-controlled environment</para>
+                </listItem>
+                <listItem>
+                  <para>Vibration isolation active during service</para>
+                </listItem>
+              </randomList>
+            </para>
+          </levelledPara>
+        </levelledPara>
+        
+        <levelledPara>
+          <title>Service Equipment Positioning</title>
+          <figure>
+            <title>Standard Transit Service Equipment Arrangement</title>
+            <graphic infoEntityIdent="ICN-AMPEL360-00-40-10-00-01-A-001-01" reproductionWidth="170mm" reproductionHeight="220mm" reproductionScale="100">
+              <icn infoEntityIdent="ICN-AMPEL360-00-40-10-00-01-A-001-01"/>
+            </graphic>
+          </figure>
+          
+          <para>The standard positioning for transit operations includes:</para>
+          <table>
+            <title>Equipment Position Matrix</title>
+            <tgroup cols="4">
+              <colspec colname="equipment" colwidth="2*"/>
+              <colspec colname="position" colwidth="2*"/>
+              <colspec colname="distance" colwidth="1*"/>
+              <colspec colname="angle" colwidth="1*"/>
+              <thead>
+                <row>
+                  <entry>Equipment</entry>
+                  <entry>Position</entry>
+                  <entry>Distance</entry>
+                  <entry>Angle</entry>
+                </row>
+              </thead>
+              <tbody>
+                <row>
+                  <entry>GPU (S-GPU-Q100)</entry>
+                  <entry>Nose, centerline</entry>
+                  <entry>3m</entry>
+                  <entry>0°</entry>
+                </row>
+                <row>
+                  <entry>Fuel Truck (RFU-Q100)</entry>
+                  <entry>Right wing root</entry>
+                  <entry>5m</entry>
+                  <entry>90°</entry>
+                </row>
+                <row>
+                  <entry>Multi-Service Cart</entry>
+                  <entry>Aft fuselage</entry>
+                  <entry>4m</entry>
+                  <entry>180°</entry>
+                </row>
+                <row>
+                  <entry>Quantum Service Unit</entry>
+                  <entry>Aft right</entry>
+                  <entry>3m</entry>
+                  <entry>135°</entry>
+                </row>
+                <row>
+                  <entry>Passenger Stairs/Bridge</entry>
+                  <entry>Door 1L/2L</entry>
+                  <entry>0m</entry>
+                  <entry>270°</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+        </levelledPara>
+        
+        <levelledPara>
+          <title>Service Panel Operations</title>
+          <para>The smart service panels provide integrated access to multiple systems:</para>
+          
+          <proceduralStep>
+            <para>Approach smart service panel with authorized credentials</para>
+          </proceduralStep>
+          <proceduralStep>
+            <para>Present biometric identification (fingerprint and retinal scan)</para>
+          </proceduralStep>
+          <proceduralStep>
+            <para>Select required service from touchscreen menu:</para>
+            <para>
+              <randomList>
+                <listItem>
+                  <para>Hydraulic service</para>
+                </listItem>
+                <listItem>
+                  <para>Pneumatic connections</para>
+                </listItem>
+                <listItem>
+                  <para>Electrical test points</para>
+                </listItem>
+                <listItem>
+                  <para>Data link access</para>
+                </listItem>
+                <listItem>
+                  <para>Fluid sampling ports</para>
+                </listItem>
+              </randomList>
+            </para>
+          </proceduralStep>
+          <proceduralStep>
+            <para>Automated door opens to reveal selected service connections</para>
+          </proceduralStep>
+          <proceduralStep>
+            <para>Connect service equipment using quick-disconnect fittings</para>
+          </proceduralStep>
+          <proceduralStep>
+            <para>Monitor service progress on panel display</para>
+          </proceduralStep>
+          <proceduralStep>
+            <para>Upon completion, disconnect equipment and confirm panel closure</para>
+          </proceduralStep>
+        </levelledPara>
+        
+        <levelledPara>
+          <title>Reference Information</title>
+          <para>For detailed service procedures, refer to:</para>
+          <para>
+            <dmRef>
+              <dmRefIdent>
+                <dmCode modelIdentCode="AMPEL360" systemDiffCode="A" systemCode="00" subSystemCode="4" subSubSystemCode="0" assyCode="10" disassyCode="02" disassyCodeVariant="A" infoCode="520" infoCodeVariant="A" itemLocationCode="A"/>
+              </dmRefIdent>
+              <dmRefAddressItems>
+                <dmTitle>
+                  <techName>Turnaround Service Procedures</techName>
+                </dmTitle>
+              </dmRefAddressItems>
+            </dmRef>
+          </para>
+          <para>
+            <dmRef>
+              <dmRefIdent>
+                <dmCode modelIdentCode="AMPEL360" systemDiffCode="A" systemCode="00" subSystemCode="4" subSubSystemCode="0" assyCode="10" disassyCode="03" disassyCodeVariant="A" infoCode="520" infoCodeVariant="A" itemLocationCode="A"/>
+              </dmRefIdent>
+              <dmRefAddressItems>
+                <dmTitle>
+                  <techName>Transit Service Procedures</techName>
+                </dmTitle>
+              </dmRefAddressItems>
+            </dmRef>
+          </para>
+        </levelledPara>
+      </levelledPara>
+    </description>
+  </content>
+  
+  <!-- Metadata Section -->
+  <metadata>
+    <restrictionInstructions>
+      <restrictionInfo>
+        <copyright>
+          <copyrightPara>&copy; 2025 GAIA Quantum Aerospace Organization. Released under CC0 1.0 Universal.</copyrightPara>
+        </copyright>
+        <dataDistribution>
+          <dataDistributionPara>Distribution Statement A: Approved for public release; distribution is unlimited.</dataDistributionPara>
+        </dataDistribution>
+        <dataDisclosure>
+          <dataDisclosurePara>This document contains no export-controlled technical data.</dataDisclosurePara>
+        </dataDisclosure>
+      </restrictionInfo>
+    </restrictionInstructions>
+    
+    <techDataRepository>
+      <repositoryLocation>https://techdata.gaia-qao.aero/AMPEL360/</repositoryLocation>
+    </techDataRepository>
+  </metadata>
+</dmodule>
