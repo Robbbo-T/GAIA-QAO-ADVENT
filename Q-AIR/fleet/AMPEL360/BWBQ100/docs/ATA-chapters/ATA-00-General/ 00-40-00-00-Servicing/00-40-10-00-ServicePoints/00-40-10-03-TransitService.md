@@ -1226,7 +1226,7 @@ flowchart TB
 ```mermaid
 flowchart TB
     subgraph Panel["Transit Quick Check Summary"]
-        STATUS["OVERALL STATUS:\n[GREEEN/AMBER/RED]"]:::status
+        STATUS["OVERALL STATUS:\n[GREEN/AMBER/RED]"]:::status
 
         QPU["QPU:\n□ GO  □ MONITOR  □ NO-GO"]
         QNS["QNS:\n□ GO  □ MONITOR  □ NO-GO"]
@@ -1613,46 +1613,52 @@ Setup: 60 seconds
 
 ```mermaid
 flowchart TB
-    %% Transit Service Layout (00-40-10-03)
-    %% QSSU = Quick Service Support Unit
-    %% S-GPU = Static Ground Power Unit
-    %% PCH = Pre-Conditioned Air Hose
-    %% ERK = Emergency Rescue Kit
-    %% MSC = Maintenance Service Cart
-    %% RFU = Refueling Unit
-    %% PBB = Passenger Boarding Bridge
-    %% TLT Ready = Toilet Ready
-
-    subgraph aircraft_area[" "]
-        AIRNOSE("AIRCRAFT NOSE")
-        AIRNOSE --> S_GPU[S-GPU]
-        S_GPU --> QSSU[QSSU]
-        S_GPU --> PCH[PCH]
+    subgraph AIRCRAFT_AREA["Aircraft Service Area"]
+        NOSE[Aircraft Nose]
+        AIRCRAFT[AMPEL360 BWB-Q100]
+        TAIL[Aircraft Tail]
+        
+        NOSE --> AIRCRAFT --> TAIL
     end
-
-    S_GPU --> AIRCRAFT
-    PCH --> AIRCRAFT
-    QSSU --> S_GPU
-
-    PBB_LEFT[PBB] --> AIRCRAFT
-    PBB_LEFT --> ERK[ERK]
-    ERK --> MSC[MSC]
-    MSC --> AIRCRAFT
-
-    PBB_STAIRS[PBB/Stairs] --> AIRCRAFT
-    AIRCRAFT --> RFU[RFU]
-
-    AIRCRAFT --> TLT[TLT Ready]
+    
+    subgraph LEFT_SIDE["Left Service Side"]
+        SGPU[S-GPU]
+        QSSU[QSSU]
+        PCH[Pre-Conditioned Air]
+    end
+    
+    subgraph RIGHT_SIDE["Right Service Side"]
+        PBB[Passenger Bridge]
+        ERK[Emergency Kit]
+        MSC[Multi-Service Cart]
+    end
+    
+    subgraph FUEL_AREA["Fuel Service"]
+        RFU[Refueling Unit]
+    end
+    
+    subgraph STANDBY["Standby Equipment"]
+        TLT[Towbar-less Tug Ready]
+    end
+    
+    LEFT_SIDE --> AIRCRAFT
+    RIGHT_SIDE --> AIRCRAFT
+    FUEL_AREA --> AIRCRAFT
+    AIRCRAFT --> STANDBY
 ```
 
 ### Quick Transit (Fuel Only)
 
-```mermauid
+```mermaid
 flowchart TB
-    AIRCRAFT
-    AIRCRAFT -- RFU --> RFU[RFU]
-    AIRCRAFT -- S-GPU --> SGPU[S-GPU]
-    AIRCRAFT -- ERK --> ERK[ERK]
+    AIRCRAFT[AIRCRAFT]
+    RFU[RFU]
+    SGPU[S-GPU]
+    ERK[ERK]
+    
+    AIRCRAFT --> RFU
+    AIRCRAFT --> SGPU
+    AIRCRAFT --> ERK
 ```
 
 ---
@@ -1693,11 +1699,13 @@ flowchart TB
 ```mermaid
 flowchart TB
     subgraph Central_Controller["Central Transit Controller"]
-        CMS["Aircraft\nCMS"]
-        CMS -- Mesh Network --> S_GPU[S-GPU]
-        CMS -- Mesh Network --> RFU[RFU]
-        CMS -- Mesh Network --> MSC[MSC]
-        CMS -- Mesh Network --> QSSU[QSSU]
+        CMS["Aircraft CMS"]
+        CMS --> S_GPU[S-GPU]
+        CMS --> RFU[RFU]
+        CMS --> MSC[MSC]
+        CMS --> QSSU[QSSU]
+    end
+```
     end
 ```
 
@@ -1865,87 +1873,52 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    %% AIRCRAFT NOSE SECTION LAYOUT
-
-    subgraph NOSE["AIRCRAFT NOSE SECTION"]
-        QPU["QPU"]
-        BCF50["🧯 BCF-50\n(Quantum)"]
-        HALON["HALON 🧯\n(Engine)"]
-
-        QPU --"BCF-50"--> BCF50
-        QPU --"HALON"--> HALON
-
-        FWD["FWD"]
-        QPU --> FWD
-
-        Door1L["[Door 1L] ●"]
-        Door1R["● [Door 1R]"]
-
-        FWD -.-> Door1L
-        FWD -.-> Door1R
-
-        MEDL["🩹 MED"]
-        MEDR["MED 🩹"]
-        FIREGEN["🧯 (General)"]
-
-        Door1L --> MEDL
-        Door1L --> FIREGEN
-        Door1R --> MEDR
-        Door1R --> FIREGEN
-
-        %% Equipment legends as floating nodes
-        EQUIPL["🩹 Medical Kit (Enhanced)"]
-        EQUIPL2["🧯 Fire Extinguisher (20kg)"]
-        EQUIPL3["🪜 Emergency Ladder (BWB)"]
-        EQUIPL4["🛞 Wheel Chocks (Smart)"]
-        EQUIPL5["📞 Emergency Comm Unit"]
-
-        classDef legend fill:#f3f3ff,stroke:#aaa,font-size:10px
-        EQUIPL:::legend
-        EQUIPL2:::legend
-        EQUIPL3:::legend
-        EQUIPL4:::legend
-        EQUIPL5:::legend
+    subgraph NOSE_SECTION["Aircraft Nose Section"]
+        QPU[QPU Area]
+        Door1L[Door 1L]
+        Door1R[Door 1R]
+        
+        QPU --> Door1L
+        QPU --> Door1R
     end
-
-    %% Legend (reference; not visually linked to main diagram)
-    %% ● Medical Kit (Enhanced) - 🩹
-    %% ● Fire Extinguisher (20kg) - 🧯  
-    %% ● Emergency Ladder (BWB) - 🪜
-    %% ● Wheel Chocks (Smart) - 🛞
-    %% ● Emergency Comm Unit - 📞
+    
+    subgraph EMERGENCY_EQUIP["Emergency Equipment"]
+        BCF50[BCF-50 Quantum Fire Extinguisher]
+        HALON[Halon Engine Extinguisher]
+        MEDL[Medical Kit Left]
+        MEDR[Medical Kit Right]
+        FIREGEN[General Fire Extinguisher]
+    end
+    
+    Door1L --> MEDL
+    Door1L --> FIREGEN
+    Door1R --> MEDR
+    QPU --> BCF50
+    QPU --> HALON
 ```
 
 ### Zone 2: Service Equipment Area (10-25m)
 
 ```mermaid
 flowchart LR
-    %% SERVICE EQUIPMENT POSITIONING
-
-    subgraph WEST["WEST SIDE"]
-        GPU["GPU<br/>🧯 🩹"]
-        MSC["MSC<br/>💧 ☣️"]
-        PBBW["PBB/Stair<br/>🩹 🧯"]
-        GPU --> MSC --> PBBW
+    subgraph WEST["West Side Services"]
+        GPU[GPU with Fire/Medical]
+        MSC[Multi-Service Cart with Spill/Hazmat]
+        PBBW[PBB/Stair with Medical/Fire]
+    end
+    
+    subgraph CENTER["Aircraft Center"]
+        AIRCRAFT[AIRCRAFT]
     end
 
-    subgraph EAST["EAST SIDE"]
-        RFU["RFU<br/>🧯 ⚡"]
-        QSSU["QSSU<br/>❄️ ⚛️"]
-        PBBE["PBB/Stair<br/>🩹 🧯"]
-        RFU --> QSSU --> PBBE
+    subgraph EAST["East Side Services"]
+        RFU[RFU with Fire/Electrical]
+        QSSU[QSSU with Cryo/Quantum]
+        PBBE[PBB/Stair with Medical/Fire]
     end
 
-    GPU -. Left Service .-> MSC
-    RFU -. Right Service .-> QSSU
-    MSC ---| AIRCRAFT |--- QSSU
-    PBBW --.-> PBBE
-
-    %% Legend (as comments)
-    %% 🧯 Fire Suppression     ⚡ Electrical Hazard Kit
-    %% 🩹 First Aid           ❄️ Cryogenic Safety
-    %% 💧 Spill Kit           ⚛️ Quantum Emergency
-    %% ☣️ Hazmat Response     📞 Direct Emergency Line
+    WEST --> CENTER
+    CENTER --> EAST
 ```
 
 ---
@@ -1993,27 +1966,18 @@ flowchart TB
 ### Specialized Quantum Emergency Zones
 
 ```mermaid
-block-beta
-  columns 5
-
-  CRYO["[CRYO]<br/>❄️"] space:1 QPUBLOCK["⚛️<br/>[QPU]"] space:1 HV["⚡<br/>[HV]"]
-
-  block
-    columns 5
-    CRYOKIT["🧊<br/>Cryo Kit"] space QPUSHIELD["🛡️<br/>Radiation Kit"] space HVKIT["⚡<br/>HV Kit"]
-  end
-
-  block
-    columns 5
-    space:1 EMERGENCY["🚨<br/>QUANTUM EMERGENCY<br/>SHUTDOWN PANEL"] space:1
-  end
-
-%% Quantum-Specific Equipment Legend (for reference only—annotate visually as needed):
-%% 🧊 Cryogenic Burn Kit (instant freeze protection)
-%% 🛡️ Radiation Detection & Protection
-%% ⚡ 10kV Insulation Set
-%% 🔴 Emergency Quench Button (EPO)
-%% 📡 Quantum State Monitor (portable)
+flowchart TB
+    subgraph QUANTUM_ZONES["Quantum Emergency Equipment Layout"]
+        CRYO[Cryogenic Zone - Cryo Kit]
+        QPU_ZONE[QPU Zone - Radiation Kit]
+        HV[High Voltage Zone - HV Kit]
+        
+        CRYO --> EMERGENCY_SHUTDOWN
+        QPU_ZONE --> EMERGENCY_SHUTDOWN  
+        HV --> EMERGENCY_SHUTDOWN
+        
+        EMERGENCY_SHUTDOWN[Quantum Emergency Shutdown Panel]
+    end
 ```
 
 ---
@@ -2040,27 +2004,25 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    FIRE_L["🚒"]
-    FIRE_R["🚒"]
+    FIRE_L[Fire Truck Left]
+    FIRE_R[Fire Truck Right]
 
-    PBB_L["[PBB]<br/>🩹 🧯"]
-    PBB_R["[PBB]<br/>🧯 🩹"]
+    PBB_L[PBB Left - Medical/Fire]
+    PBB_R[PBB Right - Fire/Medical]
 
-    AIRCRAFT["AIRCRAFT"]
+    AIRCRAFT[AIRCRAFT]
 
-    MSC["MSC"]
-    RFU["RFU"]
+    MSC[Multi-Service Cart]
+    RFU[Refueling Unit]
 
-    AMB["🚑"]
-    RFU_EQUIP["🧯⚡"]
+    AMB[Ambulance]
+    RFU_EQUIP[Fire/Electrical Equipment]
 
-    % Connections for lateral symmetry
     FIRE_L --> PBB_L
     PBB_L --> AIRCRAFT
     FIRE_R --> PBB_R
     PBB_R --> AIRCRAFT
 
-    % Downward connections
     AIRCRAFT --> MSC
     AIRCRAFT --> RFU
 
@@ -2072,32 +2034,33 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    %% FULL EMERGENCY SETUP - CAT D
-
-    %% Top ARFF corridor
-    ARFF_L("🚒")
-    ARFF_R("🚒")
-    ARFF_L -. "← ← ← ARFF CORRIDOR → → →" .- ARFF_R
-
-    %% Medical standby
-    MED_L("🚑")
-    MED_R("🚑")
-
-    %% Service zone with all positions
-    subgraph SERVICE["[ALL SERVICE POSITIONS]\n  [AIRCRAFT]\n🧯 🩹 ⚡ ❄️ ⚛️ 🛡️ 🧯 🩹"]
+    subgraph ARFF_CORRIDOR["ARFF Corridor"]
+        ARFF_L[Fire Truck Left]
+        ARFF_R[Fire Truck Right]
     end
 
-    %% Bottom ARFF escape
-    ESC_L("🚒")
-    ESC_R("🚒")
-    ESC_L -. "← ← ← ESCAPE ROUTE → → →" .- ESC_R
+    subgraph MEDICAL["Medical Standby"]
+        MED_L[Medical Left]
+        MED_R[Medical Right]
+    end
 
-    COMMAND("🚨 COMMAND 🚨")
+    subgraph SERVICE["All Service Positions"]
+        AIRCRAFT[AIRCRAFT - All Emergency Equipment]
+    end
 
-    %% Main flow
+    subgraph ESCAPE["Escape Route"]
+        ESC_L[Fire Truck Escape Left]
+        ESC_R[Fire Truck Escape Right]
+    end
+
+    COMMAND[Command Post]
+
     ARFF_L --> MED_L --> SERVICE --> MED_R --> ARFF_R
     SERVICE --> ESC_L
     SERVICE --> ESC_R
+    ESC_L --> COMMAND
+    ESC_R --> COMMAND
+```
     ESC_L --> COMMAND
     ESC_R --> COMMAND
 ```
@@ -2111,21 +2074,21 @@ flowchart TB
 ```mermaid
 flowchart TB
     subgraph Dashboard["Equipment Status Dashboard"]
-        EXT1["🧯 Extinguisher #1: ✅ Ready"]
-        EXT2["🧯 Extinguisher #2: ✅ Ready"]
-        MED1["🩹 Medical Kit #1: ✅ Full"]
-        MED2["🩹 Medical Kit #2: ⚠️ Check"]
-        CRYO["❄️ Cryo Kit: ✅ -196°C"]
-        HV["⚡ HV Safety: ✅ Tested"]
-        ARFF["🚒 ARFF Unit A: ✅ 2500gal"]
-        AMB["🚑 Medical 1: ✅ Staffed"]
+        EXT1[Extinguisher 1 - Ready]
+        EXT2[Extinguisher 2 - Ready]
+        MED1[Medical Kit 1 - Full]
+        MED2[Medical Kit 2 - Check Needed]
+        CRYO[Cryo Kit - Operational]
+        HV[HV Safety - Tested]
+        ARFF[ARFF Unit A - Ready]
+        AMB[Medical Unit 1 - Staffed]
     end
 
-    %% visually connect all dashboard nodes
-    EXT1 --> EXT2 --> MED1 --> MED2 --> CRYO --> HV --> ARFF --> AMB
+    EXT1 --> EXT2 --> MED1 --> MED2 
+    MED2 --> CRYO --> HV --> ARFF --> AMB
 
-    noteLastUpdate["Last Update: Real-time"]
-    AMB --> noteLastUpdate
+    LastUpdate[Last Update: Real-time]
+    AMB --> LastUpdate
 ```
 
 ### Automated Alert System
@@ -2143,27 +2106,25 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    WIND["Wind Direction<br/>→→→→→→→→"]
+    WIND[Wind Direction Arrow]
+    ARFF_UP[Fire Truck Upwind Primary]
+    EQUIP_SEC[Secured Equipment Only]
+    AC[Aircraft]
+    CHOCK[Extra Chocks and Anchors]
+    ARFF_CROSS[Fire Truck Crosswind Secondary]
 
-    ARFF_UP["🚒<br/>Upwind Position (Primary)"]
-    EQUIP_SEC["[SECURED EQUIPMENT ONLY]"]
-    AC["[AIRCRAFT]"]
-    CHOCK["[EXTRA CHOCKS/ANCHORS]"]
-    ARFF_CROSS["🚒<br/>Crosswind Position (Secondary)"]
-
-    WIND --- ARFF_UP
-    ARFF_UP --> EQUIP_SEC --> AC --> CHOCK --> ARFF_CROSS
+    WIND --> ARFF_UP --> EQUIP_SEC --> AC --> CHOCK --> ARFF_CROSS
 ```
 
 ### Lightning Risk
 
 ```mermaid
 flowchart TB
-    subgraph SAFETY["⚡ 30m SAFETY ZONE ⚡"]
-        AC["[AIRCRAFT]\n(All Personnel Clear)"]
+    subgraph SAFETY["30m Lightning Safety Zone"]
+        AC[Aircraft - All Personnel Clear]
     end
 
-    EVS["🚒 🚑 📞\nStaged Outside Zone"]
+    EVS[Fire/Medical/Communication Staged Outside Zone]
 
     EVS --- SAFETY
 ```
@@ -2176,37 +2137,37 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    OBS["👥 Observers"]
-    SCENARIO["🎯 Scenario:\nEngine Fire"]
-    ARFF_L["🚒"]
-    ARFF_R["🚒"]
-    AC["[AIRCRAFT]"]
-    FF["👨‍🚒"]
-    EXTL["🧯"]
-    EXTR["🧯"]
-    CAML["📹 Camera"]
-    CAMR["📹 Camera"]
+    OBS[Observers]
+    SCENARIO[Scenario: Engine Fire]
+    ARFF_L[Fire Truck Left]
+    ARFF_R[Fire Truck Right]
+    AC[Aircraft]
+    FF[Fire Fighter]
+    EXTL[Extinguisher Left]
+    EXTR[Extinguisher Right]
+    CAML[Camera Left]
+    CAMR[Camera Right]
 
     OBS --> SCENARIO
     SCENARIO --> ARFF_L
     SCENARIO --> ARFF_R
-    ARFF_L -- "→→" --> AC
-    ARFF_R -- "←←" --> AC
+    ARFF_L --> AC
+    ARFF_R --> AC
     AC --> FF
     FF --> EXTL
     FF --> EXTR
     EXTL --> CAML
     EXTR --> CAMR
 
-    %% Drill Objectives checklist:
-    OBJ1["□ 30-second deployment"]
-    OBJ2["□ Proper PPE use"]
-    OBJ3["□ Communication check"]
-    OBJ4["□ Quantum zone awareness"]
+    subgraph OBJECTIVES["Drill Objectives"]
+        OBJ1[30-second deployment]
+        OBJ2[Proper PPE use]
+        OBJ3[Communication check]
+        OBJ4[Quantum zone awareness]
+    end
 
-    CAML --> OBJ1
-    OBJ1 --> OBJ2 --> OBJ3 --> OBJ4
-    CAMR --> OBJ1
+    CAML --> OBJECTIVES
+    CAMR --> OBJECTIVES
 ```
 
 ---
