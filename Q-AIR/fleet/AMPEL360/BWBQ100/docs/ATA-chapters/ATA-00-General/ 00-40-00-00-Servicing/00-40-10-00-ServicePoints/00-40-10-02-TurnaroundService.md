@@ -132,23 +132,53 @@ Checklist: Pre-Arrival Setup
 ### 4.2 Equipment Positioning
 
 #### 4.2.1 BWB Ground Equipment Layout
-```
-                    NOSE
-           [GPU]  [ASU]  [ACU]
-              \    |    /
-         [CAT]--[BRIDGE]--[CAT]
-         /                    \
-    [CARGO]    AIRCRAFT      [CARGO]
-         \                    /
-      [FUEL]--[WASTE]--[WATER]
-              [PUSHBACK]
-                 TAIL
+```mermaid
+flowchart TB
+    %% BWB Ground Equipment Layout. Legend at end.
 
-Legend:
-GPU: Ground Power Unit    ASU: Air Start Unit
-ACU: Air Conditioning    CAT: Catering Trucks
-CARGO: Cargo Loaders     FUEL: Fuel Trucks
-WASTE: Waste Service     WATER: Water Service
+    subgraph NOSE
+        GPU[GPU]
+        ASU[ASU]
+        ACU[ACU]
+    end
+
+    GPU -- Nose area --- BRIDGE
+    ASU -- Nose area --- BRIDGE
+    ACU -- Nose area --- BRIDGE
+
+    CAT_L[CAT] -- Left catering truck --- BRIDGE
+    CAT_R[CAT] -- Right catering truck --- BRIDGE
+
+    BRIDGE -- Boarding Bridge --- AIRCRAFT
+    AIRCRAFT((AIRCRAFT))
+
+    CARGO_L[CARGO] -- Left cargo loader ---> AIRCRAFT
+    CARGO_R[CARGO] -- Right cargo loader ---> AIRCRAFT
+
+    FUEL[FUEL] -- Fuel service ---> TAIL
+    WASTE[WASTE] -- Waste service ---> TAIL
+    WATER[WATER] -- Water service ---> TAIL
+    PUSHBACK[PUSHBACK] -- Pushback --- TAIL
+
+    FUEL -- Supplies --> WASTE
+    WASTE -- Supplies --> WATER
+
+    CARGO_L -- Loader to tail --- FUEL
+    CARGO_R -- Loader to tail --- WATER
+
+    %% Layout for tail
+    TAIL((TAIL))
+
+    AIRCRAFT --> TAIL
+    BRIDGE --> CARGO_L
+    BRIDGE --> CARGO_R
+
+    %% Legend (in comments)
+    %% GPU: Ground Power Unit    ASU: Air Start Unit
+    %% ACU: Air Conditioning    CAT: Catering Trucks
+    %% CARGO: Cargo Loaders     FUEL: Fuel Trucks
+    %% WASTE: Waste Service     WATER: Water Service
+    %% PUSHBACK: Pushback Tractor
 ```
 
 ### 4.3 Safety Zone Establishment
