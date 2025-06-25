@@ -1071,15 +1071,19 @@ flowchart TB
 ```mermaid
 flowchart TB
     subgraph Prep["Quantum Service Initial Steps"]
-        step1[Approach Quantum Service Panel (Door 4L)]
-        step2[Biometric authentication]
-        step3[Activate QDT-100 tablet]
-        step4[Launch Transit Quick Check App]
-        step5[Verify aircraft registration]
-        step6[Confirm transit category]
+        step1["Approach Quantum Service Panel (Door 4L)"]
+        step2["Biometric authentication"]
+        step3["Activate QDT-100 tablet"]
+        step4["Launch Transit Quick Check App"]
+        step5["Verify aircraft registration"]
+        step6["Confirm transit category"]
     end
 
-    step1 --> step2 --> step3 --> step4 --> step5 --> step6
+    step1 --> step2
+    step2 --> step3
+    step3 --> step4
+    step4 --> step5
+    step5 --> step6
 ```
 
 ### 1.2 System Overview (0:30-1:00)
@@ -1125,14 +1129,18 @@ flowchart TB
 ```mermaid
 flowchart TB
     subgraph CryoStatus["Cryogenic System Check"]
-        helium[Helium level: >60% \n[Current: ____%]]
-        pump[Cryo-pump pressure: 0.8-1.2 bar]
-        hex[Heat exchanger ΔT: <5K]
-        backup[Backup cooling: STANDBY status]
-        service[Next service interval: >50 hours]
+        helium["Helium level: >60%
+[Current: ____%]"]
+        pump["Cryo-pump pressure: 0.8-1.2 bar"]
+        hex["Heat exchanger ΔT: <5K"]
+        backup["Backup cooling: STANDBY status"]
+        service["Next service interval: >50 hours"]
     end
 
-    helium --> pump --> hex --> backup --> service
+    helium --> pump
+    pump --> hex
+    hex --> backup
+    backup --> service
 ```
 
 **DECISION POINT**: If any parameter AMBER → Note for monitoring
@@ -1254,15 +1262,19 @@ flowchart TB
 ```mermaid
 flowchart TB
     subgraph QuantumComplete["Quantum Service Completion Checklist"]
-        sig[Digital signature applied]
-        upload[Report auto-uploaded to CMS]
-        tech[Tech log entry created (if required)]
-        notify[Notification sent to flight crew]
-        close[Close quantum service panel]
-        store[Return QDT-100 to storage]
+        sig["Digital signature applied"]
+        upload["Report auto-uploaded to CMS"]
+        tech["Tech log entry created (if required)"]
+        notify["Notification sent to flight crew"]
+        close["Close quantum service panel"]
+        store["Return QDT-100 to storage"]
     end
 
-    sig --> upload --> tech --> notify --> close --> store
+    sig --> upload
+    upload --> tech
+    tech --> notify
+    notify --> close
+    close --> store
 ```
 
 ---
@@ -1706,8 +1718,6 @@ flowchart TB
         CMS --> QSSU[QSSU]
     end
 ```
-    end
-```
 
 ---
 
@@ -1828,41 +1838,57 @@ Emergency equipment positioning for the AMPEL360 BWB-Q100 during transit operati
 
 ```mermaid
 flowchart TB
-    %% Safety & Emergency Zone Layout for AMPEL360 BWB-Q100
+    %% Key nodes: Show physical zones and equipment spatially (no deep nesting)
 
-    subgraph PERIMETER["PERIMETER FENCE (50m RADIUS)"]
-        direction TB
+    PERIM["PERIMETER FENCE\n(50m RADIUS)"]
+    FIRE_SUP_L["FIRE SUPPRESSION ZONE (RED)\n(Left)"]
+    FIRE_SUP_R["FIRE SUPPRESSION ZONE (RED)\n(Right)"]
+    FT_L["🚒 ARFF (L)"]
+    FT_R["🚒 ARFF (R)"]
+    HIGH_V["⚡ HIGH VOLTAGE ZONE ⚡"]
+    MU_L["🚑 Medical Unit (L)"]
+    MU_R["🚑 Medical Unit (R)"]
+    AC["AMPEL360 BWB-Q100"]
+    NOSE["NOSE →"]
+    TAIL["← TAIL"]
+    FE_L["🧯 Extinguisher (L)"]
+    FE_R["🧯 Extinguisher (R)"]
+    COMMAND["🚨 COMMAND POST 🚨"]
 
-        subgraph FIRE_SUP["FIRE SUPPRESSION ZONE (RED)"]
-            FT_L[🚒 Fire Truck ARFF]
-            FT_R[🚒 Fire Truck ARFF]
-            subgraph HIGH_V["⚡ HIGH VOLTAGE ZONE ⚡"]
-                MU_L[🚑 Medical Unit]
-                MU_R[🚑 Medical Unit]
-                subgraph AIRCRAFT["AMPEL360 BWB-Q100"]
-                    NOSE["NOSE →"]
-                    FE_L[🧯 Extinguisher]
-                    FE_R[🧯 Extinguisher]
-                    BODY[" "]
-                    TAIL["← TAIL"]
-                end
-            end
-        end
-        CP["🚨 COMMAND POST 🚨"]
-    end
+    %% Layout: Perimeter surrounds Fire Suppression zones
+    PERIM --> FIRE_SUP_L
+    PERIM --> FIRE_SUP_R
 
-    %% Links for orientation and legend effect
-    FT_L --- FT_R
-    MU_L --- MU_R
-    NOSE -.-> BODY -.-> TAIL
-    FE_L --- NOSE
-    FE_R --- TAIL
-    PERIMETER --> CP
+    %% Each fire suppression zone has ARFF and medical
+    FIRE_SUP_L --> FT_L
+    FIRE_SUP_L --> MU_L
+    FIRE_SUP_R --> FT_R
+    FIRE_SUP_R --> MU_R
 
-    %% LAYOUT: Simulate top (NORTH) with comment and direction
-    %% Icon meanings:
-    %% 🚒 Fire Trucks (ARFF)    🚑 Medical Units    🧯 Extinguisher
-    %% 🚨 Command Post          ⚡ Hazard           ━━ Safety Perimeter
+    %% Medical units and ARFF flank aircraft
+    MU_L --> AC
+    MU_R --> AC
+    FT_L --> AC
+    FT_R --> AC
+
+    %% Aircraft has positional details
+    AC --> NOSE
+    AC --> TAIL
+    NOSE --> FE_L
+    TAIL --> FE_R
+
+    %% Aircraft sits in high voltage zone (for annotation)
+    AC -.-> HIGH_V
+
+    %% Command post at base
+    PERIM --> COMMAND
+
+    %% (Optional) Add orientation note as a comment
+    %% NORTH is "up" in this diagram
+
+    %% Icon legend in comments
+    %% 🚒 Fire Truck (ARFF)    🚑 Medical Unit    🧯 Extinguisher
+    %% 🚨 Command Post         ⚡ Hazard Zone
 ```
 
 ---
