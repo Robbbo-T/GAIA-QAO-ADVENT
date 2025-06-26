@@ -1,4 +1,4 @@
-**## Hi there 👋
+## Hi there 👋
 **Author:** Amedeo Pelliccia
 © GAIA-QAO / Quantum Aerospace Organization
 
