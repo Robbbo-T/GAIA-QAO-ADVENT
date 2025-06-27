@@ -84,6 +84,30 @@ CB1 FORWARD BAY LAYOUT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
+```mermaid
+flowchart TB
+    subgraph BAY["CB1 FORWARD BAY LAYOUT"]
+        DOOR["Door 3L Access\n│"]
+        GRID1["┌─┬─┬─┬─┬─┬─┬─┐"]
+        GRID2["│1│2│3│4│5│6│7│"]
+        GRID3["├─┼─┼─┼─┼─┼─┼─┤"]
+        GRID4["│A│B│C│D│E│F│G│"]
+        GRID5["└─┴─┴─┴─┴─┴─┴─┘"]
+        DIM["Length: 6.0m   Width: 5.0m
+Height: 1.5m (tapered)
+Volume: 45 m³"]
+        ZONEP["Priority Zone: 1-3"]
+        ZONES["Standard Zone: 4-7"]
+        DIR["← FWD    AFT →"]
+    end
+
+    DOOR --> GRID1 --> GRID2 --> GRID3 --> GRID4 --> GRID5
+    GRID5 --> DIM
+    DIM --> ZONEP
+    ZONEP --> ZONES
+    ZONES --> DIR
+```
+
 #### 2.1.2 Capacity Specifications
 | Parameter | Specification | Notes |
 |-----------|--------------|-------|
@@ -111,18 +135,69 @@ QAO-BWB-2      6          Optimized fit
 ```
 
 #### 2.2.2 Loading Configuration Examples
-```
-Configuration A: Maximum LD3
-[LD3][LD3][LD3][LD3][---][---][---]
-Total: 4 × LD3 = 17.2 m³
 
-Configuration B: Mixed Priority
-[LD1][LD1][PMC][PMC][---][---][---]
-Total: 2 × LD1 + 2 × PMC = 18 m³
+```mermaid
+block-beta
+  columns 7
 
-Configuration C: Quick Turn
-[LD3][LD3][EMPTY][EMPTY][---][---][---]
-Total: 2 × LD3 = 8.6 m³ (Fast access)
+  %% CONFIGURATION A: MAXIMUM LD3
+  block
+    columns 7
+    TitleA[":::header[Configuration A: Maximum LD3]"]
+  end
+
+  block
+    columns 7
+    LD3A1[":::ld3[[LD3]]"] LD3A2[":::ld3[[LD3]]"] LD3A3[":::ld3[[LD3]]"] LD3A4[":::ld3[[LD3]]"]
+    EMPTYA1[":::empty[ ]"] EMPTYA2[":::empty[ ]"] EMPTYA3[":::empty[ ]"]
+  end
+
+  block
+    columns 7
+    TotA[":::total[Total: 4 × LD3 = 17.2 m³]"]
+  end
+
+  %% CONFIGURATION B: MIXED PRIORITY
+  block
+    columns 7
+    TitleB[":::header[Configuration B: Mixed Priority]"]
+  end
+
+  block
+    columns 7
+    LD1B1[":::pri[[LD1]]"] LD1B2[":::pri[[LD1]]"] PMC1[":::pmc[[PMC]]"] PMC2[":::pmc[[PMC]]"]
+    EMPTYB1[":::empty[ ]"] EMPTYB2[":::empty[ ]"] EMPTYB3[":::empty[ ]"]
+  end
+
+  block
+    columns 7
+    TotB[":::total[Total: 2 × LD1 + 2 × PMC = 18 m³]"]
+  end
+
+  %% CONFIGURATION C: QUICK TURN
+  block
+    columns 7
+    TitleC[":::header[Configuration C: Quick Turn]"]
+  end
+
+  block
+    columns 7
+    LD3C1[":::ld3[[LD3]]"] LD3C2[":::ld3[[LD3]]"] EMPTYC1[":::empty[ ]"] EMPTYC2[":::empty[ ]"]
+    EMPTYC3[":::empty[ ]"] EMPTYC4[":::empty[ ]"] EMPTYC5[":::empty[ ]"]
+  end
+
+  block
+    columns 7
+    TotC[":::total[Total: 2 × LD3 = 8.6 m³ (Fast access)]"]
+  end
+
+%% ---------------- STYLES -----------------
+classDef header fill:#e6f7ff,stroke:#07c,stroke-width:2px,font-weight:bold,font-size:18px;
+classDef ld3 fill:#caeaff,stroke:#139,stroke-width:1.5px;
+classDef pri fill:#ffd7d7,stroke:#a44,stroke-width:1.5px;
+classDef pmc fill:#dfffca,stroke:#495e2b,stroke-width:1.5px;
+classDef empty fill:#f9f9f9,stroke:#ccc,stroke-width:1.2px;
+classDef total fill:#ffffcc,stroke:#c9c900,stroke-width:2px,font-weight:bold;
 ```
 
 ### 2.3 Access Features
@@ -135,21 +210,14 @@ Total: 2 × LD3 = 8.6 m³ (Fast access)
 - **Emergency Operation**: Manual override available
 
 #### 2.3.2 Ground Equipment Interface
-```
-DOOR 3L ACCESS CONFIGURATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    Aircraft Door 3L
-         │
-    ┌────▼────┐
-    │ Bridge  │ ← Adjustable height
-    │ Platform│    2.5-3.2m
-    └────┬────┘
-         │
-    ┌────▼────┐
-    │ Loader  │ ← Belt or container
-    │ Vehicle │    compatible
-    └─────────┘
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+```mermaid
+flowchart TB
+    DOOR["Aircraft Door 3L"]
+    BRIDGE["Bridge Platform\n(Adjustable height: 2.5–3.2m)"]
+    LOADER["Loader Vehicle\n(Belt or container compatible)"]
+
+    DOOR --> BRIDGE --> LOADER
 ```
 
 ---
@@ -165,29 +233,28 @@ DOOR 3L ACCESS CONFIGURATION
 4. **Time Efficiency**: Quick load/unload capability
 
 #### 3.1.2 Loading Priority Matrix
-```
-CB1 LOADING PRIORITY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Priority 1: AOG Parts
-├── Aircraft parts
-├── Critical spares
-└── Time: <5 minutes
+```mermaid
+flowchart TB
+    subgraph CB1P["CB1 LOADING PRIORITY"]
+        P1["Priority 1: AOG Parts
+• Aircraft parts
+• Critical spares
+• Time: <5 minutes"]
+        P2["Priority 2: Express Cargo
+• Courier shipments
+• Time-definite freight
+• Time: <10 minutes"]
+        P3["Priority 3: Live Animals
+• Small animals only
+• Attendant access
+• Time: 10-15 minutes"]
+        P4["Priority 4: Standard Cargo
+• General freight
+• Mail/documents
+• Time: Standard"]
+    end
 
-Priority 2: Express Cargo
-├── Courier shipments
-├── Time-definite freight
-└── Time: <10 minutes
-
-Priority 3: Live Animals
-├── Small animals only
-├── Attendant access
-└── Time: 10-15 minutes
-
-Priority 4: Standard Cargo
-├── General freight
-├── Mail/documents
-└── Time: Standard
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    P1 --> P2 --> P3 --> P4
 ```
 
 ### 3.2 Sequencing Rules
@@ -199,18 +266,27 @@ Priority 4: Standard Cargo
 4. **Balance Consideration**: Center heavy items
 
 #### 3.2.2 Standard Loading Pattern
-```
-STANDARD CB1 LOADING PATTERN
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Step 1: Priority Positions (1-3)
-[PRI][PRI][PRI][---][---][---][---]
+```mermaid
+block-beta
+  columns 7
 
-Step 2: Standard Fill (4-7)
-[PRI][PRI][PRI][STD][STD][---][---]
+  %% Step 1: Priority Positions (1-3)
+  S1["Step 1: Priority Positions (1-3)"]
+  P1["[PRI]"] P2["[PRI]"] P3["[PRI]"] E1["[---]"] E2["[---]"] E3["[---]"] E4["[---]"]
 
-Step 3: Weight Balance
-[PRI][PRI][PRI][STD][STD][HVY][HVY]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  block
+    columns 7
+    %% Step 2: Standard Fill (4-7)
+    S2["Step 2: Standard Fill (4-7)"]
+    P1b["[PRI]"] P2b["[PRI]"] P3b["[PRI]"] S4["[STD]"] S5["[STD]"] E3b["[---]"] E4b["[---]"]
+  end
+
+  block
+    columns 7
+    %% Step 3: Weight Balance
+    S3["Step 3: Weight Balance"]
+    P1c["[PRI]"] P2c["[PRI]"] P3c["[PRI]"] S4b["[STD]"] S5b["[STD]"] H6["[HVY]"] H7["[HVY]"]
+  end
 ```
 
 ---
@@ -229,21 +305,23 @@ Step 3: Weight Balance
 | Perishable | Fresh seafood | PRI-5 |
 
 #### 4.1.2 Identification and Tracking
-```
-PRIORITY CARGO IDENTIFICATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Visual Markers:
-├── Red priority tags
-├── Quantum beacon (flashing)
-├── "PRIORITY" stencil
-└── Special handling labels
+```mermaid
+flowchart TB
+    subgraph VISUAL["Visual Markers"]
+        VM1["Red priority tags"]
+        VM2["Quantum beacon (flashing)"]
+        VM3["PRIORITY stencil"]
+        VM4["Special handling labels"]
+    end
 
-System Integration:
-├── Quantum priority flag
-├── Real-time tracking
-├── Automated alerts
-└── Direct crew notification
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    subgraph SYSTEM["System Integration"]
+        SI1["Quantum priority flag"]
+        SI2["Real-time tracking"]
+        SI3["Automated alerts"]
+        SI4["Direct crew notification"]
+    end
+
+    VISUAL --> SYSTEM
 ```
 
 ### 4.2 Priority Loading Procedures
@@ -406,49 +484,56 @@ During quick turns, the following are NOT permitted:
 ### 5.3 Quick Turn Optimization
 
 #### 5.3.1 Pre-Positioning Strategy
-```
-QUICK TURN PRE-POSITIONING
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Gate Setup:
-├── Outbound cargo staged
-├── Equipment positioned
-├── Crew briefed
-└── Documentation ready
+```mermaid
+flowchart TB
+    subgraph GATE["Gate Setup"]
+        S1["Outbound cargo staged"]
+        S2["Equipment positioned"]
+        S3["Crew briefed"]
+        S4["Documentation ready"]
+    end
 
-Container Arrangement:
-[OUT][OUT] ← Remove these
-[IN ][IN ] ← Load these
-[---][---] ← Keep empty
+    subgraph CONTAINER["Container Arrangement"]
+        OUT1["[OUT]"]
+        OUT2["[OUT]\n← Remove these"]
+        IN1["[IN ]"]
+        IN2["[IN ]\n← Load these"]
+        EMP1["[---]"]
+        EMP2["[---]\n← Keep empty"]
+    end
 
-Time Savings:
-- Pre-positioning: 3 min
-- Direct exchange: 2 min
-- Skip inspections: 1 min
-Total Saved: 6 minutes
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    subgraph TIME["Time Savings"]
+        T1["Pre-positioning: 3 min"]
+        T2["Direct exchange: 2 min"]
+        T3["Skip inspections: 1 min"]
+        T4["Total Saved: 6 minutes"]
+    end
+
+    GATE --> CONTAINER --> TIME
 ```
 
 #### 5.3.2 Crew Coordination
-```
-QUICK TURN CREW ROLES
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Supervisor:
-- Overall coordination
-- Documentation
-- Crew interface
+```mermaid
+flowchart TB
+    subgraph ROLES["QUICK TURN CREW ROLES"]
+        SUP["Supervisor:
+• Overall coordination
+• Documentation
+• Crew interface"]
+        L1["Loader 1:
+• Unload operations
+• Position outbound"]
+        L2["Loader 2:
+• Load operations
+• Secure cargo"]
+        SCAN["Scanner:
+• Quantum tracking
+• Real-time updates"]
+    end
 
-Loader 1:
-- Unload operations
-- Position outbound
-
-Loader 2:
-- Load operations
-- Secure cargo
-
-Scanner:
-- Quantum tracking
-- Real-time updates
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    SUP --> L1
+    SUP --> L2
+    SUP --> SCAN
 ```
 
 ---
@@ -458,38 +543,32 @@ Scanner:
 ### 6.1 CB1 Impact on CG
 
 #### 6.1.1 CG Shift Calculations
-```
-CB1 CG IMPACT ANALYSIS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Container Weight    CG Shift (% MAC)
-─────────────────────────────────────
-500 kg             +0.3%
-1,000 kg           +0.6%
-1,500 kg           +0.9%
-2,000 kg           +1.2%
+```mermaid
+flowchart TB
+    subgraph CGIMPACT["CB1 CG IMPACT ANALYSIS"]
+        WL1["500 kg          →   +0.3% MAC"]
+        WL2["1,000 kg        →   +0.6% MAC"]
+        WL3["1,500 kg        →   +0.9% MAC"]
+        WL4["2,000 kg        →   +1.2% MAC"]
+        WL5["Maximum CB1 Load (5,000 kg): +3.0% MAC"]
+    end
 
-Maximum CB1 Load (5,000 kg): +3.0%
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    WL1 --> WL2 --> WL3 --> WL4 --> WL5
 ```
 
 #### 6.1.2 Loading Decision Tree
-```
-CG MANAGEMENT DECISION FLOW
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Current CG Position?
-        │
-   ┌────┴────┐
-   │         │
->35% MAC  <30% MAC
-   │         │
-   ▼         ▼
-Limit CB1  Maximize CB1
-Loading    Loading
-   │         │
-Use rear   Use all
-positions  positions
-only       available
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```mermaid
+flowchart TB
+    CGPOS["Current CG Position?"]
+    CGQ{CG >35% MAC or <30% MAC?}
+
+    CGPOS --> CGQ
+
+    CGQ -- " >35% MAC " --> LIMIT["Limit CB1 Loading"]
+    LIMIT --> REAR["Use rear positions only"]
+
+    CGQ -- " <30% MAC " --> MAX["Maximize CB1 Loading"]
+    MAX --> ALL["Use all positions available"]
 ```
 
 ### 6.2 Trim Optimization
@@ -733,43 +812,38 @@ Weight: 4,950 kg ✓
 ### 9.1 CB1 Quantum Features
 
 #### 9.1.1 Quantum Node Distribution
-```
-CB1 QUANTUM SENSOR MAP
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    ┌─────────────────────┐
-    │ N1  N2  N3  N4  N5  │ Ceiling nodes
-    │                     │
-    │ •    •    •    •   │ Position sensors
-    │ P1  P2  P3  P4 P5  │
-    │                     │
-    │ •    •    •    •   │ Floor nodes
-    │ F1  F2  F3  F4  F5 │
-    └─────────────────────┘
-    
-Total Nodes: 25
-Coverage: 100%
-Accuracy: ±1cm
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```mermaid
+flowchart TB
+    subgraph QUANTUM["CB1 QUANTUM SENSOR MAP"]
+        CEIL["Ceiling nodes: N1  N2  N3  N4  N5"]
+        POS["Position sensors: •  •  •  •  •\n              P1  P2  P3  P4  P5"]
+        FLOOR["Floor nodes: •  •  •  •  •\n             F1  F2  F3  F4  F5"]
+        STATS["Total Nodes: 25\nCoverage: 100%\nAccuracy: ±1cm"]
+    end
+
+    CEIL --> POS --> FLOOR --> STATS
 ```
 
 #### 9.1.2 Priority Cargo Quantum Features
-```
-QUANTUM PRIORITY TRACKING
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Enhanced Features:
-├── Real-time position (±1mm)
-├── Tamper detection
-├── Environmental logging
-├── Predictive alerts
-└── Quantum encryption
+```mermaid
+flowchart TB
+    subgraph FEATURES["Enhanced Features"]
+        F1["Real-time position (±1mm)"]
+        F2["Tamper detection"]
+        F3["Environmental logging"]
+        F4["Predictive alerts"]
+        F5["Quantum encryption"]
+    end
 
-Alert Triggers:
-├── Movement >10cm
-├── Temperature ±2°C
-├── Humidity ±5%
-├── Shock >2g
-└── Unauthorized access
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    subgraph ALERTS["Alert Triggers"]
+        T1["Movement >10cm"]
+        T2["Temperature ±2°C"]
+        T3["Humidity ±5%"]
+        T4["Shock >2g"]
+        T5["Unauthorized access"]
+    end
+
+    FEATURES --> ALERTS
 ```
 
 ### 9.2 Data Integration
@@ -800,23 +874,21 @@ Output:
 ```
 
 #### 9.2.2 Real-Time Monitoring
-```
-CB1 QUANTUM DASHBOARD
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-╔═══════════════════════════════════╗
-║ CB1 Status: LOADING               ║
-╠═══════════════════════════════════╣
-║ Positions Filled: 3/7             ║
-║ Weight: 2,847 kg / 5,000 kg       ║
-║ Volume: 23.5 m³ / 45 m³           ║
-║ CG Impact: +1.8% MAC              ║
-╠═══════════════════════════════════╣
-║ Quantum Status: All Systems GO    ║
-║ Tracking Active: 25/25 nodes      ║
-║ Anomalies: 0                      ║
-║ Next Action: Load Position 4      ║
-╚═══════════════════════════════════╝
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```mermaid
+flowchart TB
+    subgraph DASH["CB1 QUANTUM DASHBOARD"]
+        STAT["CB1 Status: LOADING"]
+        FILL["Positions Filled: 3/7"]
+        WGT["Weight: 2,847 kg / 5,000 kg"]
+        VOL["Volume: 23.5 m³ / 45 m³"]
+        CG["CG Impact: +1.8% MAC"]
+        QSTAT["Quantum Status: All Systems GO"]
+        TRACK["Tracking Active: 25/25 nodes"]
+        ANOM["Anomalies: 0"]
+        NEXT["Next Action: Load Position 4"]
+    end
+
+    STAT --> FILL --> WGT --> VOL --> CG --> QSTAT --> TRACK --> ANOM --> NEXT
 ```
 
 ---
@@ -826,27 +898,30 @@ CB1 QUANTUM DASHBOARD
 ### 10.1 CB1-Specific Safety Concerns
 
 #### 10.1.1 Unique Hazards
-```
-CB1 SAFETY HAZARDS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Physical Hazards:
-├── Low ceiling height (1.2-1.5m)
-├── Tapered walls (trip hazard)
-├── Limited escape route (single door)
-└── Proximity to avionics bay
+```mermaid
+flowchart TB
+    subgraph PHYS["Physical Hazards"]
+        PH1["Low ceiling height (1.2-1.5m)"]
+        PH2["Tapered walls (trip hazard)"]
+        PH3["Limited escape route (single door)"]
+        PH4["Proximity to avionics bay"]
+    end
 
-Operational Hazards:
-├── Quick turn time pressure
-├── Priority cargo rush
-├── Limited maneuvering space
-└── Height restriction impacts
+    subgraph OPER["Operational Hazards"]
+        OP1["Quick turn time pressure"]
+        OP2["Priority cargo rush"]
+        OP3["Limited maneuvering space"]
+        OP4["Height restriction impacts"]
+    end
 
-Environmental:
-├── Temperature extremes possible
-├── Limited ventilation
-├── Noise from avionics cooling
-└── Static electricity buildup
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    subgraph ENV["Environmental Hazards"]
+        EN1["Temperature extremes possible"]
+        EN2["Limited ventilation"]
+        EN3["Noise from avionics cooling"]
+        EN4["Static electricity buildup"]
+    end
+
+    PHYS --> OPER --> ENV
 ```
 
 #### 10.1.2 PPE Requirements
@@ -951,46 +1026,51 @@ Recovery:
 ### 10.3 Emergency Equipment Locations
 
 #### 10.3.1 CB1 Emergency Equipment
-```
-CB1 EMERGENCY EQUIPMENT MAP
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-         Door 3L
-           │
-    ┌──────▼──────┐
-    │ 🧯        🚨│ Fire alarm
-    │             │
-    │      CB1    │ 
-    │             │
-    │ 🩹        💡│ Emergency light
-    └─────────────┘
+```mermaid
+flowchart TB
+    DOOR["Door 3L"]
 
-Legend:
-🧯 Fire extinguisher (CO2)
-🚨 Fire alarm pull station
-🩹 First aid kit
-💡 Emergency lighting
-📞 Emergency phone (outside)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    subgraph CB1["CB1"]
+        EX["🧯 Fire extinguisher (CO2)"]
+        FA["🚨 Fire alarm pull station"]
+        KIT["🩹 First aid kit"]
+        LIGHT["💡 Emergency lighting"]
+    end
+
+    DOOR --> CB1
+    EX --- FA
+    KIT --- LIGHT
+
+    %% Legend (as comments):
+    %% 🧯 Fire extinguisher (CO2)
+    %% 🚨 Fire alarm pull station
+    %% 🩹 First aid kit
+    %% 💡 Emergency lighting
+    %% 📞 Emergency phone (outside)
 ```
 
 #### 10.3.2 Evacuation Routes
-```
-CB1 EVACUATION PLAN
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Primary Route:
-CB1 → Door 3L → Loader platform → Ground
+```mermaid
+flowchart TB
+    CB1["CB1"]
+    
+    %% Primary evacuation route
+    CB1 --> D3L["Door 3L"]
+    D3L --> LOADER["Loader platform"]
+    LOADER --> GROUND["Ground"]
 
-Secondary Route:
-CB1 → Door 3L → Emergency slide (if deployed)
+    %% Secondary route (emergency slide)
+    D3L --> SLIDE["Emergency slide (if deployed)"]
 
-Blocked Exit:
-CB1 → Aft to CB2 → Door 4L → Exit
+    %% Blocked exit fallback
+    CB1 --> CB2["Aft to CB2"]
+    CB2 --> D4L["Door 4L"]
+    D4L --> EXIT["Exit"]
 
-Assembly Point:
-- 50m forward of aircraft nose
-- Upwind position
-- Account for all personnel
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    %% Assembly point
+    GROUND --> AP["Assembly Point:\n50m forward of aircraft nose\nUpwind position\nAccount for all personnel"]
+    SLIDE --> AP
+    EXIT --> AP
 ```
 
 ---
@@ -1128,43 +1208,45 @@ Recurrent Training:
 ## Forms and Documents
 
 ### F.1 CB1 Load Planning Form
-```
-CB1 LOAD PLANNING WORKSHEET
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Flight: _______ Date: _______ 
+```mermaid
+flowchart TB
+    subgraph CB1_WS["CB1 LOAD PLANNING WORKSHEET"]
+        FLIGHT["Flight: _______    Date: _______"]
 
-Position | Container | Weight | Priority
----------|-----------|--------|----------
-1A       | _________ | ___kg | ________
-2A       | _________ | ___kg | ________
-3A       | _________ | ___kg | ________
-4A       | _________ | ___kg | ________
-5A       | _________ | ___kg | ________
-6A       | _________ | ___kg | ________
-7A       | _________ | ___kg | ________
+        POS1["1A   | _________ | ___kg | ________"]
+        POS2["2A   | _________ | ___kg | ________"]
+        POS3["3A   | _________ | ___kg | ________"]
+        POS4["4A   | _________ | ___kg | ________"]
+        POS5["5A   | _________ | ___kg | ________"]
+        POS6["6A   | _________ | ___kg | ________"]
+        POS7["7A   | _________ | ___kg | ________"]
 
-Total Weight: ______kg
-CG Impact: +____% MAC
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        TOTAL["Total Weight: ______kg"]
+        CG["CG Impact: +____% MAC"]
+    end
+
+    FLIGHT --> POS1 --> POS2 --> POS3 --> POS4 --> POS5 --> POS6 --> POS7 --> TOTAL --> CG
 ```
 
 ### F.2 Priority Cargo Notification
-```
-PRIORITY CARGO ALERT FORM
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-To: Captain / Load Control
-From: CB1 Loading Team
+```mermaid
+flowchart TB
+    subgraph ALERTFORM["PRIORITY CARGO ALERT FORM"]
+        TO["To: Captain / Load Control"]
+        FROM["From: CB1 Loading Team"]
 
-Priority Level: PRI-___
-Description: _____________________
-Weight: ______kg
-Position: _______
-Special Requirements: _____________
-________________________________
+        LEVEL["Priority Level: PRI-___"]
+        DESC["Description: _____________________"]
+        WEIGHT["Weight: ______kg"]
+        POS["Position: _______"]
+        SPECIAL1["Special Requirements: _____________"]
+        SPECIAL2["________________________________"]
 
-Loaded by: _________ Time: ______
-Verified by: _______ Time: ______
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        LOADED["Loaded by: _________    Time: ______"]
+        VERIFIED["Verified by: _______    Time: ______"]
+    end
+
+    TO --> FROM --> LEVEL --> DESC --> WEIGHT --> POS --> SPECIAL1 --> SPECIAL2 --> LOADED --> VERIFIED
 ```
 
 ---
