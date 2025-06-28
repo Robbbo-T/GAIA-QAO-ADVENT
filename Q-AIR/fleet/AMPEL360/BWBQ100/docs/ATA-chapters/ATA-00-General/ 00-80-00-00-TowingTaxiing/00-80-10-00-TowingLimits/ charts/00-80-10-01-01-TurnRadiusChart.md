@@ -148,11 +148,11 @@ Required Clear Zone: 89.2 meters (with safety margins)
 ### 2.3 Turn Radius Comparison Chart
 
 ```mermaid
-xychart-beta
+xyChart
     title "Turn Radius vs. Steering Angle"
-    x-axis [15°, 30°, 45°, 60°, 75°]
-    y-axis "Turn Radius (meters)" 0 --> 70
-    line [59.4, 27.0, 15.6, 9.0, 4.2]
+    x-axis "Steering Angle (degrees)" [15, 30, 45, 60, 75]
+    y-axis "Turn Radius (m)" 0 --> 70
+    line "Radius" [59.4, 27.0, 15.6, 9.0, 4.2]
 ```
 
 **Chart 2.3: Turn Radius Performance Curve**
