@@ -1,0 +1,1461 @@
+{
+  "metadata": {
+    "document_id": "00-90-20-03-01-CalibrationData.json",
+    "gqois_id": "AS-M-PAX-BW-Q1H-QSN-CAL-DATA",
+    "title": "AMPEL360 BWB-Q100 Quantum Sensor Calibration Data",
+    "version": "2.0.0",
+    "created_date": "2025-06-29T00:00:00Z",
+    "last_modified": "2025-06-29T12:00:00Z",
+    "classification": "Technical Data - Quantum Systems",
+    "author": "GAIA-QAO Quantum Metrology Team",
+    "approval_status": "Approved",
+    "related_documents": [
+      "00-90-20-03-SensorCalibration.md",
+      "00-90-20-01-NVCenterActivation.md",
+      "00-90-20-02-EntanglementVerification.md"
+    ]
+  },
+  
+  "calibration_standards": {
+    "primary_standards": {
+      "magnetic_field": {
+        "nist_reference": {
+          "standard_id": "NIST-B-2024-001",
+          "type": "Proton NMR Magnetometer",
+          "accuracy": "±1e-9 relative",
+          "range": "1e-6 to 10 T",
+          "traceability": "SI Tesla via gyromagnetic ratio",
+          "certification_date": "2024-12-15",
+          "next_calibration": "2025-12-15",
+          "gyromagnetic_ratio": {
+            "value": 2.6752218744e8,
+            "unit": "rad⋅s⁻¹⋅T⁻¹",
+            "uncertainty": "±1.7e-1 rad⋅s⁻¹⋅T⁻¹"
+          }
+        },
+        "helmholtz_coils": {
+          "system_id": "HH-QCal-2024",
+          "coil_radius": 0.5,
+          "coil_separation": 0.5,
+          "turns_per_coil": 100,
+          "resistance": 10.234,
+          "temperature_coefficient": "±1e-6 /°C",
+          "field_uniformity": "±0.01% over 10cm sphere",
+          "calibration_constant": {
+            "value": 1.1494e-3,
+            "unit": "T/A",
+            "uncertainty": "±1e-6 relative"
+          }
+        }
+      },
+      "acceleration": {
+        "fg5_gravimeter": {
+          "instrument_id": "FG5X-251",
+          "manufacturer": "Micro-g LaCoste",
+          "accuracy": "±2e-8 g absolute",
+          "resolution": "1e-9 g",
+          "measurement_range": "0.1g to 2g",
+          "last_calibration": "2024-11-20",
+          "local_gravity": {
+            "value": 9.80665123,
+            "unit": "m/s²",
+            "uncertainty": "±2e-7 m/s²",
+            "location": "GAIA-QAO Metrology Lab",
+            "coordinates": {
+              "latitude": 45.4642,
+              "longitude": 9.1900,
+              "elevation": 122.5
+            }
+          }
+        }
+      },
+      "temperature": {
+        "its90_sprt": {
+          "instrument_id": "SPRT-25.5-2024",
+          "type": "Standard Platinum Resistance Thermometer",
+          "resistance_0c": 25.5432,
+          "resistance_ratio": 1.39254,
+          "accuracy": "±1 mK at 0°C",
+          "stability": "±2 mK/year",
+          "calibration_points": [
+            {
+              "name": "Water Triple Point",
+              "temperature": 273.16,
+              "uncertainty": "±0.1e-3 K"
+            },
+            {
+              "name": "Gallium Melting Point",
+              "temperature": 302.9146,
+              "uncertainty": "±1e-3 K"
+            },
+            {
+              "name": "Indium Freezing Point",
+              "temperature": 429.7485,
+              "uncertainty": "±2e-3 K"
+            },
+            {
+              "name": "Tin Freezing Point",
+              "temperature": 505.078,
+              "uncertainty": "±5e-3 K"
+            }
+          ]
+        }
+      }
+    }
+  },
+
+  "quantum_magnetometers": {
+    "nv_center_magnetometers": {
+      "sensor_array": [
+        {
+          "sensor_id": "QM-NV-001",
+          "location": "Wing root port",
+          "coordinates": [-2.5, -8.2, 0.3],
+          "orientation": [0, 0, 1],
+          "diamond_specifications": {
+            "crystal_orientation": "[100]",
+            "nv_density": "1e15 cm⁻³",
+            "nitrogen_concentration": "< 1 ppm",
+            "crystal_size": "2x2x0.5 mm³"
+          },
+          "calibration_data": {
+            "calibration_date": "2025-06-15",
+            "zero_field_splitting": {
+              "value": 2.8701e9,
+              "unit": "Hz",
+              "uncertainty": "±1e3 Hz",
+              "temperature_coefficient": -74e3
+            },
+            "gyromagnetic_ratio": {
+              "value": 28.025e6,
+              "unit": "Hz/T",
+              "uncertainty": "±1e3 Hz/T"
+            },
+            "calibration_points": [
+              {
+                "applied_field": 0.0,
+                "measured_field": 0.02,
+                "uncertainty": 0.08,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 10.0,
+                "measured_field": 10.01,
+                "uncertainty": 0.08,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 50.0,
+                "measured_field": 49.98,
+                "uncertainty": 0.08,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 100.0,
+                "measured_field": 100.03,
+                "uncertainty": 0.08,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 500.0,
+                "measured_field": 499.95,
+                "uncertainty": 0.10,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 1000.0,
+                "measured_field": 1000.08,
+                "uncertainty": 0.12,
+                "unit": "nT"
+              }
+            ],
+            "calibration_equation": {
+              "type": "linear",
+              "coefficients": [0.9999, 0.02],
+              "coefficient_uncertainties": [1e-5, 0.03],
+              "r_squared": 0.999998,
+              "residual_std": 0.025
+            },
+            "performance_metrics": {
+              "sensitivity": "1 nT/√Hz",
+              "bandwidth": "DC to 1 MHz",
+              "linearity": ">99.9%",
+              "cross_axis_coupling": "<1%",
+              "temperature_drift": "±0.001 nT/°C"
+            }
+          }
+        },
+        {
+          "sensor_id": "QM-NV-002",
+          "location": "Wing root starboard",
+          "coordinates": [2.5, -8.2, 0.3],
+          "orientation": [0, 0, 1],
+          "diamond_specifications": {
+            "crystal_orientation": "[100]",
+            "nv_density": "1.2e15 cm⁻³",
+            "nitrogen_concentration": "< 1 ppm",
+            "crystal_size": "2x2x0.5 mm³"
+          },
+          "calibration_data": {
+            "calibration_date": "2025-06-15",
+            "zero_field_splitting": {
+              "value": 2.8702e9,
+              "unit": "Hz",
+              "uncertainty": "±1e3 Hz",
+              "temperature_coefficient": -74.2e3
+            },
+            "gyromagnetic_ratio": {
+              "value": 28.024e6,
+              "unit": "Hz/T",
+              "uncertainty": "±1e3 Hz/T"
+            },
+            "calibration_points": [
+              {
+                "applied_field": 0.0,
+                "measured_field": -0.01,
+                "uncertainty": 0.08,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 10.0,
+                "measured_field": 9.99,
+                "uncertainty": 0.08,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 50.0,
+                "measured_field": 50.02,
+                "uncertainty": 0.08,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 100.0,
+                "measured_field": 99.97,
+                "uncertainty": 0.08,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 500.0,
+                "measured_field": 500.05,
+                "uncertainty": 0.10,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 1000.0,
+                "measured_field": 999.92,
+                "uncertainty": 0.12,
+                "unit": "nT"
+              }
+            ],
+            "calibration_equation": {
+              "type": "linear",
+              "coefficients": [1.0001, -0.01],
+              "coefficient_uncertainties": [1e-5, 0.03],
+              "r_squared": 0.999997,
+              "residual_std": 0.028
+            }
+          }
+        }
+      ]
+    },
+    
+    "cesium_vapor_magnetometers": {
+      "sensor_array": [
+        {
+          "sensor_id": "QM-CS-001",
+          "location": "Fuselage center",
+          "coordinates": [0.0, -2.0, 1.5],
+          "orientation": [0, 0, 1],
+          "cell_specifications": {
+            "cell_type": "Pyrex glass",
+            "cesium_isotope": "Cs-133",
+            "buffer_gas": "N2",
+            "cell_temperature": 75.0,
+            "vapor_density": "1e10 cm⁻³"
+          },
+          "calibration_data": {
+            "calibration_date": "2025-06-20",
+            "gyromagnetic_ratio": {
+              "value": 3.5,
+              "unit": "Hz/nT",
+              "uncertainty": "±0.001 Hz/nT"
+            },
+            "calibration_points": [
+              {
+                "applied_field": 20.0,
+                "measured_field": 20.02,
+                "uncertainty": 0.15,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 100.0,
+                "measured_field": 99.98,
+                "uncertainty": 0.15,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 500.0,
+                "measured_field": 500.05,
+                "uncertainty": 0.20,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 1000.0,
+                "measured_field": 999.95,
+                "uncertainty": 0.25,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 5000.0,
+                "measured_field": 5000.15,
+                "uncertainty": 0.50,
+                "unit": "nT"
+              },
+              {
+                "applied_field": 10000.0,
+                "measured_field": 9999.85,
+                "uncertainty": 0.75,
+                "unit": "nT"
+              }
+            ],
+            "calibration_equation": {
+              "type": "linear",
+              "coefficients": [1.0000, 0.01],
+              "coefficient_uncertainties": [2e-5, 0.05],
+              "r_squared": 0.999995,
+              "residual_std": 0.08
+            },
+            "performance_metrics": {
+              "sensitivity": "10 fT/√Hz",
+              "bandwidth": "DC to 1 kHz",
+              "heading_error": "<0.1 nT",
+              "temperature_coefficient": "±0.001 nT/°C"
+            }
+          }
+        }
+      ]
+    }
+  },
+
+  "quantum_accelerometers": {
+    "cold_atom_accelerometers": {
+      "sensor_array": [
+        {
+          "sensor_id": "QA-CA-001",
+          "location": "Navigation center",
+          "coordinates": [0.0, -5.0, 1.0],
+          "orientation": [0, 0, -1],
+          "atom_specifications": {
+            "atom_species": "Rb-87",
+            "atom_number": "1e6",
+            "temperature": "1e-6 K",
+            "cloud_size": "1 mm³"
+          },
+          "laser_system": {
+            "wavelength": 780.241e-9,
+            "frequency_stability": "1e-12",
+            "power_stability": "1e-3",
+            "beam_diameter": "10 mm"
+          },
+          "calibration_data": {
+            "calibration_date": "2025-06-10",
+            "recoil_velocity": {
+              "value": 5.8845e-3,
+              "unit": "m/s",
+              "uncertainty": "±1e-6 m/s"
+            },
+            "interrogation_time": {
+              "value": 0.1,
+              "unit": "s",
+              "uncertainty": "±1e-6 s"
+            },
+            "calibration_points": [
+              {
+                "applied_acceleration": 0.0,
+                "measured_acceleration": 1.2e-8,
+                "uncertainty": 5e-8,
+                "unit": "g"
+              },
+              {
+                "applied_acceleration": 1e-6,
+                "measured_acceleration": 1.001e-6,
+                "uncertainty": 5e-8,
+                "unit": "g"
+              },
+              {
+                "applied_acceleration": 1e-5,
+                "measured_acceleration": 9.998e-6,
+                "uncertainty": 5e-8,
+                "unit": "g"
+              },
+              {
+                "applied_acceleration": 1e-4,
+                "measured_acceleration": 1.0002e-4,
+                "uncertainty": 6e-8,
+                "unit": "g"
+              },
+              {
+                "applied_acceleration": 1e-3,
+                "measured_acceleration": 9.9995e-4,
+                "uncertainty": 8e-8,
+                "unit": "g"
+              }
+            ],
+            "calibration_equation": {
+              "type": "linear",
+              "coefficients": [0.99998, 1.2e-8],
+              "coefficient_uncertainties": [1e-5, 3e-8],
+              "r_squared": 0.999999,
+              "residual_std": 2.1e-8
+            },
+            "performance_metrics": {
+              "sensitivity": "1e-9 g",
+              "accuracy": "±1e-8 g",
+              "bandwidth": "DC to 100 Hz",
+              "dynamic_range": "1e-9 to 1e-3 g"
+            }
+          }
+        }
+      ]
+    },
+    
+    "mems_accelerometers": {
+      "sensor_array": [
+        {
+          "sensor_id": "QA-MEMS-001",
+          "location": "Wing monitoring point 1",
+          "coordinates": [-5.0, -2.0, 0.5],
+          "orientation": [0, 0, -1],
+          "specifications": {
+            "manufacturer": "Analog Devices",
+            "model": "ADXL355",
+            "range": "±2g",
+            "resolution": "3.9 μg/LSB",
+            "bandwidth": "1000 Hz"
+          },
+          "calibration_data": {
+            "calibration_date": "2025-06-18",
+            "calibration_points": [
+              {
+                "position": "+1g up",
+                "applied_acceleration": 1.0,
+                "measured_acceleration": 1.00015,
+                "uncertainty": 1e-4,
+                "unit": "g"
+              },
+              {
+                "position": "-1g down",
+                "applied_acceleration": -1.0,
+                "measured_acceleration": -0.99985,
+                "uncertainty": 1e-4,
+                "unit": "g"
+              },
+              {
+                "position": "0g horizontal",
+                "applied_acceleration": 0.0,
+                "measured_acceleration": 0.00005,
+                "uncertainty": 1e-4,
+                "unit": "g"
+              }
+            ],
+            "calibration_matrix": {
+              "scale_factors": [1.00000, 0.99985, 1.00015],
+              "biases": [5e-5, -1.5e-4, 5e-5],
+              "cross_coupling": [
+                [1.0000, 0.0002, 0.0001],
+                [0.0001, 1.0000, 0.0003],
+                [0.0002, 0.0001, 1.0000]
+              ],
+              "uncertainties": {
+                "scale_factor": 1e-4,
+                "bias": 5e-5,
+                "cross_coupling": 1e-4
+              }
+            },
+            "performance_metrics": {
+              "scale_factor_accuracy": "±0.01%",
+              "bias_stability": "±1e-5 g",
+              "nonlinearity": "<0.01% FS",
+              "cross_axis_sensitivity": "<1%",
+              "temperature_coefficient": "±10 μg/°C"
+            }
+          }
+        }
+      ]
+    }
+  },
+
+  "quantum_thermometers": {
+    "nv_center_thermometers": {
+      "sensor_array": [
+        {
+          "sensor_id": "QT-NV-001",
+          "location": "Environmental control system",
+          "coordinates": [1.0, 2.0, 1.2],
+          "diamond_specifications": {
+            "crystal_orientation": "[111]",
+            "nv_density": "5e14 cm⁻³",
+            "crystal_size": "1x1x0.3 mm³"
+          },
+          "calibration_data": {
+            "calibration_date": "2025-06-22",
+            "temperature_coefficient": {
+              "value": -74.2e3,
+              "unit": "Hz/K",
+              "uncertainty": "±0.1e3 Hz/K"
+            },
+            "reference_temperature": {
+              "value": 293.15,
+              "unit": "K"
+            },
+            "calibration_points": [
+              {
+                "reference_temperature": 273.16,
+                "measured_frequency": 2871.48e6,
+                "calculated_temperature": 273.161,
+                "uncertainty": 0.010,
+                "unit": "K"
+              },
+              {
+                "reference_temperature": 293.15,
+                "measured_frequency": 2870.00e6,
+                "calculated_temperature": 293.149,
+                "uncertainty": 0.010,
+                "unit": "K"
+              },
+              {
+                "reference_temperature": 313.15,
+                "measured_frequency": 2868.52e6,
+                "calculated_temperature": 313.151,
+                "uncertainty": 0.010,
+                "unit": "K"
+              },
+              {
+                "reference_temperature": 333.15,
+                "measured_frequency": 2867.04e6,
+                "calculated_temperature": 333.150,
+                "uncertainty": 0.012,
+                "unit": "K"
+              }
+            ],
+            "calibration_equation": {
+              "type": "linear",
+              "coefficients": [-74200, 2.892e9],
+              "coefficient_uncertainties": [100, 1e5],
+              "r_squared": 0.99999,
+              "residual_std": 0.005
+            },
+            "performance_metrics": {
+              "resolution": "1 mK",
+              "accuracy": "±10 mK",
+              "stability": "±1 mK long-term",
+              "response_time": "<1 s",
+              "spatial_resolution": "<1 μm"
+            }
+          }
+        }
+      ]
+    },
+    
+    "platinum_resistance_thermometers": {
+      "sensor_array": [
+        {
+          "sensor_id": "QT-PRT-001",
+          "location": "Structural monitoring point 1",
+          "coordinates": [-3.0, 0.0, 2.0],
+          "specifications": {
+            "type": "Class A PRT",
+            "nominal_resistance": 100.0,
+            "tolerance": "±0.15°C at 0°C",
+            "temperature_range": "-200 to 850°C"
+          },
+          "calibration_data": {
+            "calibration_date": "2025-06-25",
+            "reference_resistance": {
+              "value": 100.000,
+              "unit": "Ω",
+              "temperature": "0°C"
+            },
+            "callendar_van_dusen_coefficients": {
+              "A": 3.9083e-3,
+              "B": -5.775e-7,
+              "C": -4.183e-12,
+              "uncertainties": {
+                "A": 1e-6,
+                "B": 1e-9,
+                "C": 1e-14
+              }
+            },
+            "calibration_points": [
+              {
+                "reference_temperature": 0.01,
+                "measured_resistance": 100.000,
+                "calculated_temperature": 0.010,
+                "uncertainty": 0.003,
+                "unit": "°C"
+              },
+              {
+                "reference_temperature": 29.7646,
+                "measured_resistance": 111.405,
+                "calculated_temperature": 29.765,
+                "uncertainty": 0.003,
+                "unit": "°C"
+              },
+              {
+                "reference_temperature": 100.0,
+                "measured_resistance": 138.505,
+                "calculated_temperature": 100.001,
+                "uncertainty": 0.005,
+                "unit": "°C"
+              },
+              {
+                "reference_temperature": 156.5985,
+                "measured_resistance": 160.255,
+                "calculated_temperature": 156.599,
+                "uncertainty": 0.008,
+                "unit": "°C"
+              }
+            ],
+            "performance_metrics": {
+              "accuracy": "±0.03°C",
+              "stability": "±0.05°C/year",
+              "self_heating": "<0.1°C at 1mA",
+              "response_time": "1-5 seconds",
+              "insulation_resistance": ">100 MΩ"
+            }
+          }
+        }
+      ]
+    }
+  },
+
+  "environmental_conditions": {
+    "calibration_laboratory": {
+      "temperature": {
+        "nominal": 20.0,
+        "tolerance": "±0.1",
+        "unit": "°C",
+        "monitoring_frequency": "1 Hz"
+      },
+      "humidity": {
+        "nominal": 45,
+        "tolerance": "±5",
+        "unit": "%RH",
+        "monitoring_frequency": "0.1 Hz"
+      },
+      "pressure": {
+        "nominal": 101325,
+        "tolerance": "±100",
+        "unit": "Pa",
+        "monitoring_frequency": "0.1 Hz"
+      },
+      "magnetic_field": {
+        "residual_field": "<1 nT",
+        "gradient": "<0.1 nT/m",
+        "shielding_factor": ">100 dB",
+        "monitoring_frequency": "10 Hz"
+      },
+      "vibration": {
+        "background_level": "<1e-8 g RMS",
+        "frequency_range": "0.1 to 100 Hz",
+        "isolation_stages": 3,
+        "monitoring_frequency": "1000 Hz"
+      },
+      "air_quality": {
+        "cleanliness_class": "ISO Class 7",
+        "particle_count": "<10,000 particles/m³ (≥0.5μm)",
+        "air_changes": "20 per hour",
+        "filtration": "HEPA H14"
+      }
+    }
+  },
+
+  "uncertainty_analysis": {
+    "nv_center_magnetometer": {
+      "uncertainty_budget": [
+        {
+          "source": "Reference Standard",
+          "type": "B",
+          "value": 0.005,
+          "distribution": "normal",
+          "divisor": 2,
+          "standard_uncertainty": 0.0025,
+          "unit": "nT"
+        },
+        {
+          "source": "Frequency Measurement",
+          "type": "B",
+          "value": 0.014,
+          "distribution": "rectangular",
+          "divisor": 1.732,
+          "standard_uncertainty": 0.008,
+          "unit": "nT"
+        },
+        {
+          "source": "Temperature Coefficient",
+          "type": "B",
+          "value": 0.003,
+          "distribution": "rectangular",
+          "divisor": 1.732,
+          "standard_uncertainty": 0.0017,
+          "unit": "nT"
+        },
+        {
+          "source": "Repeatability",
+          "type": "A",
+          "value": 0.020,
+          "distribution": "normal",
+          "divisor": 1,
+          "standard_uncertainty": 0.020,
+          "unit": "nT"
+        },
+        {
+          "source": "Resolution",
+          "type": "B",
+          "value": 0.006,
+          "distribution": "rectangular",
+          "divisor": 1.732,
+          "standard_uncertainty": 0.0035,
+          "unit": "nT"
+        },
+        {
+          "source": "Drift (24h)",
+          "type": "B",
+          "value": 0.029,
+          "distribution": "rectangular",
+          "divisor": 1.732,
+          "standard_uncertainty": 0.017,
+          "unit": "nT"
+        }
+      ],
+      "combined_uncertainty": {
+        "standard_uncertainty": 0.0305,
+        "expanded_uncertainty": 0.061,
+        "coverage_factor": 2,
+        "confidence_level": 0.95,
+        "unit": "nT"
+      }
+    },
+    
+    "cold_atom_accelerometer": {
+      "uncertainty_budget": [
+        {
+          "source": "Reference Gravity",
+          "type": "B",
+          "value": 2e-8,
+          "distribution": "normal",
+          "divisor": 2,
+          "standard_uncertainty": 1e-8,
+          "unit": "g"
+        },
+        {
+          "source": "Laser Frequency",
+          "type": "B",
+          "value": 1.4e-8,
+          "distribution": "rectangular",
+          "divisor": 1.732,
+          "standard_uncertainty": 8e-9,
+          "unit": "g"
+        },
+        {
+          "source": "Timing Accuracy",
+          "type": "B",
+          "value": 8.7e-9,
+          "distribution": "rectangular",
+          "divisor": 1.732,
+          "standard_uncertainty": 5e-9,
+          "unit": "g"
+        },
+        {
+          "source": "Vibration Isolation",
+          "type": "B",
+          "value": 1e-8,
+          "distribution": "rectangular",
+          "divisor": 1.732,
+          "standard_uncertainty": 6e-9,
+          "unit": "g"
+        },
+        {
+          "source": "Repeatability",
+          "type": "A",
+          "value": 2e-8,
+          "distribution": "normal",
+          "divisor": 1,
+          "standard_uncertainty": 2e-8,
+          "unit": "g"
+        }
+      ],
+      "combined_uncertainty": {
+        "standard_uncertainty": 2.5e-8,
+        "expanded_uncertainty": 5e-8,
+        "coverage_factor": 2,
+        "confidence_level": 0.95,
+        "unit": "g"
+      }
+    }
+  },
+
+  "quality_control": {
+    "control_charts": {
+      "nv_magnetometer_qm_nv_001": {
+        "parameter": "calibration_bias",
+        "data_points": [
+          {"date": "2025-01-15", "value": 0.02, "ucl": 0.06, "lcl": -0.06},
+          {"date": "2025-02-15", "value": 0.01, "ucl": 0.06, "lcl": -0.06},
+          {"date": "2025-03-15", "value": 0.03, "ucl": 0.06, "lcl": -0.06},
+          {"date": "2025-04-15", "value": 0.02, "ucl": 0.06, "lcl": -0.06},
+          {"date": "2025-05-15", "value": 0.01, "ucl": 0.06, "lcl": -0.06},
+          {"date": "2025-06-15", "value": 0.02, "ucl": 0.06, "lcl": -0.06}
+        ],
+        "control_limits": {
+          "upper": 0.06,
+          "lower": -0.06,
+          "center": 0.0,
+          "unit": "nT"
+        },
+        "status": "in_control"
+      }
+    },
+    
+    "proficiency_testing": {
+      "last_participation": "2024-11-15",
+      "provider": "NIST MAP",
+              "results": [
+        {
+          "parameter": "Magnetic Field",
+          "reference_value": 1000.0,
+          "measured_value": 1000.05,
+          "uncertainty": 0.12,
+          "z_score": 0.42,
+          "unit": "nT",
+          "status": "satisfactory"
+        },
+        {
+          "parameter": "Acceleration",
+          "reference_value": 1e-6,
+          "measured_value": 1.002e-6,
+          "uncertainty": 5e-8,
+          "z_score": 0.04,
+          "unit": "g",
+          "status": "satisfactory"
+        },
+        {
+          "parameter": "Temperature",
+          "reference_value": 100.0,
+          "measured_value": 100.008,
+          "uncertainty": 0.005,
+          "z_score": 1.6,
+          "unit": "°C",
+          "status": "satisfactory"
+        }
+      ],
+      "overall_status": "satisfactory",
+      "next_participation": "2025-11-15"
+    },
+    
+    "calibration_intervals": {
+      "nv_center_magnetometers": {
+        "frequency": "monthly",
+        "last_calibration": "2025-06-15",
+        "next_calibration": "2025-07-15",
+        "calibration_history": [
+          {
+            "date": "2025-01-15",
+            "status": "pass",
+            "drift": 0.01,
+            "unit": "nT"
+          },
+          {
+            "date": "2025-02-15",
+            "status": "pass",
+            "drift": 0.02,
+            "unit": "nT"
+          },
+          {
+            "date": "2025-03-15",
+            "status": "pass",
+            "drift": 0.01,
+            "unit": "nT"
+          },
+          {
+            "date": "2025-04-15",
+            "status": "pass",
+            "drift": 0.03,
+            "unit": "nT"
+          },
+          {
+            "date": "2025-05-15",
+            "status": "pass",
+            "drift": 0.02,
+            "unit": "nT"
+          },
+          {
+            "date": "2025-06-15",
+            "status": "pass",
+            "drift": 0.01,
+            "unit": "nT"
+          }
+        ]
+      },
+      "cold_atom_accelerometers": {
+        "frequency": "quarterly",
+        "last_calibration": "2025-06-10",
+        "next_calibration": "2025-09-10",
+        "calibration_history": [
+          {
+            "date": "2024-12-10",
+            "status": "pass",
+            "drift": 5e-9,
+            "unit": "g"
+          },
+          {
+            "date": "2025-03-10",
+            "status": "pass",
+            "drift": 8e-9,
+            "unit": "g"
+          },
+          {
+            "date": "2025-06-10",
+            "status": "pass",
+            "drift": 3e-9,
+            "unit": "g"
+          }
+        ]
+      },
+      "quantum_thermometers": {
+        "frequency": "bi-monthly",
+        "last_calibration": "2025-06-22",
+        "next_calibration": "2025-08-22",
+        "calibration_history": [
+          {
+            "date": "2025-02-22",
+            "status": "pass",
+            "drift": 0.002,
+            "unit": "K"
+          },
+          {
+            "date": "2025-04-22",
+            "status": "pass",
+            "drift": 0.001,
+            "unit": "K"
+          },
+          {
+            "date": "2025-06-22",
+            "status": "pass",
+            "drift": 0.003,
+            "unit": "K"
+          }
+        ]
+      }
+    }
+  },
+
+  "network_synchronization": {
+    "time_reference": {
+      "master_clock": {
+        "type": "GPS-disciplined OCXO",
+        "accuracy": "±10 ns absolute",
+        "stability": "1e-12 fractional",
+        "reference": "GPS UTC",
+        "backup": "Rubidium atomic clock"
+      },
+      "distribution_protocol": "IEEE 1588v2 (PTPv2)",
+      "synchronization_accuracy": "±100 ns",
+      "network_jitter": "<50 ns RMS",
+      "monitoring_frequency": "1 Hz"
+    },
+    
+    "sensor_network_timing": {
+      "QM-NV-001": {
+        "sync_offset": 15.2,
+        "jitter": 12.5,
+        "last_sync": "2025-06-29T11:59:45Z",
+        "unit": "ns"
+      },
+      "QM-NV-002": {
+        "sync_offset": -8.7,
+        "jitter": 18.3,
+        "last_sync": "2025-06-29T11:59:45Z",
+        "unit": "ns"
+      },
+      "QA-CA-001": {
+        "sync_offset": 22.1,
+        "jitter": 35.2,
+        "last_sync": "2025-06-29T11:59:40Z",
+        "unit": "ns"
+      },
+      "QT-NV-001": {
+        "sync_offset": -5.8,
+        "jitter": 8.9,
+        "last_sync": "2025-06-29T11:59:45Z",
+        "unit": "ns"
+      }
+    }
+  },
+
+  "cross_coupling_analysis": {
+    "temperature_magnetic_coupling": {
+      "sensor_pairs": [
+        {
+          "magnetometer": "QM-NV-001",
+          "thermometer": "QT-NV-001",
+          "coupling_coefficient": -0.05,
+          "uncertainty": 0.01,
+          "unit": "nT/K",
+          "measurement_date": "2025-06-15"
+        },
+        {
+          "magnetometer": "QM-NV-002",
+          "thermometer": "QT-PRT-001",
+          "coupling_coefficient": -0.03,
+          "uncertainty": 0.01,
+          "unit": "nT/K",
+          "measurement_date": "2025-06-15"
+        }
+      ]
+    },
+    
+    "vibration_magnetic_coupling": {
+      "sensor_pairs": [
+        {
+          "magnetometer": "QM-NV-001",
+          "accelerometer": "QA-MEMS-001",
+          "coupling_coefficient": 0.8,
+          "uncertainty": 0.2,
+          "unit": "nT/g",
+          "measurement_date": "2025-06-18"
+        }
+      ]
+    },
+    
+    "compensation_matrices": {
+      "magnetometer_compensation": {
+        "QM-NV-001": {
+          "temperature_compensation": {
+            "coefficient": -0.05,
+            "uncertainty": 0.01,
+            "enabled": true
+          },
+          "vibration_compensation": {
+            "coefficient": 0.8,
+            "uncertainty": 0.2,
+            "enabled": true
+          }
+        }
+      }
+    }
+  },
+
+  "real_time_monitoring": {
+    "current_status": {
+      "timestamp": "2025-06-29T12:00:00Z",
+      "network_health": "nominal",
+      "active_sensors": 247,
+      "failed_sensors": 0,
+      "degraded_sensors": 2,
+      "calibration_due": 5
+    },
+    
+    "sensor_health": {
+      "QM-NV-001": {
+        "status": "nominal",
+        "last_measurement": "2025-06-29T11:59:58Z",
+        "drift_rate": 0.001,
+        "drift_unit": "nT/day",
+        "next_calibration": "2025-07-15",
+        "alerts": []
+      },
+      "QM-NV-002": {
+        "status": "nominal",
+        "last_measurement": "2025-06-29T11:59:58Z",
+        "drift_rate": 0.002,
+        "drift_unit": "nT/day",
+        "next_calibration": "2025-07-15",
+        "alerts": []
+      },
+      "QA-CA-001": {
+        "status": "degraded",
+        "last_measurement": "2025-06-29T11:58:32Z",
+        "drift_rate": 1.2e-8,
+        "drift_unit": "g/day",
+        "next_calibration": "2025-09-10",
+        "alerts": [
+          {
+            "type": "drift_warning",
+            "message": "Drift rate exceeding 1e-8 g/day threshold",
+            "timestamp": "2025-06-29T08:15:23Z",
+            "severity": "medium"
+          }
+        ]
+      },
+      "QT-NV-001": {
+        "status": "nominal",
+        "last_measurement": "2025-06-29T11:59:58Z",
+        "drift_rate": 0.0005,
+        "drift_unit": "K/day",
+        "next_calibration": "2025-08-22",
+        "alerts": []
+      }
+    },
+    
+    "performance_metrics": {
+      "network_availability": 99.97,
+      "measurement_success_rate": 99.95,
+      "calibration_compliance": 98.8,
+      "mean_time_between_failures": 8760,
+      "mean_time_to_repair": 2.5,
+      "unit": {
+        "availability": "%",
+        "success_rate": "%",
+        "compliance": "%",
+        "mtbf": "hours",
+        "mttr": "hours"
+      }
+    }
+  },
+
+  "predictive_maintenance": {
+    "ml_models": {
+      "drift_prediction": {
+        "model_type": "LSTM Neural Network",
+        "training_data_points": 10000,
+        "prediction_horizon": "30 days",
+        "accuracy": 95.2,
+        "last_training": "2025-06-01",
+        "next_training": "2025-09-01"
+      },
+      "failure_prediction": {
+        "model_type": "Random Forest",
+        "training_data_points": 5000,
+        "prediction_horizon": "90 days",
+        "accuracy": 92.8,
+        "last_training": "2025-05-15",
+        "next_training": "2025-08-15"
+      }
+    },
+    
+    "predictions": {
+      "QM-NV-001": {
+        "predicted_drift_30d": 0.025,
+        "confidence": 0.87,
+        "recommended_action": "routine_calibration",
+        "risk_level": "low"
+      },
+      "QA-CA-001": {
+        "predicted_drift_30d": 2.5e-8,
+        "confidence": 0.93,
+        "recommended_action": "early_calibration",
+        "risk_level": "medium"
+      },
+      "QT-NV-001": {
+        "predicted_drift_30d": 0.008,
+        "confidence": 0.91,
+        "recommended_action": "routine_calibration",
+        "risk_level": "low"
+      }
+    }
+  },
+
+  "calibration_automation": {
+    "robotic_systems": {
+      "primary_robot": {
+        "model": "KUKA LBR iiwa 14 R820",
+        "degrees_of_freedom": 7,
+        "payload": "14 kg",
+        "reach": "820 mm",
+        "repeatability": "±0.1 mm",
+        "applications": [
+          "sensor_positioning",
+          "reference_standard_placement",
+          "cable_management"
+        ]
+      },
+      "precision_positioner": {
+        "model": "PI M-405.DG",
+        "travel_range": "25 mm",
+        "resolution": "1 nm",
+        "accuracy": "±100 nm",
+        "applications": [
+          "fine_sensor_alignment",
+          "micro_positioning"
+        ]
+      }
+    },
+    
+    "automation_software": {
+      "control_system": "LabVIEW Real-Time",
+      "measurement_software": "Custom Python/C++",
+      "data_management": "PostgreSQL + InfluxDB",
+      "user_interface": "Web-based React frontend",
+      "scheduling": "Cron-based with ML optimization"
+    },
+    
+    "automation_metrics": {
+      "calibration_time_reduction": "65%",
+      "human_intervention_required": "10%",
+      "measurement_repeatability_improvement": "40%",
+      "error_rate_reduction": "80%",
+      "throughput_increase": "300%"
+    }
+  },
+
+  "traceability_chain": {
+    "magnetic_field_traceability": {
+      "level_1": {
+        "standard": "SI Tesla",
+        "realization": "Proton gyromagnetic ratio",
+        "uncertainty": "1.7e-8 relative",
+        "authority": "BIPM"
+      },
+      "level_2": {
+        "standard": "NIST Proton NMR",
+        "uncertainty": "1e-9 relative",
+        "calibration_date": "2024-12-15",
+        "certificate": "NIST-CAL-2024-B-001"
+      },
+      "level_3": {
+        "standard": "Helmholtz Coil System",
+        "uncertainty": "1e-6 relative",
+        "calibration_date": "2025-01-20",
+        "certificate": "GAIA-CAL-2025-HC-001"
+      },
+      "level_4": {
+        "standard": "Working Standards",
+        "uncertainty": "1e-5 relative",
+        "calibration_date": "2025-06-01",
+        "certificate": "GAIA-CAL-2025-WS-001"
+      },
+      "level_5": {
+        "device": "Quantum Magnetometers",
+        "uncertainty": "1e-4 relative",
+        "calibration_date": "2025-06-15"
+      }
+    },
+    
+    "acceleration_traceability": {
+      "level_1": {
+        "standard": "SI m/s²",
+        "realization": "Laser interferometry + atomic time",
+        "uncertainty": "1e-8 relative",
+        "authority": "BIPM"
+      },
+      "level_2": {
+        "standard": "NIST FG5X Gravimeter",
+        "uncertainty": "2e-8 relative",
+        "calibration_date": "2024-11-20",
+        "certificate": "NIST-CAL-2024-G-001"
+      },
+      "level_3": {
+        "standard": "Local Gravity Reference",
+        "uncertainty": "1e-6 relative",
+        "measurement_date": "2025-01-15",
+        "certificate": "GAIA-GRAV-2025-001"
+      },
+      "level_4": {
+        "device": "Quantum Accelerometers",
+        "uncertainty": "5e-8 relative",
+        "calibration_date": "2025-06-10"
+      }
+    },
+    
+    "temperature_traceability": {
+      "level_1": {
+        "standard": "SI Kelvin",
+        "realization": "Boltzmann constant",
+        "uncertainty": "exact",
+        "authority": "BIPM"
+      },
+      "level_2": {
+        "standard": "ITS-90 Fixed Points",
+        "uncertainty": "1 mK",
+        "realization_date": "2024-10-01",
+        "certificate": "NIST-CAL-2024-T-001"
+      },
+      "level_3": {
+        "standard": "Standard PRT",
+        "uncertainty": "3 mK",
+        "calibration_date": "2025-02-01",
+        "certificate": "GAIA-CAL-2025-PRT-001"
+      },
+      "level_4": {
+        "device": "Quantum Thermometers",
+        "uncertainty": "10 mK",
+        "calibration_date": "2025-06-22"
+      }
+    }
+  },
+
+  "validation_data": {
+    "inter_laboratory_comparison": {
+      "study_id": "GAIA-ILC-2025-001",
+      "participants": [
+        "GAIA-QAO Metrology Lab",
+        "NIST Boulder",
+        "NPL Teddington",
+        "PTB Braunschweig"
+      ],
+      "artifact": "Traveling Quantum Magnetometer",
+      "measurement_parameter": "Magnetic Field Sensitivity",
+      "results": [
+        {
+          "participant": "GAIA-QAO",
+          "measured_value": 1.02,
+          "uncertainty": 0.05,
+          "unit": "nT/√Hz"
+        },
+        {
+          "participant": "NIST",
+          "measured_value": 1.01,
+          "uncertainty": 0.03,
+          "unit": "nT/√Hz"
+        },
+        {
+          "participant": "NPL",
+          "measured_value": 1.03,
+          "uncertainty": 0.04,
+          "unit": "nT/√Hz"
+        },
+        {
+          "participant": "PTB",
+          "measured_value": 0.99,
+          "uncertainty": 0.04,
+          "unit": "nT/√Hz"
+        }
+      ],
+      "consensus_value": 1.01,
+      "consensus_uncertainty": 0.02,
+      "en_values": [0.25, 0.0, 0.43, -0.35],
+      "status": "satisfactory",
+      "completion_date": "2025-05-30"
+    },
+    
+    "round_robin_study": {
+      "study_id": "GAIA-RR-2025-002",
+      "parameter": "Cold Atom Accelerometer Calibration",
+      "circulation_period": "6 months",
+      "participants": 8,
+      "measurements_per_participant": 10,
+      "statistical_analysis": {
+        "between_lab_std": 3.2e-8,
+        "within_lab_std": 1.8e-8,
+        "reproducibility": 3.7e-8,
+        "repeatability": 1.8e-8,
+        "unit": "g"
+      },
+      "status": "completed",
+      "report_date": "2025-06-15"
+    }
+  },
+
+  "software_configuration": {
+    "calibration_software": {
+      "name": "QSCMS (Quantum Sensor Calibration Management System)",
+      "version": "3.2.1",
+      "build_date": "2025-06-01",
+      "programming_languages": ["Python 3.11", "C++17", "JavaScript ES2022"],
+      "databases": ["PostgreSQL 15", "InfluxDB 2.7", "Redis 7.0"],
+      "frameworks": ["React 18", "Flask 2.3", "FastAPI 0.100"],
+      "license": "Proprietary GAIA-QAO"
+    },
+    
+    "measurement_algorithms": {
+      "nv_center_odmr": {
+        "algorithm": "Least-squares Lorentzian fitting",
+        "library": "scipy.optimize",
+        "version": "1.11.0",
+        "validation_status": "V&V Complete"
+      },
+      "atom_interferometry": {
+        "algorithm": "Phase extraction via FFT",
+        "library": "numpy.fft + custom C++",
+        "version": "1.24.3",
+        "validation_status": "V&V Complete"
+      },
+      "uncertainty_propagation": {
+        "algorithm": "Monte Carlo simulation",
+        "library": "uncertainties + custom",
+        "version": "3.1.7",
+        "validation_status": "V&V Complete"
+      }
+    },
+    
+    "data_integrity": {
+      "checksum_algorithm": "SHA-256",
+      "digital_signatures": "Ed25519",
+      "encryption": "AES-256-GCM",
+      "backup_frequency": "Every 4 hours",
+      "retention_period": "10 years",
+      "archive_format": "HDF5 + JSON metadata"
+    }
+  },
+
+  "future_developments": {
+    "planned_upgrades": {
+      "quantum_networking": {
+        "description": "Quantum entangled sensor network",
+        "target_date": "2026-Q2",
+        "expected_improvement": "10x sensitivity enhancement",
+        "readiness_level": "TRL 4"
+      },
+      "ai_calibration": {
+        "description": "AI-driven adaptive calibration",
+        "target_date": "2025-Q4",
+        "expected_improvement": "50% reduction in calibration time",
+        "readiness_level": "TRL 6"
+      },
+      "blockchain_traceability": {
+        "description": "Blockchain-based calibration records",
+        "target_date": "2026-Q1",
+        "expected_improvement": "Immutable traceability chain",
+        "readiness_level": "TRL 5"
+      }
+    },
+    
+    "research_collaborations": {
+      "quantum_metrology_consortium": {
+        "partners": ["NIST", "NPL", "PTB", "RIKEN"],
+        "focus": "Next-generation quantum standards",
+        "funding": "€5M",
+        "duration": "2025-2028"
+      },
+      "aerospace_quantum_initiative": {
+        "partners": ["ESA", "NASA", "Airbus", "Boeing"],
+        "focus": "Space-qualified quantum sensors",
+        "funding": "$12M",
+        "duration": "2025-2030"
+      }
+    }
+  },
+
+  "data_provenance": {
+    "creation_metadata": {
+      "generated_by": "QSCMS Automated Reporting System v3.2.1",
+      "generation_timestamp": "2025-06-29T12:00:00Z",
+      "data_sources": [
+        "Real-time sensor network",
+        "Calibration database",
+        "Quality control system",
+        "Environmental monitoring"
+      ],
+      "processing_algorithms": [
+        "Statistical analysis suite v2.1",
+        "Uncertainty propagation engine v1.8",
+        "Trend analysis module v1.5"
+      ]
+    },
+    
+    "quality_indicators": {
+      "data_completeness": "99.8%",
+      "measurement_validity": "99.95%",
+      "calibration_currency": "98.5%",
+      "traceability_compliance": "100%"
+    },
+    
+    "verification_signatures": {
+      "data_integrity_hash": "a8f5f167f44f4964e6c998dee827110c",
+      "calibration_manager_approval": "approved_2025-06-29_AMP",
+      "quality_assurance_review": "reviewed_2025-06-29_QAM",
+      "technical_director_sign_off": "signed_2025-06-29_CTO"
+    }
+  }
+}
