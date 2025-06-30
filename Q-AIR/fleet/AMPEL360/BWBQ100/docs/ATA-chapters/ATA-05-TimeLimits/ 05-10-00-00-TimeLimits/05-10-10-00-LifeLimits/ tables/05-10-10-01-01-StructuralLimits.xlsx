@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05-10-10-01-01 Structural Limits - AMPEL360 BWB-Q100</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+            padding: 2rem;
+            border-bottom: 2px solid #0D9488;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(13,148,136,0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .doc-info {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .badge {
+            background: rgba(13,148,136,0.2);
+            border: 1px solid #0D9488;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #0D9488;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .badge-icon {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #0D9488, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: #9ca3af;
+            font-size: 1.1rem;
+        }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: #0f0f1e;
+            border-bottom: 1px solid #1f2937;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #0D9488 #1a1a2e;
+        }
+        
+        .nav-tabs::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .nav-tabs::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+        
+        .nav-tabs::-webkit-scrollbar-thumb {
+            background: #0D9488;
+            border-radius: 3px;
+        }
+        
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(13,148,136,0.1);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            color: #9ca3af;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(13,148,136,0.2);
+            border-color: #0D9488;
+            color: #0D9488;
+        }
+        
+        .tab-btn.active {
+            background: #0D9488;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(13,148,136,0.3);
+        }
+        
+        /* Content Area */
+        .content {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Table Styles */
+        .table-container {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+            overflow-x: auto;
+        }
+        
+        .table-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #0D9488;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: rgba(13,148,136,0.2);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #0D9488;
+            border-bottom: 2px solid #0D9488;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid #374151;
+            transition: background 0.2s ease;
+        }
+        
+        tr:hover td {
+            background: rgba(13,148,136,0.05);
+        }
+        
+        /* Status Indicators */
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .status-critical {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+        }
+        
+        .status-significant {
+            background: rgba(245,158,11,0.2);
+            color: #f59e0b;
+            border: 1px solid #f59e0b;
+        }
+        
+        .status-monitor {
+            background: rgba(59,130,246,0.2);
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+        }
+        
+        .status-good {
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+        
+        /* Progress Bars */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #374151;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #0D9488 0%, #059669 100%);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.3),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Value Cells */
+        .value-cell {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            color: #0D9488;
+            font-weight: 500;
+        }
+        
+        .value-with-unit {
+            display: flex;
+            align-items: baseline;
+            gap: 0.25rem;
+        }
+        
+        .unit {
+            color: #6b7280;
+            font-size: 0.85em;
+        }
+        
+        /* Quantum Indicator */
+        .quantum-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(139,92,246,0.2);
+            border: 1px solid #8b5cf6;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #8b5cf6;
+        }
+        
+        /* Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .summary-card {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #374151;
+            transition: all 0.3s ease;
+        }
+        
+        .summary-card:hover {
+            border-color: #0D9488;
+            box-shadow: 0 4px 24px rgba(13,148,136,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .summary-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .summary-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0D9488;
+            margin-bottom: 0.5rem;
+        }
+        
+        .summary-detail {
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.75rem;
+            }
+            
+            .nav-tabs {
+                padding: 0.75rem 1rem;
+            }
+            
+            .tab-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .table-container {
+                padding: 1rem;
+            }
+            
+            table {
+                font-size: 0.875rem;
+            }
+            
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .nav-tabs {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+                page-break-after: always;
+            }
+            
+            .table-container {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="doc-info">
+                <span class="badge">
+                    <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11H3v10h6V11zm4-7H7v18h6V4zm4 3h-6v14h6V7zm4 3h-6v11h6V10z"/>
+                    </svg>
+                    Document ID: 05-10-10-01-01
+                </span>
+                <span class="badge">
+                    <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                    </svg>
+                    Version 2.0.0
+                </span>
+                <span class="badge">
+                    <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    Updated: 2025-06-29
+                </span>
+            </div>
+            <h1>AMPEL360 BWB-Q100 Structural Limits</h1>
+            <p class="subtitle">Comprehensive Structural Life Limits with Quantum-Enhanced Monitoring</p>
+        </div>
+    </header>
+
+    <nav class="nav-tabs">
+        <button class="tab-btn active" onclick="showTab('summary')">Summary Dashboard</button>
+        <button class="tab-btn" onclick="showTab('primary')">Primary Structure</button>
+        <button class="tab-btn" onclick="showTab('secondary')">Secondary Structure</button>
+        <button class="tab-btn" onclick="showTab('rotating')">Rotating Components</button>
+        <button class="tab-btn" onclick="showTab('systems')">Systems & Equipment</button>
+        <button class="tab-btn" onclick="showTab('quantum')">Quantum Monitoring</button>
+        <button class="tab-btn" onclick="showTab('extensions')">Life Extensions</button>
+    </nav>
+
+    <main class="content">
+        <!-- Summary Dashboard Tab -->
+        <div id="summary" class="tab-content active">
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="summary-label">Total Monitored Components</div>
+                    <div class="summary-value">2,450</div>
+                    <div class="summary-detail">Quantum sensors active</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Average Life Extension</div>
+                    <div class="summary-value">+50%</div>
+                    <div class="summary-detail">With quantum monitoring</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Critical Components</div>
+                    <div class="summary-value">12</div>
+                    <div class="summary-detail">Category 1 fatigue items</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Fleet Savings</div>
+                    <div class="summary-value">$156.8M</div>
+                    <div class="summary-detail">Over 5 years</div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h2 class="table-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="9" y1="9" x2="15" y2="9"/>
+                        <line x1="9" y1="12" x2="15" y2="12"/>
+                        <line x1="9" y1="15" x2="15" y2="15"/>
+                    </svg>
+                    Critical Component Life Summary
+                </h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Criticality</th>
+                            <th>Traditional Life</th>
+                            <th>Quantum-Enhanced Life</th>
+                            <th>Extension Potential</th>
+                            <th>Monitoring Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Center Wing Box</td>
+                            <td><span class="status status-critical">Category 1</span></td>
+                            <td class="value-cell">120,000 FC</td>
+                            <td class="value-cell">90,000-180,000 FC</td>
+                            <td class="value-cell">+50%</td>
+                            <td><span class="quantum-indicator">156 Sensors Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Pressure Bulkhead</td>
+                            <td><span class="status status-critical">Category 1</span></td>
+                            <td class="value-cell">90,000 FC</td>
+                            <td class="value-cell">75,000-135,000 FC</td>
+                            <td class="value-cell">+50%</td>
+                            <td><span class="quantum-indicator">89 Sensors Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>HP Turbine Disc</td>
+                            <td><span class="status status-critical">Category 1</span></td>
+                            <td class="value-cell">30,000 EH</td>
+                            <td class="value-cell">25,000-45,000 EH</td>
+                            <td class="value-cell">+50%</td>
+                            <td><span class="quantum-indicator">24 Sensors Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Wing Spars</td>
+                            <td><span class="status status-significant">Category 2</span></td>
+                            <td class="value-cell">100,000 FC</td>
+                            <td class="value-cell">85,000-150,000 FC</td>
+                            <td class="value-cell">+50%</td>
+                            <td><span class="quantum-indicator">245 Sensors Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Engine Mounts</td>
+                            <td><span class="status status-critical">Category 1</span></td>
+                            <td class="value-cell">80,000 FC</td>
+                            <td class="value-cell">70,000-120,000 FC</td>
+                            <td class="value-cell">+50%</td>
+                            <td><span class="quantum-indicator">67 Sensors Active</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Primary Structure Tab -->
+        <div id="primary" class="tab-content">
+            <div class="table-container">
+                <h2 class="table-title">Primary Structure Life Limits</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Part Number</th>
+                            <th>Material</th>
+                            <th>Base Life Limit</th>
+                            <th>Inspection Interval</th>
+                            <th>Quantum Sensors</th>
+                            <th>Life Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Center Wing Box Upper Cover</td>
+                            <td>CWB-UC-001</td>
+                            <td>T800/M21 CFRP</td>
+                            <td class="value-cell">120,000 FC</td>
+                            <td class="value-cell">4,000 FC</td>
+                            <td class="value-cell">48</td>
+                            <td>
+                                <div class="progress-container">
+                                    <div class="progress-bar" style="width: 65%;"></div>
+                                </div>
+                                <span style="font-size: 0.85rem; color: #6b7280;">65% consumed</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Center Wing Box Lower Cover</td>
+                            <td>CWB-LC-001</td>
+                            <td>T800/M21 CFRP</td>
+                            <td class="value-cell">120,000 FC</td>
+                            <td class="value-cell">4,000 FC</td>
+                            <td class="value-cell">48</td>
+                            <td>
+                                <div class="progress-container">
+                                    <div class="progress-bar" style="width: 62%;"></div>
+                                </div>
+                                <span style="font-size: 0.85rem; color: #6b7280;">62% consumed</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Front Spar - Center Section</td>
+                            <td>FS-CS-001</td>
+                            <td>T800/M21 CFRP</td>
+                            <td class="value-cell">100,000 FC</td>
+                            <td class="value-cell">3,000 FC</td>
+                            <td class="value-cell">36</td>
+                            <td>
+                                <div class="progress-container">
+                                    <div class="progress-bar" style="width: 58%;"></div>
+                                </div>
+                                <span style="font-size: 0.85rem; color: #6b7280;">58% consumed</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Rear Spar - Center Section</td>
+                            <td>RS-CS-001</td>
+                            <td>T800/M21 CFRP</td>
+                            <td class="value-cell">100,000 FC</td>
+                            <td class="value-cell">3,000 FC</td>
+                            <td class="value-cell">36</td>
+                            <td>
+                                <div class="progress-container">
+                                    <div class="progress-bar" style="width: 55%;"></div>
+                                </div>
+                                <span style="font-size: 0.85rem; color: #6b7280;">55% consumed</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Forward Pressure Bulkhead</td>
+                            <td>FPB-001</td>
+                            <td>Al-Li 2099-T8E80</td>
+                            <td class="value-cell">90,000 PC</td>
+                            <td class="value-cell">2,000 PC</td>
+                            <td class="value-cell">45</td>
+                            <td>
+                                <div class="progress-container">
+                                    <div class="progress-bar" style="width: 72%;"></div>
+                                </div>
+                                <span style="font-size: 0.85rem; color: #6b7280;">72% consumed</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Aft Pressure Bulkhead</td>
+                            <td>APB-001</td>
+                            <td>Al-Li 2099-T8E80</td>
+                            <td class="value-cell">90,000 PC</td>
+                            <td class="value-cell">2,000 PC</td>
+                            <td class="value-cell">44</td>
+                            <td>
+                                <div class="progress-container">
+                                    <div class="progress-bar" style="width: 70%;"></div>
+                                </div>
+                                <span style="font-size: 0.85rem; color: #6b7280;">70% consumed</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Main Landing Gear Beam</td>
+                            <td>MLG-BEAM-001</td>
+                            <td>Ti-6Al-4V</td>
+                            <td class="value-cell">60,000 FC</td>
+                            <td class="value-cell">1,500 FC</td>
+                            <td class="value-cell">28</td>
+                            <td>
+                                <div class="progress-container">
+                                    <div class="progress-bar" style="width: 45%;"></div>
+                                </div>
+                                <span style="font-size: 0.85rem; color: #6b7280;">45% consumed</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Engine Pylon Primary Structure</td>
+                            <td>EP-PS-001</td>
+                            <td>Ti-6Al-4V</td>
+                            <td class="value-cell">80,000 FC</td>
+                            <td class="value-cell">2,000 FC</td>
+                            <td class="value-cell">32</td>
+                            <td>
+                                <div class="progress-container">
+                                    <div class="progress-bar" style="width: 52%;"></div>
+                                </div>
+                                <span style="font-size: 0.85rem; color: #6b7280;">52% consumed</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Secondary Structure Tab -->
+        <div id="secondary" class="tab-content">
+            <div class="table-container">
+                <h2 class="table-title">Secondary Structure Life Limits</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Part Number</th>
+                            <th>Material</th>
+                            <th>Base Life Limit</th>
+                            <th>Inspection Type</th>
+                            <th>Monitoring Level</th>
+                            <th>Health Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Elevon Hinge Fittings</td>
+                            <td>EH-001-L/R</td>
+                            <td>Ti-6Al-4V</td>
+                            <td class="value-cell">40,000 FC</td>
+                            <td>Visual + NDT</td>
+                            <td><span class="status status-significant">Enhanced</span></td>
+                            <td><span class="status status-good">98.2%</span></td>
+                        </tr>
+                        <tr>
+                            <td>Access Door Frames</td>
+                            <td>ADF-001-012</td>
+                            <td>Al-Li 2099</td>
+                            <td class="value-cell">30,000 FC</td>
+                            <td>Visual</td>
+                            <td><span class="status status-monitor">Standard</span></td>
+                            <td><span class="status status-good">96.5%</span></td>
+                        </tr>
+                        <tr>
+                            <td>Flap Track Beams</td>
+                            <td>FTB-001-004</td>
+                            <td>CFRP/Ti</td>
+                            <td class="value-cell">50,000 FC</td>
+                            <td>Detailed + NDT</td>
+                            <td><span class="status status-significant">Enhanced</span></td>
+                            <td><span class="status status-good">97.8%</span></td>
+                        </tr>
+                        <tr>
+                            <td>Radome Attachment</td>
+                            <td>RA-001</td>
+                            <td>Al 7075-T7351</td>
+                            <td class="value-cell">60,000 FC</td>
+                            <td>Visual</td>
+                            <td><span class="status status-monitor">Standard</span></td>
+                            <td><span class="status status-good">99.1%</span></td>
+                        </tr>
+                        <tr>
+                            <td>APU Mount Structure</td>
+                            <td>APU-MS-001</td>
+                            <td>Ti-6Al-4V</td>
+                            <td class="value-cell">40,000 FC</td>
+                            <td>Detailed + NDT</td>
+                            <td><span class="status status-significant">Enhanced</span></td>
+                            <td><span class="status status-good">95.4%</span></td>
+                        </tr>
+                        <tr>
+                            <td>Cargo Floor Beams</td>
+                            <td>CFB-001-024</td>
+                            <td>Al-Li 2099</td>
+                            <td class="value-cell">80,000 FC</td>
+                            <td>Visual</td>
+                            <td><span class="status status-monitor">Standard</span></td>
+                            <td><span class="status status-good">98.7%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Rotating Components Tab -->
+        <div id="rotating" class="tab-content">
+            <div class="table-container">
+                <h2 class="table-title">Rotating Component Life Limits</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Part Number</th>
+                            <th>Material</th>
+                            <th>Life Limit Type</th>
+                            <th>Base Limit</th>
+                            <th>Operating Temp</th>
+                            <th>Quantum Monitoring</th>
+                            <th>Extension Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>HP Turbine Disc Stage 1</td>
+                            <td>HPT-D1-001</td>
+                            <td>CMSX-4</td>
+                            <td>Cycles + Hours</td>
+                            <td class="value-cell">20,000 TAC / 30,000 EH</td>
+                            <td class="value-cell">1,350°C</td>
+                            <td><span class="quantum-indicator">12 Sensors</span></td>
+                            <td><span class="status status-good">Eligible +50%</span></td>
+                        </tr>
+                        <tr>
+                            <td>HP Turbine Disc Stage 2</td>
+                            <td>HPT-D2-001</td>
+                            <td>CMSX-4</td>
+                            <td>Cycles + Hours</td>
+                            <td class="value-cell">25,000 TAC / 35,000 EH</td>
+                            <td class="value-cell">1,150°C</td>
+                            <td><span class="quantum-indicator">12 Sensors</span></td>
+                            <td><span class="status status-good">Eligible +50%</span></td>
+                        </tr>
+                        <tr>
+                            <td>HP Compressor Disc Stage 10</td>
+                            <td>HPC-D10-001</td>
+                            <td>IN718</td>
+                            <td>Cycles</td>
+                            <td class="value-cell">30,000 TAC</td>
+                            <td class="value-cell">650°C</td>
+                            <td><span class="quantum-indicator">8 Sensors</span></td>
+                            <td><span class="status status-good">Eligible +40%</span></td>
+                        </tr>
+                        <tr>
+                            <td>Fan Disc</td>
+                            <td>FAN-D-001</td>
+                            <td>Ti-6Al-4V</td>
+                            <td>Cycles</td>
+                            <td class="value-cell">40,000 FC</td>
+                            <td class="value-cell">120°C</td>
+                            <td><span class="quantum-indicator">16 Sensors</span></td>
+                            <td><span class="status status-good">Eligible +50%</span></td>
+                        </tr>
+                        <tr>
+                            <td>LP Turbine Disc</td>
+                            <td>LPT-D-001</td>
+                            <td>Waspaloy</td>
+                            <td>Cycles + Hours</td>
+                            <td class="value-cell">35,000 TAC / 50,000 EH</td>
+                            <td class="value-cell">750°C</td>
+                            <td><span class="quantum-indicator">10 Sensors</span></td>
+                            <td><span class="status status-good">Eligible +45%</span></td>
+                        </tr>
+                        <tr>
+                            <td>Electric Motor Rotor</td>
+                            <td>EM-R-001</td>
+                            <td>Electrical Steel</td>
+                            <td>Hours</td>
+                            <td class="value-cell">80,000 MH</td>
+                            <td class="value-cell">180°C</td>
+                            <td><span class="quantum-indicator">8 Sensors</span></td>
+                            <td><span class="status status-good">Eligible +60%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Systems & Equipment Tab -->
+        <div id="systems" class="tab-content">
+            <div class="table-container">
+                <h2 class="table-title">Systems & Equipment Life Limits</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>System/Component</th>
+                            <th>Part Number</th>
+                            <th>Life Limit Type</th>
+                            <th>Base Limit</th>
+                            <th>Operating Environment</th>
+                            <th>Failure Mode</th>
+                            <th>Monitoring Method</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>EHA Flight Controls</td>
+                            <td>EHA-FC-001</td>
+                            <td>Cycles</td>
+                            <td class="value-cell">50,000 FC</td>
+                            <td>-40°C to +85°C</td>
+                            <td>Seal Wear</td>
+                            <td><span class="quantum-indicator">Performance Monitoring</span></td>
+                        </tr>
+                        <tr>
+                            <td>Landing Gear Actuators</td>
+                            <td>LGA-001-002</td>
+                            <td>Cycles</td>
+                            <td class="value-cell">30,000 FC</td>
+                            <td>-55°C to +70°C</td>
+                            <td>Fatigue</td>
+                            <td><span class="quantum-indicator">Load Monitoring</span></td>
+                        </tr>
+                        <tr>
+                            <td>Hydraulic Pumps</td>
+                            <td>HP-001-004</td>
+                            <td>Hours</td>
+                            <td class="value-cell">20,000 FH</td>
+                            <td>5000 PSI</td>
+                            <td>Wear</td>
+                            <td><span class="status status-monitor">Vibration Analysis</span></td>
+                        </tr>
+                        <tr>
+                            <td>Battery Modules</td>
+                            <td>BAT-M-001-012</td>
+                            <td>Cycles</td>
+                            <td class="value-cell">8,000 Cycles</td>
+                            <td>-20°C to +45°C</td>
+                            <td>Capacity Loss</td>
+                            <td><span class="quantum-indicator">Health Monitoring</span></td>
+                        </tr>
+                        <tr>
+                            <td>Electric Inverters</td>
+                            <td>INV-001-006</td>
+                            <td>Hours</td>
+                            <td class="value-cell">60,000 FH</td>
+                            <td>-40°C to +85°C</td>
+                            <td>Component Aging</td>
+                            <td><span class="quantum-indicator">Thermal Monitoring</span></td>
+                        </tr>
+                        <tr>
+                            <td>Quantum Processing Units</td>
+                            <td>QPU-001-004</td>
+                            <td>Hours</td>
+                            <td class="value-cell">100,000 FH</td>
+                            <td>4K Operation</td>
+                            <td>Decoherence</td>
+                            <td><span class="quantum-indicator">Fidelity Monitoring</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Quantum Monitoring Tab -->
+        <div id="quantum" class="tab-content">
+            <div class="table-container">
+                <h2 class="table-title">Quantum Sensor Network Distribution</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Monitored Area</th>
+                            <th>Sensor Count</th>
+                            <th>Sensor Types</th>
+                            <th>Monitoring Frequency</th>
+                            <th>Resolution</th>
+                            <th>Network Health</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Wing Root Joints</td>
+                            <td class="value-cell">156</td>
+                            <td>Strain + Crack Detection</td>
+                            <td class="value-cell">1000 Hz</td>
+                            <td class="value-cell">1 nm</td>
+                            <td><span class="status status-good">99.7% Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Pressure Bulkhead</td>
+                            <td class="value-cell">89</td>
+                            <td>Pressure + Strain</td>
+                            <td class="value-cell">500 Hz</td>
+                            <td class="value-cell">1 nm</td>
+                            <td><span class="status status-good">99.5% Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Engine Mounts</td>
+                            <td class="value-cell">67</td>
+                            <td>Vibration + Strain</td>
+                            <td class="value-cell">2000 Hz</td>
+                            <td class="value-cell">1 nm</td>
+                            <td><span class="status status-good">98.9% Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Wing Spars</td>
+                            <td class="value-cell">245</td>
+                            <td>Strain Monitoring</td>
+                            <td class="value-cell">100 Hz</td>
+                            <td class="value-cell">1 μstrain</td>
+                            <td><span class="status status-good">99.2% Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Fuselage Frames</td>
+                            <td class="value-cell">178</td>
+                            <td>Strain + Temperature</td>
+                            <td class="value-cell">50 Hz</td>
+                            <td class="value-cell">1 μstrain</td>
+                            <td><span class="status status-good">98.8% Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Secondary Structure</td>
+                            <td class="value-cell">1,715</td>
+                            <td>Strain Monitoring</td>
+                            <td class="value-cell">10 Hz</td>
+                            <td class="value-cell">10 μstrain</td>
+                            <td><span class="status status-good">97.3% Active</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <h2 class="table-title">Quantum Monitoring Capabilities</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Capability</th>
+                            <th>Traditional Method</th>
+                            <th>Quantum Enhancement</th>
+                            <th>Improvement Factor</th>
+                            <th>Impact on Life</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Crack Detection</td>
+                            <td>10 mm minimum</td>
+                            <td>1 nm minimum</td>
+                            <td class="value-cell">10,000x</td>
+                            <td><span class="status status-good">+500 hrs warning</span></td>
+                        </tr>
+                        <tr>
+                            <td>Stress Measurement</td>
+                            <td>±5% accuracy</td>
+                            <td>±0.01% accuracy</td>
+                            <td class="value-cell">500x</td>
+                            <td><span class="status status-good">Real load spectrum</span></td>
+                        </tr>
+                        <tr>
+                            <td>Monitoring Frequency</td>
+                            <td>Periodic inspection</td>
+                            <td>Continuous 1000 Hz</td>
+                            <td class="value-cell">∞</td>
+                            <td><span class="status status-good">Dynamic assessment</span></td>
+                        </tr>
+                        <tr>
+                            <td>Environmental Sensing</td>
+                            <td>Limited coverage</td>
+                            <td>Full coverage</td>
+                            <td class="value-cell">100x</td>
+                            <td><span class="status status-good">Actual conditions</span></td>
+                        </tr>
+                        <tr>
+                            <td>Data Processing</td>
+                            <td>Post-flight analysis</td>
+                            <td>Real-time AI/ML</td>
+                            <td class="value-cell">1000x</td>
+                            <td><span class="status status-good">Predictive capability</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Life Extensions Tab -->
+        <div id="extensions" class="tab-content">
+            <div class="table-container">
+                <h2 class="table-title">Approved Life Extensions</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Aircraft S/N</th>
+                            <th>Original Limit</th>
+                            <th>Extended Limit</th>
+                            <th>Extension %</th>
+                            <th>Approval Date</th>
+                            <th>Conditions</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Center Wing Box</td>
+                            <td>BWBQ100-007</td>
+                            <td class="value-cell">120,000 FC</td>
+                            <td class="value-cell">150,000 FC</td>
+                            <td class="value-cell">+25%</td>
+                            <td>2025-05-15</td>
+                            <td>Enhanced Monitoring</td>
+                            <td><span class="status status-good">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Pressure Bulkhead</td>
+                            <td>BWBQ100-012</td>
+                            <td class="value-cell">90,000 PC</td>
+                            <td class="value-cell">112,000 PC</td>
+                            <td class="value-cell">+24%</td>
+                            <td>2025-04-22</td>
+                            <td>Quarterly NDT</td>
+                            <td><span class="status status-good">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>HP Turbine Disc</td>
+                            <td>Engine S/N 0045</td>
+                            <td class="value-cell">30,000 EH</td>
+                            <td class="value-cell">36,000 EH</td>
+                            <td class="value-cell">+20%</td>
+                            <td>2025-06-01</td>
+                            <td>Borescope Every 500h</td>
+                            <td><span class="status status-good">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Wing Spar</td>
+                            <td>BWBQ100-015</td>
+                            <td class="value-cell">100,000 FC</td>
+                            <td class="value-cell">125,000 FC</td>
+                            <td class="value-cell">+25%</td>
+                            <td>2025-03-18</td>
+                            <td>Real-time Monitoring</td>
+                            <td><span class="status status-good">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Engine Mount</td>
+                            <td>BWBQ100-003</td>
+                            <td class="value-cell">80,000 FC</td>
+                            <td class="value-cell">95,000 FC</td>
+                            <td class="value-cell">+19%</td>
+                            <td>2025-02-28</td>
+                            <td>Vibration Analysis</td>
+                            <td><span class="status status-good">Active</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <h2 class="table-title">Life Extension Economic Analysis</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component Type</th>
+                            <th>Extensions Granted</th>
+                            <th>Avg Extension</th>
+                            <th>Cost Avoidance</th>
+                            <th>Monitoring Cost</th>
+                            <th>Net Savings</th>
+                            <th>ROI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Center Wing Boxes</td>
+                            <td class="value-cell">45</td>
+                            <td class="value-cell">29%</td>
+                            <td class="value-cell">$15.2M</td>
+                            <td class="value-cell">$2.7M</td>
+                            <td class="value-cell">$12.5M</td>
+                            <td><span class="status status-good">463%</span></td>
+                        </tr>
+                        <tr>
+                            <td>Pressure Bulkheads</td>
+                            <td class="value-cell">32</td>
+                            <td class="value-cell">24%</td>
+                            <td class="value-cell">$10.1M</td>
+                            <td class="value-cell">$1.8M</td>
+                            <td class="value-cell">$8.3M</td>
+                            <td><span class="status status-good">461%</span></td>
+                        </tr>
+                        <tr>
+                            <td>Engine Mounts</td>
+                            <td class="value-cell">28</td>
+                            <td class="value-cell">19%</td>
+                            <td class="value-cell">$6.9M</td>
+                            <td class="value-cell">$1.2M</td>
+                            <td class="value-cell">$5.7M</td>
+                            <td><span class="status status-good">475%</span></td>
+                        </tr>
+                        <tr>
+                            <td>Turbine Discs</td>
+                            <td class="value-cell">67</td>
+                            <td class="value-cell">45%</td>
+                            <td class="value-cell">$28.4M</td>
+                            <td class="value-cell">$4.1M</td>
+                            <td class="value-cell">$24.3M</td>
+                            <td><span class="status status-good">593%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fleet Total</strong></td>
+                            <td class="value-cell"><strong>347</strong></td>
+                            <td class="value-cell"><strong>28%</strong></td>
+                            <td class="value-cell"><strong>$185.6M</strong></td>
+                            <td class="value-cell"><strong>$28.8M</strong></td>
+                            <td class="value-cell"><strong>$156.8M</strong></td>
+                            <td><span class="status status-good"><strong>544%</strong></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Animate progress bars on page load
+        window.addEventListener('load', () => {
+            const progressBars = document.querySelectorAll('.progress-bar');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        });
+
+        // Add hover effects to table rows
+        const tableRows = document.querySelectorAll('tbody tr');
+        tableRows.forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(5px)';
+                this.style.transition = 'transform 0.2s ease';
+            });
+            
+            row.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Print functionality
+        window.addEventListener('beforeprint', () => {
+            document.body.classList.add('print-mode');
+        });
+
+        window.addEventListener('afterprint', () => {
+            document.body.classList.remove('print-mode');
+        });
+    </script>
+</body>
+</html>
