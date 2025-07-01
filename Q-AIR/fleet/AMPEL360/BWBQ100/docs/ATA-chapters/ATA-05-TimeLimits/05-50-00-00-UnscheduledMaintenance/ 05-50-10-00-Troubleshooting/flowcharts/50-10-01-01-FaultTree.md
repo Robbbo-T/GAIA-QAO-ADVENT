@@ -1,4 +1,4 @@
-```yaml
+
 ---
 project: GAIA-QAO-AdVent
 program: AMPEL360 BWB-Q100
@@ -14,7 +14,7 @@ info_code: FTA # Fault Tree Analysis
 next_review_date: 2026-06-30
 parent_document: GQOIS-QAIR-ATA-05501001
 ---
-```
+
 
 # ATA 05-50-10-01-01 — Fault Tree Analysis
 
