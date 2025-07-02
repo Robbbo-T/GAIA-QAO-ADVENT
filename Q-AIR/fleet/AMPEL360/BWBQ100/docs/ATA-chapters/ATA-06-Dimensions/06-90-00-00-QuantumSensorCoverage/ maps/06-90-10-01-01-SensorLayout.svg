@@ -1,617 +1,930 @@
-<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
-  <!-- Document Header -->
-  <defs>
-    <!-- Gradients for different density zones -->
-    <radialGradient id="ultraHighDensity" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" style="stop-color:#d32f2f;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#f44336;stop-opacity:0.8" />
-    </radialGradient>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMPEL360 BWB-Q100 Quantum Sensor Layout Map</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            overflow-x: auto;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 1200px;
+        }
+        
+        .svg-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        
+        svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .control-group {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        
+        .control-group label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        button {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        button:hover {
+            background: #1565c0;
+        }
+        
+        button.active {
+            background: #4caf50;
+        }
+        
+        select {
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .info-panel {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-card {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 4px;
+            border-left: 4px solid #1976d2;
+        }
+        
+        .info-card h4 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: #1976d2;
+        }
+        
+        .info-card p {
+            margin: 4px 0;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .highlight {
+            opacity: 1 !important;
+            filter: drop-shadow(0 0 3px rgba(25, 118, 210, 0.8));
+        }
+        
+        .dimmed {
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="controls">
+            <div class="control-group">
+                <label>Sensor Density Filter</label>
+                <select id="densityFilter">
+                    <option value="all">All Densities</option>
+                    <option value="ultra-high">Ultra-High (20-25/m²)</option>
+                    <option value="high">High (10-20/m²)</option>
+                    <option value="medium">Medium (5-10/m²)</option>
+                    <option value="standard">Standard (2-5/m²)</option>
+                    <option value="low">Low (1-2/m²)</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>System Focus</label>
+                <button id="wingStructure" data-system="wing">Wing Structure</button>
+                <button id="landingGear" data-system="gear">Landing Gear</button>
+                <button id="engineMounts" data-system="engine">Engine Mounts</button>
+                <button id="fuselage" data-system="fuselage">Fuselage</button>
+            </div>
+            
+            <div class="control-group">
+                <label>View Options</label>
+                <button id="resetView">Reset View</button>
+                <button id="toggleGrid">Toggle Grid</button>
+            </div>
+        </div>
+        
+        <div class="svg-container">
+            <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" id="sensorMap">
+              <!-- Document Header -->
+              <defs>
+                <!-- Gradients for different density zones -->
+                <radialGradient id="ultraHighDensity" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" style="stop-color:#d32f2f;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#f44336;stop-opacity:0.8" />
+                </radialGradient>
+                
+                <radialGradient id="highDensity" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" style="stop-color:#f57c00;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#ff9800;stop-opacity:0.8" />
+                </radialGradient>
+                
+                <radialGradient id="mediumDensity" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" style="stop-color:#388e3c;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#4caf50;stop-opacity:0.8" />
+                </radialGradient>
+                
+                <radialGradient id="standardDensity" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" style="stop-color:#1976d2;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#2196f3;stop-opacity:0.8" />
+                </radialGradient>
+                
+                <radialGradient id="lowDensity" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" style="stop-color:#616161;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#9e9e9e;stop-opacity:0.8" />
+                </radialGradient>
+                
+                <!-- Sensor symbols -->
+                <g id="sensorUltraHigh">
+                  <circle r="2" fill="url(#ultraHighDensity)" stroke="#d32f2f" stroke-width="0.5"/>
+                  <text y="1" text-anchor="middle" font-size="3" fill="white">●</text>
+                </g>
+                
+                <g id="sensorHigh">
+                  <circle r="1.8" fill="url(#highDensity)" stroke="#f57c00" stroke-width="0.5"/>
+                  <text y="1" text-anchor="middle" font-size="2.5" fill="white">●</text>
+                </g>
+                
+                <g id="sensorMedium">
+                  <circle r="1.5" fill="url(#mediumDensity)" stroke="#388e3c" stroke-width="0.5"/>
+                  <text y="0.8" text-anchor="middle" font-size="2" fill="white">●</text>
+                </g>
+                
+                <g id="sensorStandard">
+                  <circle r="1.2" fill="url(#standardDensity)" stroke="#1976d2" stroke-width="0.5"/>
+                  <text y="0.6" text-anchor="middle" font-size="1.5" fill="white">●</text>
+                </g>
+                
+                <g id="sensorLow">
+                  <circle r="1" fill="url(#lowDensity)" stroke="#616161" stroke-width="0.5"/>
+                  <text y="0.5" text-anchor="middle" font-size="1" fill="white">●</text>
+                </g>
+              </defs>
+              
+              <!-- Background -->
+              <rect width="1200" height="800" fill="#f5f5f5"/>
+              
+              <!-- Title Block -->
+              <g transform="translate(50, 30)">
+                <rect width="1100" height="60" fill="#263238" stroke="#37474f" stroke-width="2"/>
+                <text x="550" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">
+                  AMPEL360 BWB-Q100 Quantum Sensor Layout Map
+                </text>
+                <text x="550" y="45" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#b0bec5">
+                  Document: 06-90-10-01-01 | 2,847 Quantum Sensors | Coverage: 891.2 m² | Scale: 1:100
+                </text>
+              </g>
+              
+              <!-- Aircraft Outline - BWB Configuration -->
+              <g transform="translate(600, 400)" stroke="#37474f" stroke-width="2" fill="none" class="aircraft-outline">
+                <!-- Main BWB outline -->
+                <path d="M -400 0 
+                         Q -380 -80 -300 -120 
+                         L -200 -140 
+                         Q -100 -145 0 -145 
+                         Q 100 -145 200 -140 
+                         L 300 -120 
+                         Q 380 -80 400 0 
+                         Q 380 80 300 120 
+                         L 200 140 
+                         Q 100 145 0 145 
+                         Q -100 145 -200 140 
+                         L -300 120 
+                         Q -380 80 -400 0 Z" 
+                      fill="#eceff1" stroke="#263238" stroke-width="3"/>
+                
+                <!-- Wing leading edge -->
+                <path d="M -300 -120 Q -250 -130 -200 -140 Q -100 -145 0 -145 Q 100 -145 200 -140 Q 250 -130 300 -120" 
+                      stroke="#1976d2" stroke-width="2"/>
+                
+                <!-- Wing trailing edge -->
+                <path d="M -300 120 Q -250 130 -200 140 Q -100 145 0 145 Q 100 145 200 140 Q 250 130 300 120" 
+                      stroke="#1976d2" stroke-width="2"/>
+                
+                <!-- Fuselage centerline -->
+                <line x1="-400" y1="0" x2="400" y2="0" stroke="#455a64" stroke-width="1" stroke-dasharray="5,5"/>
+              </g>
+              
+              <!-- Wing Root Attachments - Ultra High Density (25 sensors/m²) -->
+              <g transform="translate(600, 400)" class="sensor-group wing-structure ultra-high">
+                <!-- Port Wing Root -->
+                <g transform="translate(-60, 0)">
+                  <circle cx="0" cy="-15" r="25" fill="none" stroke="#d32f2f" stroke-width="2" stroke-dasharray="3,2"/>
+                  <text x="0" y="-40" text-anchor="middle" font-size="10" fill="#d32f2f" font-weight="bold">Wing Root</text>
+                  <text x="0" y="-30" text-anchor="middle" font-size="8" fill="#d32f2f">25 sensors/m²</text>
+                  
+                  <!-- Sensor grid in wing root -->
+                  <g opacity="0.9">
+                    <use href="#sensorUltraHigh" x="-15" y="-25"/>
+                    <use href="#sensorUltraHigh" x="-10" y="-20"/>
+                    <use href="#sensorUltraHigh" x="-5" y="-15"/>
+                    <use href="#sensorUltraHigh" x="0" y="-10"/>
+                    <use href="#sensorUltraHigh" x="5" y="-15"/>
+                    <use href="#sensorUltraHigh" x="10" y="-20"/>
+                    <use href="#sensorUltraHigh" x="15" y="-25"/>
+                    <use href="#sensorUltraHigh" x="-15" y="5"/>
+                    <use href="#sensorUltraHigh" x="-10" y="10"/>
+                    <use href="#sensorUltraHigh" x="-5" y="15"/>
+                    <use href="#sensorUltraHigh" x="0" y="20"/>
+                    <use href="#sensorUltraHigh" x="5" y="15"/>
+                    <use href="#sensorUltraHigh" x="10" y="10"/>
+                    <use href="#sensorUltraHigh" x="15" y="5"/>
+                  </g>
+                </g>
+                
+                <!-- Starboard Wing Root -->
+                <g transform="translate(60, 0)">
+                  <circle cx="0" cy="-15" r="25" fill="none" stroke="#d32f2f" stroke-width="2" stroke-dasharray="3,2"/>
+                  <text x="0" y="-40" text-anchor="middle" font-size="10" fill="#d32f2f" font-weight="bold">Wing Root</text>
+                  <text x="0" y="-30" text-anchor="middle" font-size="8" fill="#d32f2f">25 sensors/m²</text>
+                  
+                  <!-- Sensor grid in wing root -->
+                  <g opacity="0.9">
+                    <use href="#sensorUltraHigh" x="-15" y="-25"/>
+                    <use href="#sensorUltraHigh" x="-10" y="-20"/>
+                    <use href="#sensorUltraHigh" x="-5" y="-15"/>
+                    <use href="#sensorUltraHigh" x="0" y="-10"/>
+                    <use href="#sensorUltraHigh" x="5" y="-15"/>
+                    <use href="#sensorUltraHigh" x="10" y="-20"/>
+                    <use href="#sensorUltraHigh" x="15" y="-25"/>
+                    <use href="#sensorUltraHigh" x="-15" y="5"/>
+                    <use href="#sensorUltraHigh" x="-10" y="10"/>
+                    <use href="#sensorUltraHigh" x="-5" y="15"/>
+                    <use href="#sensorUltraHigh" x="0" y="20"/>
+                    <use href="#sensorUltraHigh" x="5" y="15"/>
+                    <use href="#sensorUltraHigh" x="10" y="10"/>
+                    <use href="#sensorUltraHigh" x="15" y="5"/>
+                  </g>
+                </g>
+              </g>
+              
+              <!-- Landing Gear Mounts - High Density (22 sensors/m²) -->
+              <g transform="translate(600, 400)" class="sensor-group landing-gear high">
+                <!-- Main Landing Gear Locations -->
+                <g transform="translate(-80, 60)">
+                  <rect x="-20" y="-15" width="40" height="30" fill="none" stroke="#f57c00" stroke-width="2" stroke-dasharray="3,2"/>
+                  <text x="0" y="-25" text-anchor="middle" font-size="9" fill="#f57c00" font-weight="bold">MLG Port</text>
+                  <text x="0" y="-15" text-anchor="middle" font-size="7" fill="#f57c00">22 sensors/m²</text>
+                  
+                  <!-- Landing gear sensor grid -->
+                  <g opacity="0.8">
+                    <use href="#sensorHigh" x="-15" y="-10"/>
+                    <use href="#sensorHigh" x="-8" y="-10"/>
+                    <use href="#sensorHigh" x="0" y="-10"/>
+                    <use href="#sensorHigh" x="8" y="-10"/>
+                    <use href="#sensorHigh" x="15" y="-10"/>
+                    <use href="#sensorHigh" x="-15" y="0"/>
+                    <use href="#sensorHigh" x="-8" y="0"/>
+                    <use href="#sensorHigh" x="0" y="0"/>
+                    <use href="#sensorHigh" x="8" y="0"/>
+                    <use href="#sensorHigh" x="15" y="0"/>
+                    <use href="#sensorHigh" x="-15" y="10"/>
+                    <use href="#sensorHigh" x="-8" y="10"/>
+                    <use href="#sensorHigh" x="0" y="10"/>
+                    <use href="#sensorHigh" x="8" y="10"/>
+                    <use href="#sensorHigh" x="15" y="10"/>
+                  </g>
+                </g>
+                
+                <g transform="translate(0, 70)">
+                  <rect x="-20" y="-15" width="40" height="30" fill="none" stroke="#f57c00" stroke-width="2" stroke-dasharray="3,2"/>
+                  <text x="0" y="-25" text-anchor="middle" font-size="9" fill="#f57c00" font-weight="bold">MLG Center</text>
+                  <text x="0" y="-15" text-anchor="middle" font-size="7" fill="#f57c00">22 sensors/m²</text>
+                  
+                  <!-- Landing gear sensor grid -->
+                  <g opacity="0.8">
+                    <use href="#sensorHigh" x="-15" y="-10"/>
+                    <use href="#sensorHigh" x="-8" y="-10"/>
+                    <use href="#sensorHigh" x="0" y="-10"/>
+                    <use href="#sensorHigh" x="8" y="-10"/>
+                    <use href="#sensorHigh" x="15" y="-10"/>
+                    <use href="#sensorHigh" x="-15" y="0"/>
+                    <use href="#sensorHigh" x="-8" y="0"/>
+                    <use href="#sensorHigh" x="0" y="0"/>
+                    <use href="#sensorHigh" x="8" y="0"/>
+                    <use href="#sensorHigh" x="15" y="0"/>
+                    <use href="#sensorHigh" x="-15" y="10"/>
+                    <use href="#sensorHigh" x="-8" y="10"/>
+                    <use href="#sensorHigh" x="0" y="10"/>
+                    <use href="#sensorHigh" x="8" y="10"/>
+                    <use href="#sensorHigh" x="15" y="10"/>
+                  </g>
+                </g>
+                
+                <g transform="translate(80, 60)">
+                  <rect x="-20" y="-15" width="40" height="30" fill="none" stroke="#f57c00" stroke-width="2" stroke-dasharray="3,2"/>
+                  <text x="0" y="-25" text-anchor="middle" font-size="9" fill="#f57c00" font-weight="bold">MLG Starboard</text>
+                  <text x="0" y="-15" text-anchor="middle" font-size="7" fill="#f57c00">22 sensors/m²</text>
+                  
+                  <!-- Landing gear sensor grid -->
+                  <g opacity="0.8">
+                    <use href="#sensorHigh" x="-15" y="-10"/>
+                    <use href="#sensorHigh" x="-8" y="-10"/>
+                    <use href="#sensorHigh" x="0" y="-10"/>
+                    <use href="#sensorHigh" x="8" y="-10"/>
+                    <use href="#sensorHigh" x="15" y="-10"/>
+                    <use href="#sensorHigh" x="-15" y="0"/>
+                    <use href="#sensorHigh" x="-8" y="0"/>
+                    <use href="#sensorHigh" x="0" y="0"/>
+                    <use href="#sensorHigh" x="8" y="0"/>
+                    <use href="#sensorHigh" x="15" y="0"/>
+                    <use href="#sensorHigh" x="-15" y="10"/>
+                    <use href="#sensorHigh" x="-8" y="10"/>
+                    <use href="#sensorHigh" x="0" y="10"/>
+                    <use href="#sensorHigh" x="8" y="10"/>
+                    <use href="#sensorHigh" x="15" y="10"/>
+                  </g>
+                </g>
+                
+                <!-- Nose Landing Gear -->
+                <g transform="translate(-320, 0)">
+                  <rect x="-15" y="-10" width="30" height="20" fill="none" stroke="#f57c00" stroke-width="2" stroke-dasharray="3,2"/>
+                  <text x="0" y="-20" text-anchor="middle" font-size="9" fill="#f57c00" font-weight="bold">NLG</text>
+                  <text x="0" y="-12" text-anchor="middle" font-size="7" fill="#f57c00">22 sensors/m²</text>
+                  
+                  <!-- Nose gear sensor grid -->
+                  <g opacity="0.8">
+                    <use href="#sensorHigh" x="-10" y="-5"/>
+                    <use href="#sensorHigh" x="0" y="-5"/>
+                    <use href="#sensorHigh" x="10" y="-5"/>
+                    <use href="#sensorHigh" x="-10" y="5"/>
+                    <use href="#sensorHigh" x="0" y="5"/>
+                    <use href="#sensorHigh" x="10" y="5"/>
+                  </g>
+                </g>
+              </g>
+              
+              <!-- Engine Mount Points - High Density (20 sensors/m²) -->
+              <g transform="translate(600, 400)" class="sensor-group engine-mounts high">
+                <!-- Port Engine Mounts -->
+                <g transform="translate(-200, -80)">
+                  <ellipse cx="0" cy="0" rx="25" ry="15" fill="none" stroke="#fbc02d" stroke-width="2" stroke-dasharray="3,2"/>
+                  <text x="0" y="-25" text-anchor="middle" font-size="9" fill="#fbc02d" font-weight="bold">Engine Mount</text>
+                  <text x="0" y="-15" text-anchor="middle" font-size="7" fill="#fbc02d">20 sensors/m²</text>
+                  
+                  <!-- Engine mount sensor grid -->
+                  <g opacity="0.8">
+                    <use href="#sensorHigh" x="-20" y="-10"/>
+                    <use href="#sensorHigh" x="-10" y="-10"/>
+                    <use href="#sensorHigh" x="0" y="-10"/>
+                    <use href="#sensorHigh" x="10" y="-10"/>
+                    <use href="#sensorHigh" x="20" y="-10"/>
+                    <use href="#sensorHigh" x="-15" y="0"/>
+                    <use href="#sensorHigh" x="-5" y="0"/>
+                    <use href="#sensorHigh" x="5" y="0"/>
+                    <use href="#sensorHigh" x="15" y="0"/>
+                    <use href="#sensorHigh" x="-20" y="10"/>
+                    <use href="#sensorHigh" x="-10" y="10"/>
+                    <use href="#sensorHigh" x="0" y="10"/>
+                    <use href="#sensorHigh" x="10" y="10"/>
+                    <use href="#sensorHigh" x="20" y="10"/>
+                  </g>
+                </g>
+                
+                <!-- Starboard Engine Mounts -->
+                <g transform="translate(200, -80)">
+                  <ellipse cx="0" cy="0" rx="25" ry="15" fill="none" stroke="#fbc02d" stroke-width="2" stroke-dasharray="3,2"/>
+                  <text x="0" y="-25" text-anchor="middle" font-size="9" fill="#fbc02d" font-weight="bold">Engine Mount</text>
+                  <text x="0" y="-15" text-anchor="middle" font-size="7" fill="#fbc02d">20 sensors/m²</text>
+                  
+                  <!-- Engine mount sensor grid -->
+                  <g opacity="0.8">
+                    <use href="#sensorHigh" x="-20" y="-10"/>
+                    <use href="#sensorHigh" x="-10" y="-10"/>
+                    <use href="#sensorHigh" x="0" y="-10"/>
+                    <use href="#sensorHigh" x="10" y="-10"/>
+                    <use href="#sensorHigh" x="20" y="-10"/>
+                    <use href="#sensorHigh" x="-15" y="0"/>
+                    <use href="#sensorHigh" x="-5" y="0"/>
+                    <use href="#sensorHigh" x="5" y="0"/>
+                    <use href="#sensorHigh" x="15" y="0"/>
+                    <use href="#sensorHigh" x="-20" y="10"/>
+                    <use href="#sensorHigh" x="-10" y="10"/>
+                    <use href="#sensorHigh" x="0" y="10"/>
+                    <use href="#sensorHigh" x="10" y="10"/>
+                    <use href="#sensorHigh" x="20" y="10"/>
+                  </g>
+                </g>
+              </g>
+              
+              <!-- Primary Wing Structure - Medium Density (8 sensors/m²) -->
+              <g transform="translate(600, 400)" class="sensor-group wing-structure medium">
+                <!-- Port Wing Structure -->
+                <g transform="translate(-150, -60)">
+                  <path d="M -80 -40 Q -60 -45 -40 -50 L 40 -50 Q 60 -45 80 -40 L 80 40 Q 60 45 40 50 L -40 50 Q -60 45 -80 40 Z" 
+                        fill="none" stroke="#388e3c" stroke-width="1.5" stroke-dasharray="4,3"/>
+                  <text x="0" y="-60" text-anchor="middle" font-size="9" fill="#388e3c" font-weight="bold">Primary Wing Structure</text>
+                  <text x="0" y="-50" text-anchor="middle" font-size="7" fill="#388e3c">8 sensors/m²</text>
+                  
+                  <!-- Wing structure sensor distribution -->
+                  <g opacity="0.7">
+                    <use href="#sensorMedium" x="-60" y="-30"/>
+                    <use href="#sensorMedium" x="-30" y="-35"/>
+                    <use href="#sensorMedium" x="0" y="-40"/>
+                    <use href="#sensorMedium" x="30" y="-35"/>
+                    <use href="#sensorMedium" x="60" y="-30"/>
+                    <use href="#sensorMedium" x="-60" y="-10"/>
+                    <use href="#sensorMedium" x="-30" y="-15"/>
+                    <use href="#sensorMedium" x="0" y="-20"/>
+                    <use href="#sensorMedium" x="30" y="-15"/>
+                    <use href="#sensorMedium" x="60" y="-10"/>
+                    <use href="#sensorMedium" x="-60" y="10"/>
+                    <use href="#sensorMedium" x="-30" y="15"/>
+                    <use href="#sensorMedium" x="0" y="20"/>
+                    <use href="#sensorMedium" x="30" y="15"/>
+                    <use href="#sensorMedium" x="60" y="10"/>
+                    <use href="#sensorMedium" x="-60" y="30"/>
+                    <use href="#sensorMedium" x="-30" y="35"/>
+                    <use href="#sensorMedium" x="0" y="40"/>
+                    <use href="#sensorMedium" x="30" y="35"/>
+                    <use href="#sensorMedium" x="60" y="30"/>
+                  </g>
+                </g>
+                
+                <!-- Starboard Wing Structure -->
+                <g transform="translate(150, -60)">
+                  <path d="M -80 -40 Q -60 -45 -40 -50 L 40 -50 Q 60 -45 80 -40 L 80 40 Q 60 45 40 50 L -40 50 Q -60 45 -80 40 Z" 
+                        fill="none" stroke="#388e3c" stroke-width="1.5" stroke-dasharray="4,3"/>
+                  <text x="0" y="-60" text-anchor="middle" font-size="9" fill="#388e3c" font-weight="bold">Primary Wing Structure</text>
+                  <text x="0" y="-50" text-anchor="middle" font-size="7" fill="#388e3c">8 sensors/m²</text>
+                  
+                  <!-- Wing structure sensor distribution -->
+                  <g opacity="0.7">
+                    <use href="#sensorMedium" x="-60" y="-30"/>
+                    <use href="#sensorMedium" x="-30" y="-35"/>
+                    <use href="#sensorMedium" x="0" y="-40"/>
+                    <use href="#sensorMedium" x="30" y="-35"/>
+                    <use href="#sensorMedium" x="60" y="-30"/>
+                    <use href="#sensorMedium" x="-60" y="-10"/>
+                    <use href="#sensorMedium" x="-30" y="-15"/>
+                    <use href="#sensorMedium" x="0" y="-20"/>
+                    <use href="#sensorMedium" x="30" y="-15"/>
+                    <use href="#sensorMedium" x="60" y="-10"/>
+                    <use href="#sensorMedium" x="-60" y="10"/>
+                    <use href="#sensorMedium" x="-30" y="15"/>
+                    <use href="#sensorMedium" x="0" y="20"/>
+                    <use href="#sensorMedium" x="30" y="15"/>
+                    <use href="#sensorMedium" x="60" y="10"/>
+                    <use href="#sensorMedium" x="-60" y="30"/>
+                    <use href="#sensorMedium" x="-30" y="35"/>
+                    <use href="#sensorMedium" x="0" y="40"/>
+                    <use href="#sensorMedium" x="30" y="35"/>
+                    <use href="#sensorMedium" x="60" y="30"/>
+                  </g>
+                </g>
+              </g>
+              
+              <!-- Fuselage Areas - Standard Density (4 sensors/m²) -->
+              <g transform="translate(600, 400)" class="sensor-group fuselage standard">
+                <!-- Forward Fuselage -->
+                <g transform="translate(-200, 0)">
+                  <ellipse cx="0" cy="0" rx="60" ry="40" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-dasharray="5,4"/>
+                  <text x="0" y="-50" text-anchor="middle" font-size="9" fill="#1976d2" font-weight="bold">Forward Fuselage</text>
+                  <text x="0" y="-40" text-anchor="middle" font-size="7" fill="#1976d2">4 sensors/m²</text>
+                  
+                  <!-- Forward fuselage sensor distribution -->
+                  <g opacity="0.6">
+                    <use href="#sensorStandard" x="-40" y="-20"/>
+                    <use href="#sensorStandard" x="-20" y="-25"/>
+                    <use href="#sensorStandard" x="0" y="-30"/>
+                    <use href="#sensorStandard" x="20" y="-25"/>
+                    <use href="#sensorStandard" x="40" y="-20"/>
+                    <use href="#sensorStandard" x="-40" y="0"/>
+                    <use href="#sensorStandard" x="-20" y="0"/>
+                    <use href="#sensorStandard" x="0" y="0"/>
+                    <use href="#sensorStandard" x="20" y="0"/>
+                    <use href="#sensorStandard" x="40" y="0"/>
+                    <use href="#sensorStandard" x="-40" y="20"/>
+                    <use href="#sensorStandard" x="-20" y="25"/>
+                    <use href="#sensorStandard" x="0" y="30"/>
+                    <use href="#sensorStandard" x="20" y="25"/>
+                    <use href="#sensorStandard" x="40" y="20"/>
+                  </g>
+                </g>
+                
+                <!-- Aft Fuselage -->
+                <g transform="translate(200, 0)">
+                  <ellipse cx="0" cy="0" rx="60" ry="40" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-dasharray="5,4"/>
+                  <text x="0" y="-50" text-anchor="middle" font-size="9" fill="#1976d2" font-weight="bold">Aft Fuselage</text>
+                  <text x="0" y="-40" text-anchor="middle" font-size="7" fill="#1976d2">4 sensors/m²</text>
+                  
+                  <!-- Aft fuselage sensor distribution -->
+                  <g opacity="0.6">
+                    <use href="#sensorStandard" x="-40" y="-20"/>
+                    <use href="#sensorStandard" x="-20" y="-25"/>
+                    <use href="#sensorStandard" x="0" y="-30"/>
+                    <use href="#sensorStandard" x="20" y="-25"/>
+                    <use href="#sensorStandard" x="40" y="-20"/>
+                    <use href="#sensorStandard" x="-40" y="0"/>
+                    <use href="#sensorStandard" x="-20" y="0"/>
+                    <use href="#sensorStandard" x="0" y="0"/>
+                    <use href="#sensorStandard" x="20" y="0"/>
+                    <use href="#sensorStandard" x="40" y="0"/>
+                    <use href="#sensorStandard" x="-40" y="20"/>
+                    <use href="#sensorStandard" x="-20" y="25"/>
+                    <use href="#sensorStandard" x="0" y="30"/>
+                    <use href="#sensorStandard" x="20" y="25"/>
+                    <use href="#sensorStandard" x="40" y="20"/>
+                  </g>
+                </g>
+              </g>
+              
+              <!-- Wing Tips - Low Density (2 sensors/m²) -->
+              <g transform="translate(600, 400)" class="sensor-group wing-structure low">
+                <!-- Port Wing Tip -->
+                <g transform="translate(-350, -100)">
+                  <ellipse cx="0" cy="0" rx="30" ry="20" fill="none" stroke="#616161" stroke-width="1" stroke-dasharray="6,5"/>
+                  <text x="0" y="-30" text-anchor="middle" font-size="8" fill="#616161" font-weight="bold">Wing Tip</text>
+                  <text x="0" y="-22" text-anchor="middle" font-size="6" fill="#616161">2 sensors/m²</text>
+                  
+                  <!-- Wing tip sensor distribution -->
+                  <g opacity="0.5">
+                    <use href="#sensorLow" x="-15" y="-10"/>
+                    <use href="#sensorLow" x="0" y="-12"/>
+                    <use href="#sensorLow" x="15" y="-10"/>
+                    <use href="#sensorLow" x="-15" y="10"/>
+                    <use href="#sensorLow" x="0" y="12"/>
+                    <use href="#sensorLow" x="15" y="10"/>
+                  </g>
+                </g>
+                
+                <!-- Starboard Wing Tip -->
+                <g transform="translate(350, -100)">
+                  <ellipse cx="0" cy="0" rx="30" ry="20" fill="none" stroke="#616161" stroke-width="1" stroke-dasharray="6,5"/>
+                  <text x="0" y="-30" text-anchor="middle" font-size="8" fill="#616161" font-weight="bold">Wing Tip</text>
+                  <text x="0" y="-22" text-anchor="middle" font-size="6" fill="#616161">2 sensors/m²</text>
+                  
+                  <!-- Wing tip sensor distribution -->
+                  <g opacity="0.5">
+                    <use href="#sensorLow" x="-15" y="-10"/>
+                    <use href="#sensorLow" x="0" y="-12"/>
+                    <use href="#sensorLow" x="15" y="-10"/>
+                    <use href="#sensorLow" x="-15" y="10"/>
+                    <use href="#sensorLow" x="0" y="12"/>
+                    <use href="#sensorLow" x="15" y="10"/>
+                  </g>
+                </g>
+              </g>
+              
+              <!-- Legend -->
+              <g transform="translate(50, 650)">
+                <rect width="300" height="140" fill="white" stroke="#37474f" stroke-width="2"/>
+                <text x="150" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#263238">
+                  Sensor Density Legend
+                </text>
+                
+                <!-- Ultra High Density -->
+                <g transform="translate(20, 35)">
+                  <use href="#sensorUltraHigh" x="10" y="0"/>
+                  <text x="25" y="3" font-family="Arial, sans-serif" font-size="10" fill="#263238">Ultra-High (20-25/m²)</text>
+                  <text x="25" y="13" font-family="Arial, sans-serif" font-size="8" fill="#666">Critical attachments</text>
+                </g>
+                
+                <!-- High Density -->
+                <g transform="translate(20, 55)">
+                  <use href="#sensorHigh" x="10" y="0"/>
+                  <text x="25" y="3" font-family="Arial, sans-serif" font-size="10" fill="#263238">High (10-20/m²)</text>
+                  <text x="25" y="13" font-family="Arial, sans-serif" font-size="8" fill="#666">Primary structure joints</text>
+                </g>
+                
+                <!-- Medium Density -->
+                <g transform="translate(20, 75)">
+                  <use href="#sensorMedium" x="10" y="0"/>
+                  <text x="25" y="3" font-family="Arial, sans-serif" font-size="10" fill="#263238">Medium (5-10/m²)</text>
+                  <text x="25" y="13" font-family="Arial, sans-serif" font-size="8" fill="#666">Main structural elements</text>
+                </g>
+                
+                <!-- Standard Density -->
+                <g transform="translate(20, 95)">
+                  <use href="#sensorStandard" x="10" y="0"/>
+                  <text x="25" y="3" font-family="Arial, sans-serif" font-size="10" fill="#263238">Standard (2-5/m²)</text>
+                  <text x="25" y="13" font-family="Arial, sans-serif" font-size="8" fill="#666">Secondary structures</text>
+                </g>
+                
+                <!-- Low Density -->
+                <g transform="translate(20, 115)">
+                  <use href="#sensorLow" x="10" y="0"/>
+                  <text x="25" y="3" font-family="Arial, sans-serif" font-size="10" fill="#263238">Low (1-2/m²)</text>
+                  <text x="25" y="13" font-family="Arial, sans-serif" font-size="8" fill="#666">Non-critical areas</text>
+                </g>
+              </g>
+              
+              <!-- Coverage Statistics -->
+              <g transform="translate(370, 650)">
+                <rect width="350" height="140" fill="white" stroke="#37474f" stroke-width="2"/>
+                <text x="175" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#263238">
+                  Coverage Statistics
+                </text>
+                
+                <text x="20" y="40" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#263238">Total Sensors:</text>
+                <text x="120" y="40" font-family="Arial, sans-serif" font-size="11" fill="#263238">2,847 quantum nodes</text>
+                
+                <text x="20" y="55" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#263238">Coverage Area:</text>
+                <text x="120" y="55" font-family="Arial, sans-serif" font-size="11" fill="#263238">891.2 m² (9,596 ft²)</text>
+                
+                <text x="20" y="70" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#263238">Average Density:</text>
+                <text x="120" y="70" font-family="Arial, sans-serif" font-size="11" fill="#263238">3.2 sensors/m²</text>
+                
+                <text x="20" y="85" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#263238">Coverage Efficiency:</text>
+                <text x="120" y="85" font-family="Arial, sans-serif" font-size="11" fill="#263238">97.3% optimized</text>
+                
+                <text x="20" y="100" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#263238">Response Time:</text>
+                <text x="120" y="100" font-family="Arial, sans-serif" font-size="11" fill="#263238">&lt;1 μs anywhere</text>
+                
+                <text x="20" y="115" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#263238">Redundancy:</text>
+                <text x="120" y="115" font-family="Arial, sans-serif" font-size="11" fill="#263238">2.3x average factor</text>
+                
+                <text x="20" y="130" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#263238">Blind Spots:</text>
+                <text x="120" y="130" font-family="Arial, sans-serif" font-size="11" fill="#4caf50">Zero detected</text>
+              </g>
+              
+              <!-- Technical Specifications -->
+              <g transform="translate(740, 650)">
+                <rect width="300" height="140" fill="white" stroke="#37474f" stroke-width="2"/>
+                <text x="150" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#263238">
+                  Sensor Technologies
+                </text>
+                
+                <text x="20" y="40" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#d32f2f">Diamond NV-Centers:</text>
+                <text x="20" y="50" font-family="Arial, sans-serif" font-size="9" fill="#263238">1,248 sensors (44%)</text>
+                <text x="20" y="60" font-family="Arial, sans-serif" font-size="8" fill="#666">Structural health monitoring</text>
+                
+                <text x="20" y="75" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#f57c00">Quantum Dots:</text>
+                <text x="20" y="85" font-family="Arial, sans-serif" font-size="9" fill="#263238">768 sensors (27%)</text>
+                <text x="20" y="95" font-family="Arial, sans-serif" font-size="8" fill="#666">Environmental monitoring</text>
+                
+                <text x="160" y="40" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#388e3c">Photonic Sensors:</text>
+                <text x="160" y="50" font-family="Arial, sans-serif" font-size="9" fill="#263238">384 sensors (13%)</text>
+                <text x="160" y="60" font-family="Arial, sans-serif" font-size="8" fill="#666">Optical monitoring</text>
+                
+                <text x="160" y="75" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#1976d2">Trapped Ions:</text>
+                <text x="160" y="85" font-family="Arial, sans-serif" font-size="9" fill="#263238">351 sensors (12%)</text>
+                <text x="160" y="95" font-family="Arial, sans-serif" font-size="8" fill="#666">Navigation precision</text>
+                
+                <text x="20" y="115" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#7b1fa2">Atom Interferometry:</text>
+                <text x="20" y="125" font-family="Arial, sans-serif" font-size="9" fill="#263238">96 sensors (3%)</text>
+                <text x="20" y="135" font-family="Arial, sans-serif" font-size="8" fill="#666">Gravity & rotation sensing</text>
+              </g>
+              
+              <!-- Reference Grid -->
+              <g stroke="#e0e0e0" stroke-width="0.5" opacity="0.3" id="referenceGrid">
+                <!-- Vertical grid lines -->
+                <line x1="100" y1="100" x2="100" y2="700"/>
+                <line x1="200" y1="100" x2="200" y2="700"/>
+                <line x1="300" y1="100" x2="300" y2="700"/>
+                <line x1="400" y1="100" x2="400" y2="700"/>
+                <line x1="500" y1="100" x2="500" y2="700"/>
+                <line x1="600" y1="100" x2="600" y2="700"/>
+                <line x1="700" y1="100" x2="700" y2="700"/>
+                <line x1="800" y1="100" x2="800" y2="700"/>
+                <line x1="900" y1="100" x2="900" y2="700"/>
+                <line x1="1000" y1="100" x2="1000" y2="700"/>
+                <line x1="1100" y1="100" x2="1100" y2="700"/>
+                
+                <!-- Horizontal grid lines -->
+                <line x1="100" y1="150" x2="1100" y2="150"/>
+                <line x1="100" y1="200" x2="1100" y2="200"/>
+                <line x1="100" y1="250" x2="1100" y2="250"/>
+                <line x1="100" y1="300" x2="1100" y2="300"/>
+                <line x1="100" y1="350" x2="1100" y2="350"/>
+                <line x1="100" y1="400" x2="1100" y2="400"/>
+                <line x1="100" y1="450" x2="1100" y2="450"/>
+                <line x1="100" y1="500" x2="1100" y2="500"/>
+                <line x1="100" y1="550" x2="1100" y2="550"/>
+                <line x1="100" y1="600" x2="1100" y2="600"/>
+              </g>
+              
+              <!-- Coordinate Reference -->
+              <g transform="translate(1050, 120)">
+                <rect width="140" height="80" fill="white" stroke="#37474f" stroke-width="1"/>
+                <text x="70" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#263238">
+                  Coordinates
+                </text>
+                <text x="10" y="30" font-family="Arial, sans-serif" font-size="8" fill="#263238">Scale: 1:100</text>
+                <text x="10" y="42" font-family="Arial, sans-serif" font-size="8" fill="#263238">Grid: 100m spacing</text>
+                <text x="10" y="54" font-family="Arial, sans-serif" font-size="8" fill="#263238">Origin: Aircraft CG</text>
+                <text x="10" y="66" font-family="Arial, sans-serif" font-size="8" fill="#263238">Units: Meters</text>
+              </g>
+              
+              <!-- Document Information -->
+              <g transform="translate(50, 100)">
+                <rect width="200" height="60" fill="white" stroke="#37474f" stroke-width="1"/>
+                <text x="100" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#263238">
+                  Document Info
+                </text>
+                <text x="10" y="30" font-family="Arial, sans-serif" font-size="8" fill="#263238">Doc: 06-90-10-01-01</text>
+                <text x="10" y="42" font-family="Arial, sans-serif" font-size="8" fill="#263238">Rev: 3.8.0</text>
+                <text x="10" y="54" font-family="Arial, sans-serif" font-size="8" fill="#263238">Date: 2025-07-02</text>
+                
+                <text x="110" y="30" font-family="Arial, sans-serif" font-size="8" fill="#263238">Status: Final Draft</text>
+                <text x="110" y="42" font-family="Arial, sans-serif" font-size="8" fill="#263238">Class: Confidential</text>
+                <text x="110" y="54" font-family="Arial, sans-serif" font-size="8" fill="#263238">Owner: GAIA-QAO</text>
+              </g>
+              
+            </svg>
+        </div>
+        
+        <div class="info-panel">
+            <h3>AMPEL360 BWB-Q100 Quantum Sensor Network Analysis</h3>
+            <p>This interactive visualization displays the comprehensive quantum sensor layout for the GAIA-QAO BWB (Blended Wing Body) aircraft. The system employs 2,847 quantum sensors across 891.2 m² of coverage area, achieving 97.3% optimization efficiency with zero blind spots.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>Critical Attachment Points</h4>
+                    <p><strong>Ultra-High Density:</strong> 20-25 sensors/m²</p>
+                    <p>Wing root attachments and main structural joints requiring maximum monitoring precision</p>
+                    <p><strong>Technology:</strong> Diamond NV-Centers for structural health monitoring</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Landing Gear & Engine Mounts</h4>
+                    <p><strong>High Density:</strong> 10-22 sensors/m²</p>
+                    <p>Critical load-bearing components with dynamic stress patterns</p>
+                    <p><strong>Technology:</strong> Quantum dots for environmental and stress monitoring</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Primary Wing Structure</h4>
+                    <p><strong>Medium Density:</strong> 5-10 sensors/m²</p>
+                    <p>Main structural elements requiring continuous health monitoring</p>
+                    <p><strong>Technology:</strong> Mixed quantum sensor array for comprehensive coverage</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Fuselage Areas</h4>
+                    <p><strong>Standard Density:</strong> 2-5 sensors/m²</p>
+                    <p>Secondary structures with standard monitoring requirements</p>
+                    <p><strong>Technology:</strong> Photonic sensors for optical monitoring applications</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Wing Tips & Extremities</h4>
+                    <p><strong>Low Density:</strong> 1-2 sensors/m²</p>
+                    <p>Non-critical areas with basic monitoring coverage</p>
+                    <p><strong>Technology:</strong> Atom interferometry for gravity and rotation sensing</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>System Performance</h4>
+                    <p><strong>Response Time:</strong> &lt;1 μs anywhere on aircraft</p>
+                    <p><strong>Redundancy Factor:</strong> 2.3x average coverage</p>
+                    <p><strong>Reliability:</strong> 99.97% operational availability</p>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <radialGradient id="highDensity" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" style="stop-color:#f57c00;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#ff9800;stop-opacity:0.8" />
-    </radialGradient>
-    
-    <radialGradient id="mediumDensity" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" style="stop-color:#388e3c;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#4caf50;stop-opacity:0.8" />
-    </radialGradient>
-    
-    <radialGradient id="standardDensity" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" style="stop-color:#1976d2;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#2196f3;stop-opacity:0.8" />
-    </radialGradient>
-    
-    <radialGradient id="lowDensity" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" style="stop-color:#616161;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#9e9e9e;stop-opacity:0.8" />
-    </radialGradient>
-    
-    <!-- Sensor symbols -->
-    <g id="sensorUltraHigh">
-      <circle r="2" fill="url(#ultraHighDensity)" stroke="#d32f2f" stroke-width="0.5"/>
-      <text y="1" text-anchor="middle" font-size="3" fill="white">●</text>
-    </g>
-    
-    <g id="sensorHigh">
-      <circle r="1.8" fill="url(#highDensity)" stroke="#f57c00" stroke-width="0.5"/>
-      <text y="1" text-anchor="middle" font-size="2.5" fill="white">●</text>
-    </g>
-    
-    <g id="sensorMedium">
-      <circle r="1.5" fill="url(#mediumDensity)" stroke="#388e3c" stroke-width="0.5"/>
-      <text y="0.8" text-anchor="middle" font-size="2" fill="white">●</text>
-    </g>
-    
-    <g id="sensorStandard">
-      <circle r="1.2" fill="url(#standardDensity)" stroke="#1976d2" stroke-width="0.5"/>
-      <text y="0.6" text-anchor="middle" font-size="1.5" fill="white">●</text>
-    </g>
-    
-    <g id="sensorLow">
-      <circle r="1" fill="url(#lowDensity)" stroke="#616161" stroke-width="0.5"/>
-      <text y="0.5" text-anchor="middle" font-size="1" fill="white">●</text>
-    </g>
-  </defs>
-  
-  <!-- Background -->
-  <rect width="1200" height="800" fill="#f5f5f5"/>
-  
-  <!-- Title Block -->
-  <g transform="translate(50, 30)">
-    <rect width="1100" height="60" fill="#263238" stroke="#37474f" stroke-width="2"/>
-    <text x="550" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">
-      AMPEL360 BWB-Q100 Quantum Sensor Layout Map
-    </text>
-    <text x="550" y="45" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#b0bec5">
-      Document: 06-90-10-01-01 | 2,847 Quantum Sensors | Coverage: 891.2 m² | Scale: 1:100
-    </text>
-  </g>
-  
-  <!-- Aircraft Outline - BWB Configuration -->
-  <g transform="translate(600, 400)" stroke="#37474f" stroke-width="2" fill="none">
-    <!-- Main BWB outline -->
-    <path d="M -400 0 
-             Q -380 -80 -300 -120 
-             L -200 -140 
-             Q -100 -145 0 -145 
-             Q 100 -145 200 -140 
-             L 300 -120 
-             Q 380 -80 400 0 
-             Q 380 80 300 120 
-             L 200 140 
-             Q 100 145 0 145 
-             Q -100 145 -200 140 
-             L -300 120 
-             Q -380 80 -400 0 Z" 
-          fill="#eceff1" stroke="#263238" stroke-width="3"/>
-    
-    <!-- Wing leading edge -->
-    <path d="M -300 -120 Q -250 -130 -200 -140 Q -100 -145 0 -145 Q 100 -145 200 -140 Q 250 -130 300 -120" 
-          stroke="#1976d2" stroke-width="2"/>
-    
-    <!-- Wing trailing edge -->
-    <path d="M -300 120 Q -250 130 -200 140 Q -100 145 0 145 Q 100 145 200 140 Q 250 130 300 120" 
-          stroke="#1976d2" stroke-width="2"/>
-    
-    <!-- Fuselage centerline -->
-    <line x1="-400" y1="0" x2="400" y2="0" stroke="#455a64" stroke-width="1" stroke-dasharray="5,5"/>
-  </g>
-  
-  <!-- Wing Root Attachments - Ultra High Density (25 sensors/m²) -->
-  <g transform="translate(600, 400)">
-    <!-- Port Wing Root -->
-    <g transform="translate(-60, 0)">
-      <circle cx="0" cy="-15" r="25" fill="none" stroke="#d32f2f" stroke-width="2" stroke-dasharray="3,2"/>
-      <text x="0" y="-40" text-anchor="middle" font-size="10" fill="#d32f2f" font-weight="bold">Wing Root</text>
-      <text x="0" y="-30" text-anchor="middle" font-size="8" fill="#d32f2f">25 sensors/m²</text>
-      
-      <!-- Sensor grid in wing root -->
-      <g opacity="0.9">
-        <use href="#sensorUltraHigh" x="-15" y="-25"/>
-        <use href="#sensorUltraHigh" x="-10" y="-20"/>
-        <use href="#sensorUltraHigh" x="-5" y="-15"/>
-        <use href="#sensorUltraHigh" x="0" y="-10"/>
-        <use href="#sensorUltraHigh" x="5" y="-15"/>
-        <use href="#sensorUltraHigh" x="10" y="-20"/>
-        <use href="#sensorUltraHigh" x="15" y="-25"/>
-        <use href="#sensorUltraHigh" x="-15" y="5"/>
-        <use href="#sensorUltraHigh" x="-10" y="10"/>
-        <use href="#sensorUltraHigh" x="-5" y="15"/>
-        <use href="#sensorUltraHigh" x="0" y="20"/>
-        <use href="#sensorUltraHigh" x="5" y="15"/>
-        <use href="#sensorUltraHigh" x="10" y="10"/>
-        <use href="#sensorUltraHigh" x="15" y="5"/>
-      </g>
-    </g>
-    
-    <!-- Starboard Wing Root -->
-    <g transform="translate(60, 0)">
-      <circle cx="0" cy="-15" r="25" fill="none" stroke="#d32f2f" stroke-width="2" stroke-dasharray="3,2"/>
-      <text x="0" y="-40" text-anchor="middle" font-size="10" fill="#d32f2f" font-weight="bold">Wing Root</text>
-      <text x="0" y="-30" text-anchor="middle" font-size="8" fill="#d32f2f">25 sensors/m²</text>
-      
-      <!-- Sensor grid in wing root -->
-      <g opacity="0.9">
-        <use href="#sensorUltraHigh" x="-15" y="-25"/>
-        <use href="#sensorUltraHigh" x="-10" y="-20"/>
-        <use href="#sensorUltraHigh" x="-5" y="-15"/>
-        <use href="#sensorUltraHigh" x="0" y="-10"/>
-        <use href="#sensorUltraHigh" x="5" y="-15"/>
-        <use href="#sensorUltraHigh" x="10" y="-20"/>
-        <use href="#sensorUltraHigh" x="15" y="-25"/>
-        <use href="#sensorUltraHigh" x="-15" y="5"/>
-        <use href="#sensorUltraHigh" x="-10" y="10"/>
-        <use href="#sensorUltraHigh" x="-5" y="15"/>
-        <use href="#sensorUltraHigh" x="0" y="20"/>
-        <use href="#sensorUltraHigh" x="5" y="15"/>
-        <use href="#sensorUltraHigh" x="10" y="10"/>
-        <use href="#sensorUltraHigh" x="15" y="5"/>
-      </g>
-    </g>
-  </g>
-  
-  <!-- Landing Gear Mounts - Ultra High Density (22 sensors/m²) -->
-  <g transform="translate(600, 400)">
-    <!-- Main Landing Gear Locations -->
-    <g transform="translate(-80, 60)">
-      <rect x="-20" y="-15" width="40" height="30" fill="none" stroke="#f57c00" stroke-width="2" stroke-dasharray="3,2"/>
-      <text x="0" y="-25" text-anchor="middle" font-size="9" fill="#f57c00" font-weight="bold">MLG Port</text>
-      <text x="0" y="-15" text-anchor="middle" font-size="7" fill="#f57c00">22 sensors/m²</text>
-      
-      <!-- Landing gear sensor grid -->
-      <g opacity="0.8">
-        <use href="#sensorHigh" x="-15" y="-10"/>
-        <use href="#sensorHigh" x="-8" y="-10"/>
-        <use href="#sensorHigh" x="0" y="-10"/>
-        <use href="#sensorHigh" x="8" y="-10"/>
-        <use href="#sensorHigh" x="15" y="-10"/>
-        <use href="#sensorHigh" x="-15" y="0"/>
-        <use href="#sensorHigh" x="-8" y="0"/>
-        <use href="#sensorHigh" x="0" y="0"/>
-        <use href="#sensorHigh" x="8" y="0"/>
-        <use href="#sensorHigh" x="15" y="0"/>
-        <use href="#sensorHigh" x="-15" y="10"/>
-        <use href="#sensorHigh" x="-8" y="10"/>
-        <use href="#sensorHigh" x="0" y="10"/>
-        <use href="#sensorHigh" x="8" y="10"/>
-        <use href="#sensorHigh" x="15" y="10"/>
-      </g>
-    </g>
-    
-    <g transform="translate(0, 70)">
-      <rect x="-20" y="-15" width="40" height="30" fill="none" stroke="#f57c00" stroke-width="2" stroke-dasharray="3,2"/>
-      <text x="0" y="-25" text-anchor="middle" font-size="9" fill="#f57c00" font-weight="bold">MLG Center</text>
-      <text x="0" y="-15" text-anchor="middle" font-size="7" fill="#f57c00">22 sensors/m²</text>
-      
-      <!-- Landing gear sensor grid -->
-      <g opacity="0.8">
-        <use href="#sensorHigh" x="-15" y="-10"/>
-        <use href="#sensorHigh" x="-8" y="-10"/>
-        <use href="#sensorHigh" x="0" y="-10"/>
-        <use href="#sensorHigh" x="8" y="-10"/>
-        <use href="#sensorHigh" x="15" y="-10"/>
-        <use href="#sensorHigh" x="-15" y="0"/>
-        <use href="#sensorHigh" x="-8" y="0"/>
-        <use href="#sensorHigh" x="0" y="0"/>
-        <use href="#sensorHigh" x="8" y="0"/>
-        <use href="#sensorHigh" x="15" y="0"/>
-        <use href="#sensorHigh" x="-15" y="10"/>
-        <use href="#sensorHigh" x="-8" y="10"/>
-        <use href="#sensorHigh" x="0" y="10"/>
-        <use href="#sensorHigh" x="8" y="10"/>
-        <use href="#sensorHigh" x="15" y="10"/>
-      </g>
-    </g>
-    
-    <g transform="translate(80, 60)">
-      <rect x="-20" y="-15" width="40" height="30" fill="none" stroke="#f57c00" stroke-width="2" stroke-dasharray="3,2"/>
-      <text x="0" y="-25" text-anchor="middle" font-size="9" fill="#f57c00" font-weight="bold">MLG Starboard</text>
-      <text x="0" y="-15" text-anchor="middle" font-size="7" fill="#f57c00">22 sensors/m²</text>
-      
-      <!-- Landing gear sensor grid -->
-      <g opacity="0.8">
-        <use href="#sensorHigh" x="-15" y="-10"/>
-        <use href="#sensorHigh" x="-8" y="-10"/>
-        <use href="#sensorHigh" x="0" y="-10"/>
-        <use href="#sensorHigh" x="8" y="-10"/>
-        <use href="#sensorHigh" x="15" y="-10"/>
-        <use href="#sensorHigh" x="-15" y="0"/>
-        <use href="#sensorHigh" x="-8" y="0"/>
-        <use href="#sensorHigh" x="0" y="0"/>
-        <use href="#sensorHigh" x="8" y="0"/>
-        <use href="#sensorHigh" x="15" y="0"/>
-        <use href="#sensorHigh" x="-15" y="10"/>
-        <use href="#sensorHigh" x="-8" y="10"/>
-        <use href="#sensorHigh" x="0" y="10"/>
-        <use href="#sensorHigh" x="8" y="10"/>
-        <use href="#sensorHigh" x="15" y="10"/>
-      </g>
-    </g>
-    
-    <!-- Nose Landing Gear -->
-    <g transform="translate(-320, 0)">
-      <rect x="-15" y="-10" width="30" height="20" fill="none" stroke="#f57c00" stroke-width="2" stroke-dasharray="3,2"/>
-      <text x="0" y="-20" text-anchor="middle" font-size="9" fill="#f57c00" font-weight="bold">NLG</text>
-      <text x="0" y="-12" text-anchor="middle" font-size="7" fill="#f57c00">22 sensors/m²</text>
-      
-      <!-- Nose gear sensor grid -->
-      <g opacity="0.8">
-        <use href="#sensorHigh" x="-10" y="-5"/>
-        <use href="#sensorHigh" x="0" y="-5"/>
-        <use href="#sensorHigh" x="10" y="-5"/>
-        <use href="#sensorHigh" x="-10" y="5"/>
-        <use href="#sensorHigh" x="0" y="5"/>
-        <use href="#sensorHigh" x="10" y="5"/>
-      </g>
-    </g>
-  </g>
-  
-  <!-- Engine Mount Points - Ultra High Density (20 sensors/m²) -->
-  <g transform="translate(600, 400)">
-    <!-- Port Engine Mounts -->
-    <g transform="translate(-200, -80)">
-      <ellipse cx="0" cy="0" rx="25" ry="15" fill="none" stroke="#fbc02d" stroke-width="2" stroke-dasharray="3,2"/>
-      <text x="0" y="-25" text-anchor="middle" font-size="9" fill="#fbc02d" font-weight="bold">Engine Mount</text>
-      <text x="0" y="-15" text-anchor="middle" font-size="7" fill="#fbc02d">20 sensors/m²</text>
-      
-      <!-- Engine mount sensor grid -->
-      <g opacity="0.8">
-        <use href="#sensorHigh" x="-20" y="-10"/>
-        <use href="#sensorHigh" x="-10" y="-10"/>
-        <use href="#sensorHigh" x="0" y="-10"/>
-        <use href="#sensorHigh" x="10" y="-10"/>
-        <use href="#sensorHigh" x="20" y="-10"/>
-        <use href="#sensorHigh" x="-15" y="0"/>
-        <use href="#sensorHigh" x="-5" y="0"/>
-        <use href="#sensorHigh" x="5" y="0"/>
-        <use href="#sensorHigh" x="15" y="0"/>
-        <use href="#sensorHigh" x="-20" y="10"/>
-        <use href="#sensorHigh" x="-10" y="10"/>
-        <use href="#sensorHigh" x="0" y="10"/>
-        <use href="#sensorHigh" x="10" y="10"/>
-        <use href="#sensorHigh" x="20" y="10"/>
-      </g>
-    </g>
-    
-    <!-- Starboard Engine Mounts -->
-    <g transform="translate(200, -80)">
-      <ellipse cx="0" cy="0" rx="25" ry="15" fill="none" stroke="#fbc02d" stroke-width="2" stroke-dasharray="3,2"/>
-      <text x="0" y="-25" text-anchor="middle" font-size="9" fill="#fbc02d" font-weight="bold">Engine Mount</text>
-      <text x="0" y="-15" text-anchor="middle" font-size="7" fill="#fbc02d">20 sensors/m²</text>
-      
-      <!-- Engine mount sensor grid -->
-      <g opacity="0.8">
-        <use href="#sensorHigh" x="-20" y="-10"/>
-        <use href="#sensorHigh" x="-10" y="-10"/>
-        <use href="#sensorHigh" x="0" y="-10"/>
-        <use href="#sensorHigh" x="10" y="-10"/>
-        <use href="#sensorHigh" x="20" y="-10"/>
-        <use href="#sensorHigh" x="-15" y="0"/>
-        <use href="#sensorHigh" x="-5" y="0"/>
-        <use href="#sensorHigh" x="5" y="0"/>
-        <use href="#sensorHigh" x="15" y="0"/>
-        <use href="#sensorHigh" x="-20" y="10"/>
-        <use href="#sensorHigh" x="-10" y="10"/>
-        <use href="#sensorHigh" x="0" y="10"/>
-        <use href="#sensorHigh" x="10" y="10"/>
-        <use href="#sensorHigh" x="20" y="10"/>
-      </g>
-    </g>
-  </g>
-  
-  <!-- Primary Wing Structure - Medium Density (8 sensors/m²) -->
-  <g transform="translate(600, 400)">
-    <!-- Port Wing Structure -->
-    <g transform="translate(-150, -60)">
-      <path d="M -80 -40 Q -60 -45 -40 -50 L 40 -50 Q 60 -45 80 -40 L 80 40 Q 60 45 40 50 L -40 50 Q -60 45 -80 40 Z" 
-            fill="none" stroke="#388e3c" stroke-width="1.5" stroke-dasharray="4,3"/>
-      <text x="0" y="-60" text-anchor="middle" font-size="9" fill="#388e3c" font-weight="bold">Primary Wing Structure</text>
-      <text x="0" y="-50" text-anchor="middle" font-size="7" fill="#388e3c">8 sensors/m²</text>
-      
-      <!-- Wing structure sensor distribution -->
-      <g opacity="0.7">
-        <use href="#sensorMedium" x="-60" y="-30"/>
-        <use href="#sensorMedium" x="-30" y="-35"/>
-        <use href="#sensorMedium" x="0" y="-40"/>
-        <use href="#sensorMedium" x="30" y="-35"/>
-        <use href="#sensorMedium" x="60" y="-30"/>
-        <use href="#sensorMedium" x="-60" y="-10"/>
-        <use href="#sensorMedium" x="-30" y="-15"/>
-        <use href="#sensorMedium" x="0" y="-20"/>
-        <use href="#sensorMedium" x="30" y="-15"/>
-        <use href="#sensorMedium" x="60" y="-10"/>
-        <use href="#sensorMedium" x="-60" y="10"/>
-        <use href="#sensorMedium" x="-30" y="15"/>
-        <use href="#sensorMedium" x="0" y="20"/>
-        <use href="#sensorMedium" x="30" y="15"/>
-        <use href="#sensorMedium" x="60" y="10"/>
-        <use href="#sensorMedium" x="-60" y="30"/>
-        <use href="#sensorMedium" x="-30" y="35"/>
-        <use href="#sensorMedium" x="0" y="40"/>
-        <use href="#sensorMedium" x="30" y="35"/>
-        <use href="#sensorMedium" x="60" y="30"/>
-      </g>
-    </g>
-    
-    <!-- Starboard Wing Structure -->
-    <g transform="translate(150, -60)">
-      <path d="M -80 -40 Q -60 -45 -40 -50 L 40 -50 Q 60 -45 80 -40 L 80 40 Q 60 45 40 50 L -40 50 Q -60 45 -80 40 Z" 
-            fill="none" stroke="#388e3c" stroke-width="1.5" stroke-dasharray="4,3"/>
-      <text x="0" y="-60" text-anchor="middle" font-size="9" fill="#388e3c" font-weight="bold">Primary Wing Structure</text>
-      <text x="0" y="-50" text-anchor="middle" font-size="7" fill="#388e3c">8 sensors/m²</text>
-      
-      <!-- Wing structure sensor distribution -->
-      <g opacity="0.7">
-        <use href="#sensorMedium" x="-60" y="-30"/>
-        <use href="#sensorMedium" x="-30" y="-35"/>
-        <use href="#sensorMedium" x="0" y="-40"/>
-        <use href="#sensorMedium" x="30" y="-35"/>
-        <use href="#sensorMedium" x="60" y="-30"/>
-        <use href="#sensorMedium" x="-60" y="-10"/>
-        <use href="#sensorMedium" x="-30" y="-15"/>
-        <use href="#sensorMedium" x="0" y="-20"/>
-        <use href="#sensorMedium" x="30" y="-15"/>
-        <use href="#sensorMedium" x="60" y="-10"/>
-        <use href="#sensorMedium" x="-60" y="10"/>
-        <use href="#sensorMedium" x="-30" y="15"/>
-        <use href="#sensorMedium" x="0" y="20"/>
-        <use href="#sensorMedium" x="30" y="15"/>
-        <use href="#sensorMedium" x="60" y="10"/>
-        <use href="#sensorMedium" x="-60" y="30"/>
-        <use href="#sensorMedium" x="-30" y="35"/>
-        <use href="#sensorMedium" x="0" y="40"/>
-        <use href="#sensorMedium" x="30" y="35"/>
-        <use href="#sensorMedium" x="60" y="30"/>
-      </g>
-    </g>
-  </g>
-  
-  <!-- Fuselage Areas - Standard Density (4 sensors/m²) -->
-  <g transform="translate(600, 400)">
-    <!-- Forward Fuselage -->
-    <g transform="translate(-200, 0)">
-      <ellipse cx="0" cy="0" rx="60" ry="40" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-dasharray="5,4"/>
-      <text x="0" y="-50" text-anchor="middle" font-size="9" fill="#1976d2" font-weight="bold">Forward Fuselage</text>
-      <text x="0" y="-40" text-anchor="middle" font-size="7" fill="#1976d2">4 sensors/m²</text>
-      
-      <!-- Forward fuselage sensor distribution -->
-      <g opacity="0.6">
-        <use href="#sensorStandard" x="-40" y="-20"/>
-        <use href="#sensorStandard" x="-20" y="-25"/>
-        <use href="#sensorStandard" x="0" y="-30"/>
-        <use href="#sensorStandard" x="20" y="-25"/>
-        <use href="#sensorStandard" x="40" y="-20"/>
-        <use href="#sensorStandard" x="-40" y="0"/>
-        <use href="#sensorStandard" x="-20" y="0"/>
-        <use href="#sensorStandard" x="0" y="0"/>
-        <use href="#sensorStandard" x="20" y="0"/>
-        <use href="#sensorStandard" x="40" y="0"/>
-        <use href="#sensorStandard" x="-40" y="20"/>
-        <use href="#sensorStandard" x="-20" y="25"/>
-        <use href="#sensorStandard" x="0" y="30"/>
-        <use href="#sensorStandard" x="20" y="25"/>
-        <use href="#sensorStandard" x="40" y="20"/>
-      </g>
-    </g>
-    
-    <!-- Aft Fuselage -->
-    <g transform="translate(200, 0)">
-      <ellipse cx="0" cy="0" rx="60" ry="40" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-dasharray="5,4"/>
-      <text x="0" y="-50" text-anchor="middle" font-size="9" fill="#1976d2" font-weight="bold">Aft Fuselage</text>
-      <text x="0" y="-40" text-anchor="middle" font-size="7" fill="#1976d2">4 sensors/m²</text>
-      
-      <!-- Aft fuselage sensor distribution -->
-      <g opacity="0.6">
-        <use href="#sensorStandard" x="-40" y="-20"/>
-        <use href="#sensorStandard" x="-20" y="-25"/>
-        <use href="#sensorStandard" x="0" y="-30"/>
-        <use href="#sensorStandard" x="20" y="-25"/>
-        <use href="#sensorStandard" x="40" y="-20"/>
-        <use href="#sensorStandard" x="-40" y="0"/>
-        <use href="#sensorStandard" x="-20" y="0"/>
-        <use href="#sensorStandard" x="0" y="0"/>
-        <use href="#sensorStandard" x="20" y="0"/>
-        <use href="#sensorStandard" x="40" y="0"/>
-        <use href="#sensorStandard" x="-40" y="20"/>
-        <use href="#sensorStandard" x="-20" y="25"/>
-        <use href="#sensorStandard" x="0" y="30"/>
-        <use href="#sensorStandard" x="20" y="25"/>
-        <use href="#sensorStandard" x="40" y="20"/>
-      </g>
-    </g>
-  </g>
-  
-  <!-- Wing Tips - Low Density (2 sensors/m²) -->
-  <g transform="translate(600, 400)">
-    <!-- Port Wing Tip -->
-    <g transform="translate(-350, -100)">
-      <ellipse cx="0" cy="0" rx="30" ry="20" fill="none" stroke="#616161" stroke-width="1" stroke-dasharray="6,5"/>
-      <text x="0" y="-30" text-anchor="middle" font-size="8" fill="#616161" font-weight="bold">Wing Tip</text>
-      <text x="0" y="-22" text-anchor="middle" font-size="6" fill="#616161">2 sensors/m²</text>
-      
-      <!-- Wing tip sensor distribution -->
-      <g opacity="0.5">
-        <use href="#sensorLow" x="-15" y="-10"/>
-        <use href="#sensorLow" x="0" y="-12"/>
-        <use href="#sensorLow" x="15" y="-10"/>
-        <use href="#sensorLow" x="-15" y="10"/>
-        <use href="#sensorLow" x="0" y="12"/>
-        <use href="#sensorLow" x="15" y="10"/>
-      </g>
-    </g>
-    
-    <!-- Starboard Wing Tip -->
-    <g transform="translate(350, -100)">
-      <ellipse cx="0" cy="0" rx="30" ry="20" fill="none" stroke="#616161" stroke-width="1" stroke-dasharray="6,5"/>
-      <text x="0" y="-30" text-anchor="middle" font-size="8" fill="#616161" font-weight="bold">Wing Tip</text>
-      <text x="0" y="-22" text-anchor="middle" font-size="6" fill="#616161">2 sensors/m²</text>
-      
-      <!-- Wing tip sensor distribution -->
-      <g opacity="0.5">
-        <use href="#sensorLow" x="-15" y="-10"/>
-        <use href="#sensorLow" x="0" y="-12"/>
-        <use href="#sensorLow" x="15" y="-10"/>
-        <use href="#sensorLow" x="-15" y="10"/>
-        <use href="#sensorLow" x="0" y="12"/>
-        <use href="#sensorLow" x="15" y="10"/>
-      </g>
-    </g>
-  </g>
-  
-  <!-- Legend -->
-  <g transform="translate(50, 650)">
-    <rect width="300" height="140" fill="white" stroke="#37474f" stroke-width="2"/>
-    <text x="150" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#263238">
-      Sensor Density Legend
-    </text>
-    
-    <!-- Ultra High Density -->
-    <g transform="translate(20, 35)">
-      <use href="#sensorUltraHigh" x="10" y="0"/>
-      <text x="25" y="3" font-family="Arial, sans-serif" font-size="10" fill="#263238">Ultra-High (20-25/m²)</text>
-      <text x="25" y="13" font-family="Arial, sans-serif" font-size="8" fill="#666">Critical attachments</text>
-    </g>
-    
-    <!-- High Density -->
-    <g transform="translate(20, 55)">
-      <use href="#sensorHigh" x="10" y="0"/>
-      <text x="25" y="3" font-family="Arial, sans-serif" font-size="10" fill="#263238">High (10-20/m²)</text>
-      <text x="25" y="13" font-family="Arial, sans-serif" font-size="8" fill="#666">Primary structure joints</text>
-    </g>
-    
-    <!-- Medium Density -->
-    <g transform="translate(20, 75)">
-      <use href="#sensorMedium" x="10" y="0"/>
-      <text x="25" y="3" font-family="Arial, sans-serif" font-size="10" fill="#263238">Medium (5-10/m²)</text>
-      <text x="25" y="13" font-family="Arial, sans-serif" font-size="8" fill="#666">Main structural elements</text>
-    </g>
-    
-    <!-- Standard Density -->
-    <g transform="translate(20, 95)">
-      <use href="#sensorStandard" x="10" y="0"/>
-      <text x="25" y="3" font-family="Arial, sans-serif" font-size="10" fill="#263238">Standard (2-5/m²)</text>
-      <text x="25" y="13" font-family="Arial, sans-serif" font-size="8" fill="#666">Secondary structures</text>
-    </g>
-    
-    <!-- Low Density -->
-    <g transform="translate(20, 115)">
-      <use href="#sensorLow" x="10" y="0"/>
-      <text x="25" y="3" font-family="Arial, sans-serif" font-size="10" fill="#263238">Low (1-2/m²)</text>
-      <text x="25" y="13" font-family="Arial, sans-serif" font-size="8" fill="#666">Non-critical areas</text>
-    </g>
-  </g>
-  
-  <!-- Coverage Statistics -->
-  <g transform="translate(370, 650)">
-    <rect width="350" height="140" fill="white" stroke="#37474f" stroke-width="2"/>
-    <text x="175" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#263238">
-      Coverage Statistics
-    </text>
-    
-    <text x="20" y="40" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#263238">Total Sensors:</text>
-    <text x="120" y="40" font-family="Arial, sans-serif" font-size="11" fill="#263238">2,847 quantum nodes</text>
-    
-    <text x="20" y="55" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#263238">Coverage Area:</text>
-    <text x="120" y="55" font-family="Arial, sans-serif" font-size="11" fill="#263238">891.2 m² (9,596 ft²)</text>
-    
-    <text x="20" y="70" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#263238">Average Density:</text>
-    <text x="120" y="70" font-family="Arial, sans-serif" font-size="11" fill="#263238">3.2 sensors/m²</text>
-    
-    <text x="20" y="85" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#263238">Coverage Efficiency:</text>
-    <text x="120" y="85" font-family="Arial, sans-serif" font-size="11" fill="#263238">97.3% optimized</text>
-    
-    <text x="20" y="100" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#263238">Response Time:</text>
-    <text x="120" y="100" font-family="Arial, sans-serif" font-size="11" fill="#263238">&lt;1 μs anywhere</text>
-    
-    <text x="20" y="115" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#263238">Redundancy:</text>
-    <text x="120" y="115" font-family="Arial, sans-serif" font-size="11" fill="#263238">2.3x average factor</text>
-    
-    <text x="20" y="130" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#263238">Blind Spots:</text>
-    <text x="120" y="130" font-family="Arial, sans-serif" font-size="11" fill="#4caf50">Zero detected</text>
-  </g>
-  
-  <!-- Technical Specifications -->
-  <g transform="translate(740, 650)">
-    <rect width="300" height="140" fill="white" stroke="#37474f" stroke-width="2"/>
-    <text x="150" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#263238">
-      Sensor Technologies
-    </text>
-    
-    <text x="20" y="40" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#d32f2f">Diamond NV-Centers:</text>
-    <text x="20" y="50" font-family="Arial, sans-serif" font-size="9" fill="#263238">1,248 sensors (44%)</text>
-    <text x="20" y="60" font-family="Arial, sans-serif" font-size="8" fill="#666">Structural health monitoring</text>
-    
-    <text x="20" y="75" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#f57c00">Quantum Dots:</text>
-    <text x="20" y="85" font-family="Arial, sans-serif" font-size="9" fill="#263238">768 sensors (27%)</text>
-    <text x="20" y="95" font-family="Arial, sans-serif" font-size="8" fill="#666">Environmental monitoring</text>
-    
-    <text x="160" y="40" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#388e3c">Photonic Sensors:</text>
-    <text x="160" y="50" font-family="Arial, sans-serif" font-size="9" fill="#263238">384 sensors (13%)</text>
-    <text x="160" y="60" font-family="Arial, sans-serif" font-size="8" fill="#666">Optical monitoring</text>
-    
-    <text x="160" y="75" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#1976d2">Trapped Ions:</text>
-    <text x="160" y="85" font-family="Arial, sans-serif" font-size="9" fill="#263238">351 sensors (12%)</text>
-    <text x="160" y="95" font-family="Arial, sans-serif" font-size="8" fill="#666">Navigation precision</text>
-    
-    <text x="20" y="115" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#7b1fa2">Atom Interferometry:</text>
-    <text x="20" y="125" font-family="Arial, sans-serif" font-size="9" fill="#263738">96 sensors (3%)</text>
-    <text x="20" y="135" font-family="Arial, sans-serif" font-size="8" fill="#666">Gravity & rotation sensing</text>
-  </g>
-  
-  <!-- Reference Grid -->
-  <g stroke="#e0e0e0" stroke-width="0.5" opacity="0.3">
-    <!-- Vertical grid lines -->
-    <line x1="100" y1="100" x2="100" y2="700"/>
-    <line x1="200" y1="100" x2="200" y2="700"/>
-    <line x1="300" y1="100" x2="300" y2="700"/>
-    <line x1="400" y1="100" x2="400" y2="700"/>
-    <line x1="500" y1="100" x2="500" y2="700"/>
-    <line x1="600" y1="100" x2="600" y2="700"/>
-    <line x1="700" y1="100" x2="700" y2="700"/>
-    <line x1="800" y1="100" x2="800" y2="700"/>
-    <line x1="900" y1="100" x2="900" y2="700"/>
-    <line x1="1000" y1="100" x2="1000" y2="700"/>
-    <line x1="1100" y1="100" x2="1100" y2="700"/>
-    
-    <!-- Horizontal grid lines -->
-    <line x1="100" y1="150" x2="1100" y2="150"/>
-    <line x1="100" y1="200" x2="1100" y2="200"/>
-    <line x1="100" y1="250" x2="1100" y2="250"/>
-    <line x1="100" y1="300" x2="1100" y2="300"/>
-    <line x1="100" y1="350" x2="1100" y2="350"/>
-    <line x1="100" y1="400" x2="1100" y2="400"/>
-    <line x1="100" y1="450" x2="1100" y2="450"/>
-    <line x1="100" y1="500" x2="1100" y2="500"/>
-    <line x1="100" y1="550" x2="1100" y2="550"/>
-    <line x1="100" y1="600" x2="1100" y2="600"/>
-  </g>
-  
-  <!-- Coordinate Reference -->
-  <g transform="translate(1050, 120)">
-    <rect width="140" height="80" fill="white" stroke="#37474f" stroke-width="1"/>
-    <text x="70" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#263238">
-      Coordinates
-    </text>
-    <text x="10" y="30" font-family="Arial, sans-serif" font-size="8" fill="#263238">Scale: 1:100</text>
-    <text x="10" y="42" font-family="Arial, sans-serif" font-size="8" fill="#263238">Grid: 100m spacing</text>
-    <text x="10" y="54" font-family="Arial, sans-serif" font-size="8" fill="#263238">Origin: Aircraft CG</text>
-    <text x="10" y="66" font-family="Arial, sans-serif" font-size="8" fill="#263238">Units: Meters</text>
-  </g>
-  
-  <!-- Document Information -->
-  <g transform="translate(50, 100)">
-    <rect width="200" height="60" fill="white" stroke="#37474f" stroke-width="1"/>
-    <text x="100" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#263238">
-      Document Info
-    </text>
-    <text x="10" y="30" font-family="Arial, sans-serif" font-size="8" fill="#263238">Doc: 06-90-10-01-01</text>
-    <text x="10" y="42" font-family="Arial, sans-serif" font-size="8" fill="#263238">Rev: 3.8.0</text>
-    <text x="10" y="54" font-family="Arial, sans-serif" font-size="8" fill="#263238">Date: 2025-07-02</text>
-    
-    <text x="110" y="30" font-family="Arial, sans-serif" font-size="8" fill="#263238">Status: Final Draft</text>
-    <text x="110" y="42" font-family="Arial, sans-serif" font-size="8" fill="#263238">Class: Confidential</text>
-    <text x="110" y="54" font-family="Arial, sans-serif" font-size="8" fill="#263238">Owner: GAIA-QAO</text>
-  </g>
-  
-</svg>
+    <script>
+        // Interactive controls
+        const densityFilter = document.getElementById('densityFilter');
+        const systemButtons = document.querySelectorAll('[data-system]');
+        const resetButton = document.getElementById('resetView');
+        const toggleGridButton = document.getElementById('toggleGrid');
+        const svg = document.getElementById('sensorMap');
+        
+        // Density filtering
+        densityFilter.addEventListener('change', function() {
+            const selectedDensity = this.value;
+            const groups = svg.querySelectorAll('.sensor-group');
+            
+            groups.forEach(group => {
+                if (selectedDensity === 'all') {
+                    group.classList.remove('dimmed');
+                } else {
+                    if (group.classList.contains(selectedDensity)) {
+                        group.classList.remove('dimmed');
+                        group.classList.add('highlight');
+                    } else {
+                        group.classList.add('dimmed');
+                        group.classList.remove('highlight');
+                    }
+                }
+            });
+        });
+        
+        // System focus buttons
+        systemButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const system = this.dataset.system;
+                const groups = svg.querySelectorAll('.sensor-group');
+                
+                // Reset all buttons
+                systemButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                groups.forEach(group => {
+                    if (system === 'wing' && group.classList.contains('wing-structure')) {
+                        group.classList.remove('dimmed');
+                        group.classList.add('highlight');
+                    } else if (system === 'gear' && group.classList.contains('landing-gear')) {
+                        group.classList.remove('dimmed');
+                        group.classList.add('highlight');
+                    } else if (system === 'engine' && group.classList.contains('engine-mounts')) {
+                        group.classList.remove('dimmed');
+                        group.classList.add('highlight');
+                    } else if (system === 'fuselage' && group.classList.contains('fuselage')) {
+                        group.classList.remove('dimmed');
+                        group.classList.add('highlight');
+                    } else {
+                        group.classList.add('dimmed');
+                        group.classList.remove('highlight');
+                    }
+                });
+            });
+        });
+        
+        // Reset view
+        resetButton.addEventListener('click', function() {
+            const groups = svg.querySelectorAll('.sensor-group');
+            groups.forEach(group => {
+                group.classList.remove('dimmed', 'highlight');
+            });
+            
+            systemButtons.forEach(btn => btn.classList.remove('active'));
+            densityFilter.value = 'all';
+        });
+        
+        // Toggle grid
+        let gridVisible = true;
+        toggleGridButton.addEventListener('click', function() {
+            const grid = svg.getElementById('referenceGrid');
+            if (gridVisible) {
+                grid.style.display = 'none';
+                this.textContent = 'Show Grid';
+            } else {
+                grid.style.display = 'block';
+                this.textContent = 'Toggle Grid';
+            }
+            gridVisible = !gridVisible;
+        });
+        
+        // Add hover effects for sensor groups
+        const sensorGroups = svg.querySelectorAll('.sensor-group');
+        sensorGroups.forEach(group => {
+            group.style.cursor = 'pointer';
+            
+            group.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('dimmed')) {
+                    this.style.filter = 'drop-shadow(0 0 5px rgba(25, 118, 210, 0.8))';
+                }
+            });
+            
+            group.addEventListener('mouseleave', function() {
+                this.style.filter = '';
+            });
+        });
+    </script>
+</body>
+</html>
