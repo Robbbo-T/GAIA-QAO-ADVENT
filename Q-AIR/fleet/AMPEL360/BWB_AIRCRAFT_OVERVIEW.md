@@ -138,16 +138,15 @@ graph TB
 ### QSM Network Stress Analysis Visualization
 
 ```mermaid
-heatmap
+xychart-beta
     title "BWB Structural Stress Distribution (Real-time QSM Data)"
     x-axis ["Leading Edge", "Quarter Chord", "Mid Chord", "Three-Quarter", "Trailing Edge"]
-    y-axis ["Root", "Inner Wing", "Mid Span", "Outer Wing", "Tip"]
-    color-scheme "YlOrRd"
-    [[45, 62, 78, 65, 40],
-     [58, 85, 92, 88, 52],
-     [72, 95, 98, 95, 68],
-     [58, 88, 92, 85, 55],
-     [42, 65, 75, 62, 38]]
+    y-axis "Stress (QSM)" 0 --> 100
+    line [45, 62, 78, 65, 40] 
+    line [58, 85, 92, 88, 52] 
+    line [72, 95, 98, 95, 68] 
+    line [58, 88, 92, 85, 55] 
+    line [42, 65, 75, 62, 38] 
 ```
 
 ### Hybrid-Electric Propulsion System Architecture
@@ -293,16 +292,16 @@ graph TB
 ### System Integration Matrix
 
 ```mermaid
-heatmap
+xychart-beta
     title "System Interdependency Matrix (1=Low, 5=Critical)"
-    x-axis ["QNS", "QSM", "QDS", "Propulsion", "Structure", "Avionics"]
-    y-axis ["QNS", "QSM", "QDS", "Propulsion", "Structure", "Avionics"]
-    [[0, 3, 4, 5, 2, 5],
-     [3, 0, 3, 2, 5, 3],
-     [4, 3, 0, 5, 4, 4],
-     [5, 2, 5, 0, 3, 4],
-     [2, 5, 4, 3, 0, 2],
-     [5, 3, 4, 4, 2, 0]]
+    x-axis [QNS, QSM, QDS, Propulsion, Structure, Avionics]
+    y-axis "Interdependency Level" 0 --> 5
+    line [0, 3, 4, 5, 2, 5]
+    line [3, 0, 3, 2, 5, 3]
+    line [4, 3, 0, 5, 4, 4]
+    line [5, 2, 5, 0, 3, 4]
+    line [2, 5, 4, 3, 0, 2]
+    line [5, 3, 4, 4, 2, 0]
 ```
 
 ---
@@ -361,13 +360,13 @@ graph LR
 ### Performance Projection Timeline
 
 ```mermaid
-line
+xychart-beta
     title "BWB Performance Evolution (2025-2035)"
     x-axis [2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035]
     y-axis "Performance Index (%)" 0 --> 200
-    "Fuel Efficiency" [100, 110, 125, 140, 155, 170, 180, 185, 190, 195, 200]
-    "Quantum System Integration" [20, 35, 50, 70, 85, 100, 120, 140, 160, 180, 195]
-    "Autonomous Capability" [10, 20, 30, 45, 60, 75, 90, 100, 110, 120, 130]
+    line [100, 110, 125, 140, 155, 170, 180, 185, 190, 195, 200]
+    line [20, 35, 50, 70, 85, 100, 120, 140, 160, 180, 195]
+    line [10, 20, 30, 45, 60, 75, 90, 100, 110, 120, 130]
 ```
 
 ---
@@ -377,11 +376,16 @@ line
 ### BWB vs Traditional Metrics Comparison
 
 ```mermaid
-radar
-    title "BWB-Q100 vs Traditional Wide-body"
-    labels ["Fuel Efficiency", "Passenger Comfort", "Cargo Capacity", "Environmental Impact", "Operating Cost", "Safety Systems"]
-    "Traditional Aircraft" [60, 70, 65, 50, 60, 80]
-    "AMPEL360 BWB-Q100" [95, 85, 90, 95, 85, 98]
+quadrantChart
+    title BWB-Q100 vs Traditional Wide-body
+    x-axis Lower Performance --> Higher Performance
+    y-axis Less Advanced Systems --> More Advanced Systems
+    quadrant-1 BWB High All-round Advancement
+    quadrant-2 Traditional Strength in Safety, Efficiency
+    quadrant-3 Legacy Performance
+    quadrant-4 Affordable/Catch-up
+    Traditional Aircraft: [0.48, 0.68]
+    AMPEL360 BWB-Q100: [0.92, 0.95]
 ```
 
 ### Quantum System Status Dashboard
