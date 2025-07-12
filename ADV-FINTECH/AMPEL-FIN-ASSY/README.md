@@ -5216,4 +5216,245 @@ The analysis identifies several major challenges and outlines a strategic plan t
 
 * **The Challenge**: The novel "Quantum Weighting" governance model could be manipulated, and the system's complexity creates a large attack surface.
 * **The Solution**: **Progressive decentralization and defense-in-depth**. The Quantum Weighting feature will initially be deployed as a **non-binding advisory tool** to educate voters, with its model being fully open-source. It will only be given power to influence votes after years of proven reliability and community trust. Security relies on a multi-layered approach, including PQC-secured bridges, staked validators, and transfer limits to prevent catastrophic exploits.
+* 
+Below is a **“notebook-as-markdown” scaffold** you can drop straight into your repo (e.g., `notebooks/pfa_q100_gaia_qao_demo.md`).
+Each cell is marked with the usual **`# %% [markdown]` / `# %%`** syntax so it can be opened in VS Code, Jupyter-Lab, or converted with `jupytext`.
+
+````markdown
+# %% [markdown]
+# # PFA-Q100 | GAIA-QAO Demo Notebook
+#
+# **Quantum-Enhanced Aerospace Portfolio Optimisation**
+#
+# This notebook shows an end-to-end toy flow:
+# 1. Pull aerospace-sector price data (placeholder method)
+# 2. Build a classical mean/variance (Markowitz) baseline
+# 3. Run a small-QAOA portfolio optimiser on a simulator
+# 4. Compare risk/return metrics  
+# 5. Stub: ADV settlement + compliance hooks
+#
+# **Author:** GAIA-QAO Dev Team  
+# **Version:** 0.1 (scaffold)  
+# **Last updated:** {{ insert today’s date }}
+
+# %% [markdown]
+# ## 0  Environment
+# - Python ≥ 3.10
+# - `pandas`, `numpy`, `matplotlib`
+# - `cvxpy` or `scipy` for classical optimisation
+# - `qiskit` (>= 1.0) for QAOA
+# - Optionally `qiskit_aqua` / `qiskit_optimization`
+#
+# ```bash
+# pip install pandas numpy matplotlib cvxpy qiskit qiskit-optimization
+# ```
+
+# %%
+import warnings, datetime, json
+import numpy as np, pandas as pd
+import matplotlib.pyplot as plt
+
+try:
+    from qiskit import Aer, QuantumCircuit, execute
+    from qiskit_algorithms import QAOA
+    from qiskit_optimization import QuadraticProgram
+    from qiskit_optimization.algorithms import MinimumEigenOptimizer
+    from qiskit.primitives import Sampler
+except ImportError:
+    warnings.warn("Qiskit not found – quantum section will be skipped")
+
+# Global matplotlib tweaks
+plt.rcParams["figure.dpi"] = 110
+
+# %% [markdown]
+# ## 1  Pull aerospace price data   *(placeholder)*
+# In production this hooks into:
+# - **QUAChain price oracle** (on-chain)
+# - or traditional feeds via GAIA-QAO market data adapters
+#
+# For the demo we’ll:
+# 1. Define a static ticker list  
+# 2. Fetch daily closes via `yfinance` *or* generate synthetic data if offline
+
+# %%
+TICKERS = ["BA", "AIR.PA", "LMT", "RTX", "TDG"]  # Boeing, Airbus, etc.
+START, END = "2021-01-01", "2024-12-31"
+
+def get_price_df(tickers, start, end, offline=False):
+    if offline:
+        dates = pd.date_range(start, end, freq="B")
+        rng = np.random.default_rng(seed=42)
+        prices = {t: 100 + np.cumsum(rng.normal(0, 1, len(dates))) for t in tickers}
+        return pd.DataFrame(prices, index=dates)
+    import yfinance as yf
+    df = yf.download(tickers, start=start, end=end)["Adj Close"]
+    return df.dropna()
+
+prices = get_price_df(TICKERS, START, END, offline=True)
+prices.tail()
+
+# %% [markdown]
+# **Quick sanity plot**
+
+# %%
+prices.plot(title="Aerospace sample price series")
+plt.ylabel("Price")
+
+# %% [markdown]
+# ## 2  Classical mean–variance baseline (Markowitz)
+# 1. Compute log-returns  
+# 2. Target a **max-Sharpe** portfolio subject to full investment & no shorts
+
+# %%
+import cvxpy as cp
+
+returns = np.log(prices / prices.shift(1)).dropna()
+mu = returns.mean() * 252      # annualised
+Sigma = returns.cov() * 252
+
+w = cp.Variable(len(TICKERS))
+risk = cp.quad_form(w, Sigma)
+ret = mu @ w
+
+gamma = cp.Parameter(nonneg=True, value=1)  # risk aversion
+prob = cp.Problem(cp.Maximize(ret - gamma * risk),
+                  [cp.sum(w) == 1,
+                   w >= 0])
+prob.solve()
+
+w_classical = w.value.round(4)
+pd.Series(w_classical, index=TICKERS, name="Weight").to_frame()
+
+# %% [markdown]
+# ### Baseline KPI
+
+# %%
+def portfolio_metrics(weights, mu, Sigma):
+    p_ret = float(mu @ weights)
+    p_vol = float(np.sqrt(weights.T @ Sigma @ weights))
+    sharpe = p_ret / p_vol
+    return dict(ret=p_ret, vol=p_vol, sharpe=sharpe)
+
+kpi_classical = portfolio_metrics(w_classical, mu, Sigma)
+kpi_classical
+
+# %% [markdown]
+# ## 3  Quantum QAOA optimiser (toy)
+# We map the mean-variance objective to a quadratic unconstrained binary optimisation (QUBO).
+# **Assumptions** (for demo):
+# - Discretise each asset into `n_bits` fractional slots  
+# - Small problem size → suitable for Aer simulator
+
+# %%
+try:
+    n_bits = 3                                 # bits per asset (toy!)
+    budget = 2 ** n_bits - 1                   # max encoded weight per asset
+
+    qp = QuadraticProgram()
+    for t in TICKERS:
+        for b in range(n_bits):
+            qp.binary_var(name=f"{t}_{b}")
+
+    # Encode weights & constraints -------------------------------
+    scaling = 1 / budget
+    for i, t in enumerate(TICKERS):
+        coeff = 2 ** np.arange(n_bits)
+        w_bin = [f"{t}_{b}" for b in range(n_bits)]
+        weight_expr = cp.sum([coeff[j] * qp.variables_dict[w_bin[j]] for j in range(n_bits)]) * scaling
+        # Objective pieces
+        qp.minimize(linear={w_bin[j]: -float(mu[i]) * scaling * coeff[j]   for j in range(n_bits)},
+                    quadratic={(w_bin[j], w_bin[k]): float(Sigma.iloc[i,i]) * (coeff[j]*coeff[k]) * scaling**2
+                               for j in range(n_bits) for k in range(n_bits)})
+    # Budget constraint (weights sum to 1)
+    qp.linear_constraint({v.name: 1 for v in qp.variables}, "==", budget)
+
+    # Solve with QAOA -------------------------------------------
+    sampler = Sampler(backend=Aer.get_backend("aer_simulator_statevector"))
+    qaoa = QAOA(reps=2, sampler=sampler)
+    optimizer = MinimumEigenOptimizer(qaoa)
+    q_result = optimizer.solve(qp)
+
+    bitstring = np.array(list(q_result.x)).reshape(len(TICKERS), n_bits)
+    w_quant = bitstring.dot(2 ** np.arange(n_bits)) * scaling
+    w_quant = w_quant / w_quant.sum()          # normalise
+except Exception as e:
+    warnings.warn(f"Quantum section skipped: {e}")
+    w_quant = None
+
+w_quant
+
+# %% [markdown]
+# ### Quantum KPI
+
+# %%
+if w_quant is not None:
+    kpi_quant = portfolio_metrics(w_quant, mu, Sigma)
+    pd.DataFrame([kpi_classical, kpi_quant], index=["Classical", "QAOA"])
+
+# %% [markdown]
+# ## 4  Result visualisation
+
+# %%
+if w_quant is not None:
+    df_kpi = pd.DataFrame([kpi_classical, kpi_quant], index=["Classical", "QAOA"])
+    ax = df_kpi[["ret", "vol"]].plot(kind="bar", subplots=True, layout=(1,2), sharex=True, figsize=(8,4))
+    plt.suptitle("Return / Volatility comparison")
+
+    sharpe = df_kpi["sharpe"]
+    sharpe.plot(kind="bar", title="Sharpe ratio", color="grey")
+
+# %% [markdown]
+# ## 5  ADV Token settlement (stub)
+# In production this would:
+# 1. Construct an **AMPEL-Contract** tx calling `mintWithQuantumProof`  
+# 2. Sign with Dilithium via HSM  
+# 3. Broadcast to QUAChain node
+#
+# ```python
+# from adv_sdk import AdvClient
+#
+# adv = AdvClient(private_key=<dilithium>, node_url=...)
+# tx_hash = adv.settle_trade(
+#     portfolio_id = "demo123",
+#     weights      = w_quant.tolist() if w_quant is not None else w_classical.tolist(),
+#     quantum_proof= q_result.samples[0].probability_vector if w_quant is not None else None
+# )
+# print("Tx sent:", tx_hash)
+# ```
+#
+# *(The `adv_sdk` package is internal; replace with actual client once available.)*
+
+# %% [markdown]
+# ## 6  Compliance logging (stub)
+# ```python
+# from zk_kyc_sdk import ZKComplianceClient
+#
+# zk = ZKComplianceClient()
+# proof = zk.generate_trade_proof(
+#     user_id="user_42",
+#     transaction_hash=tx_hash,
+#     jurisdiction="EU"
+# )
+# zk.submit_proof(proof)
+# ```
+# The proof hash would be anchored on-chain and linked to the trade for auditability.
+
+# %% [markdown]
+# ---
+# ### Next Steps for Engineering
+# 1. Swap synthetic data for live GAIA-QAO oracles  
+# 2. Parameter-sweep QAOA reps / depth; collect performance metrics  
+# 3. Wire up ADV settlement + ZKP modules  
+# 4. Containerise notebook → CI pipeline  
+# 5. Extend to multi-objective (carbon, ESG) optimisation
+````
+
+### How to use
+
+1. Save the block above as `pfa_q100_gaia_qao_demo.md`.
+2. If you use **Jupytext**, run `jupytext --to ipynb pfa_q100_gaia_qao_demo.md` to materialise the notebook; otherwise open directly in VS Code’s Python Notebook view.
+3. Replace the **“stub / placeholder”** sections with real SDK calls as they come online.
+
+Let me know if you’d like the same scaffold as a pre-built `.ipynb` file or with alternative quantum frameworks (e.g., *Braket*, *Cirq*).
+
 
