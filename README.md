@@ -11,7 +11,7 @@
 
 | **Version** | **Date** | **Author** | **Description** |
 |-------------|----------|------------|-----------------|
-| 3.0.0 | July 2025 | GAIA-QAO Consortium | Initial comprehensive framework documentation |
+| 3.0.0 | July 2025 | Amedeo Pelliccia | Initial comprehensive framework documentation |
 
 **Classification**: GAIA-QAO Proprietary  
 **Distribution**: Program Participants and Authorized Partners  
