@@ -36,6 +36,56 @@
 
 ---
 
+```mermaid
+%% GAIA-QAO-ADVENT Grand Framework High-Level Mindmap
+mindmap
+  root((GAIA-QAO-ADVENT Framework))
+    GAIA
+      Q-GROUND
+        LA[Living Artifacts]
+        HA[Hybrid Artifacts]
+      Q-MARITIME
+        LA
+        HA
+      Q-INDUSTRY
+        HA
+        PDA[Pure Digital]
+      Q-STRUCTURES
+        HA
+    QAO
+      Q-HPC
+        HA
+        PDA
+      Q-SCIRES
+        HA
+        PDA
+      Q-GREENTECH
+        HA
+        PDA
+    ADVENT
+      Q-AIR
+        LA
+        HA
+        PDA
+      Q-SPACE
+        LA
+        HA
+        PDA
+      Q-ROBOTICS
+        HA
+        PDA
+      Q-MECHANICS
+        HA
+        PDA
+      Q-DATAGOV
+        HA
+        PDA
+    subannexes((Annexes & PDAs))
+      AnnexA["Annex A: Living Artifacts Catalogue"]
+      AnnexB["Annex B: Hybrid Artifacts Catalogue"]
+      AnnexC["Annex C: Pure Digital Assets Catalogue"]
+```
+
 ## 1. Executive Summary
 
 The GAIA-QAO-ADVENT framework represents a comprehensive approach to quantum-enhanced aerospace development, designed to revolutionize the aviation industry through the integration of quantum computing, artificial intelligence, and sustainable technologies. This document serves as the master reference for understanding the framework's architecture, deliverables, and implementation strategy.
